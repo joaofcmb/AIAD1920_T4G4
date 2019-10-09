@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/AIAD1819_T4.iml" filepath="$PROJECT_DIR$/.idea/AIAD1819_T4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MultiAgentPoker.iml" filepath="$PROJECT_DIR$/MultiAgentPoker.iml" />
     </modules>
   </component>
 </project>
