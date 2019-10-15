@@ -6,18 +6,42 @@ import jade.lang.acl.MessageTemplate;
 
 public class OfferSessionServer extends CyclicBehaviour {
 
+    /**
+     * Dealer agent
+     */
+    private Dealer dealer;
+
+    /**
+     * Default constructor
+     * @param dealer Agent
+     */
+    OfferSessionServer(Dealer dealer) {
+        this.dealer = dealer;
+    }
+
     @Override
     public void action() {
-        MessageTemplate mt = MessageTemplate.MatchPerformative(ACLMessage.CFP);
-        ACLMessage msg = myAgent.receive(mt);
+        MessageTemplate msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.CFP);
+        ACLMessage msg = myAgent.receive(msgTemplate);
         if (msg != null) {
             // CFP Message received. Process it
-            String title = msg.getContent();
+            int playerBuyIn = Integer.parseInt(msg.getContent());
+
+            // Create reply
             ACLMessage reply = msg.createReply();
 
-            reply.setPerformative(ACLMessage.PROPOSE);
-            reply.setContent("1234");
-
+            if(this.dealer.getTableSettings().get("lowerBuyIn") <= playerBuyIn &&
+                this.dealer.getTableSettings().get("upperBuyIn") >= playerBuyIn) {
+                reply.setPerformative(ACLMessage.PROPOSE);
+                reply.setContent("Session-available");
+                System.out.println(this.dealer.getName() + " :: Session available in response to " + msg.getSender().getName());
+            }
+            else {
+                reply.setPerformative(ACLMessage.REFUSE);
+                reply.setContent("Player buy in do not fit the session buy in range [" +
+                        this.dealer.getTableSettings().get("lowerBuyIn") + " : " +
+                        this.dealer.getTableSettings().get("upperBuyIn") + "]");
+            }
             myAgent.send(reply);
         }
         else {

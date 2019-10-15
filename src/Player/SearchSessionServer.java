@@ -28,7 +28,7 @@ public class SearchSessionServer extends TickerBehaviour {
     @Override
     protected void onTick() {
         if(this.player.getPlayerState() == Player.State.SEARCHING_SESSION) {
-            System.out.println("Agent " + myAgent.getName() + " searching for session");
+            System.out.println(this.player.getName() + " :: Searching for session.");
 
             // Update the list of seller agents
             DFAgentDescription DFD = new DFAgentDescription();
@@ -41,12 +41,13 @@ public class SearchSessionServer extends TickerBehaviour {
                 DFAgentDescription[] data = DFService.search(myAgent, DFD);
 
                 if(data.length > 0) {
-                    System.out.println("Found the following dealers agents:");
+                    System.out.print(this.player.getName() + " :: Found the following dealer agents: ");
                     this.dealerAgents = new AID[data.length];
                     for (int i = 0; i < data.length; ++i) {
                         this.dealerAgents[i] = data[i].getName();
-                        System.out.println(this.dealerAgents[i].getName());
+                        System.out.print(this.dealerAgents[i].getName() + " ");
                     }
+                    System.out.println();
                 }
             }
             catch (FIPAException fe) {

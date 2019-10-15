@@ -17,33 +17,98 @@ public class JoinSessionPerformer extends Behaviour {
      */
     private AID[] dealerAgents;
 
-    private MessageTemplate mt; // The template to receive replies
+    /**
+     * The template to receive replies
+     */
+    private MessageTemplate msgTemplate;
+
+    /**
+     * Number of replies received
+     */
+    private int repliesCnt;
+
+    /**
+     * Dealer agent
+     */
+    private AID dealer;
+
+    /**
+     * Process step
+     */
     private int step = 0;
 
+    /**
+     * Default constructor
+     * @param player Agent
+     * @param dealerAgents Possible sessions that can be joined
+     */
     JoinSessionPerformer(Player player, AID[] dealerAgents) {
         this.player = player;
+        this.repliesCnt = 0;
         this.dealerAgents = dealerAgents;
     }
 
     @Override
     public void action() {
         switch (step) {
-            case 0:
-                // Send the cfp to all sellers
-                ACLMessage cfp = new ACLMessage(ACLMessage.CFP);
-                for (int i = 0; i < this.dealerAgents.length; ++i) {
-                    cfp.addReceiver(this.dealerAgents[i]);
+            case 0: // Send the CFP to all dealers
+                ACLMessage CFP = new ACLMessage(ACLMessage.CFP);
+                for (AID dealerAgent : this.dealerAgents) {
+                    CFP.addReceiver(dealerAgent);
                 }
-                cfp.setContent(myAgent.getName() + " is searching for a session");
-                cfp.setConversationId("searching-session");
-                cfp.setReplyWith("cfp" + System.currentTimeMillis()); // Unique value
-                myAgent.send(cfp);
+
+                // Configure message
+                CFP.setContent(Integer.toString(this.player.getBuyIn()));
+                CFP.setConversationId("searching-session");
+                CFP.setReplyWith("CFP" + System.currentTimeMillis()); // Unique value
+
+                // Send CFP
+                myAgent.send(CFP);
+
                 // Prepare the template to get proposals
-                mt = MessageTemplate.and(MessageTemplate.MatchConversationId("book-trade"),
-                        MessageTemplate.MatchInReplyTo(cfp.getReplyWith()));
-                step = 1;
+                this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("searching-session"),
+                        MessageTemplate.MatchInReplyTo(CFP.getReplyWith()));
+                step++;
                 break;
-            case 1:
+            case 1: // Receive all proposals/refusals from dealer agents
+                ACLMessage reply = myAgent.receive(this.msgTemplate);
+                if (reply != null) {
+                    if (reply.getPerformative() == ACLMessage.PROPOSE) {
+                        this.dealer = reply.getSender();
+                    }
+
+                    // Increment number of replies received
+                    repliesCnt++;
+
+                    // Check if there are some replies to be received
+                    if (repliesCnt >= this.dealerAgents.length) {
+                        step++;
+                    }
+                }
+                else {
+                    block();
+                }
+                break;
+            case 2:
+                // Send the purchase order to the seller that provided the best offer
+                ACLMessage session = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
+
+                // Configure message
+                session.addReceiver(this.dealer);
+                session.setContent("joining-session");
+                session.setConversationId("session-join");
+                session.setReplyWith("session" + System.currentTimeMillis());
+
+                // Send message
+                myAgent.send(session);
+
+                // Prepare the template to get the purchase order reply
+                this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("session-join"),
+                        MessageTemplate.MatchInReplyTo(session.getReplyWith()));
+                step++;
+                break;
+            case 3:
+                // TODO 
                 break;
         }
     }

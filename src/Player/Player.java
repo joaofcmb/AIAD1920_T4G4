@@ -38,14 +38,18 @@ public class Player extends Agent {
 
     // Agent clean-up operations
     protected void takeDown() {
-        System.out.println("Dealer " + getAID().getName() + " terminating.");
+        System.out.println(this.getName() + " :: Terminating.");
     }
 
     State getPlayerState() {
         return playerState;
     }
 
-    public void setPlayerState(State playerState) {
+    int getBuyIn() {
+        return buyIn;
+    }
+
+    void setPlayerState(State playerState) {
         this.playerState = playerState;
     }
 }
