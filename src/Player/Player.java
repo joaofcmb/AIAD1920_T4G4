@@ -2,23 +2,37 @@ package Player;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.TickerBehaviour;
-import jade.domain.DFService;
-import jade.domain.FIPAAgentManagement.DFAgentDescription;
-import jade.domain.FIPAAgentManagement.ServiceDescription;
-import jade.domain.FIPAException;
-
-import java.util.HashMap;
 
 public class Player extends Agent {
+
+    /**
+     * Player buy in
+     */
     private int buyIn;
+
+    /**
+     * Player personality
+     */
     private Personality personality;
 
-    public static enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, PLAYING};
+    /**
+     * Player state machine
+     */
+    public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, PLAYING};
 
+    /**
+     * Initial state
+     */
     private State playerState = State.INIT;
 
-    @Override
+    /**
+     * Dealer of the current session
+     */
+    private AID dealer = null;
+
+    /**
+     * Agent initializations
+     */
     protected void setup() {
         final Object[] playerSettings = getArguments();
 
@@ -41,15 +55,38 @@ public class Player extends Agent {
         System.out.println(this.getName() + " :: Terminating.");
     }
 
+    /**
+     * Get player state
+     */
     State getPlayerState() {
         return playerState;
     }
 
+    /**
+     * Get player buy in
+     */
     int getBuyIn() {
         return buyIn;
     }
 
+    /**
+     * Get player's current session dealer
+     */
+    public AID getDealer() {
+        return dealer;
+    }
+
+    /**
+     * Set player state
+     */
     void setPlayerState(State playerState) {
         this.playerState = playerState;
+    }
+
+    /**
+     * Set player current session dealer
+     */
+    void setDealer(AID dealer) {
+        this.dealer = dealer;
     }
 }

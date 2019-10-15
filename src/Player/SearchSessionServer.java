@@ -1,7 +1,6 @@
 package Player;
 
 import jade.core.AID;
-import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
@@ -20,6 +19,11 @@ public class SearchSessionServer extends TickerBehaviour {
      */
     private AID[] dealerAgents;
 
+    /**
+     * Default constructor
+     * @param player Agent
+     * @param period Tick period
+     */
     SearchSessionServer(Player player, long period) {
         super(player, period);
         this.player = player;

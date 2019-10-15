@@ -16,9 +16,14 @@ public class Dealer extends Agent {
      */
     private HashMap<String, Integer> tableSettings = new HashMap<>();
 
+    /**
+     * Current players
+     */
     private HashMap<String, AID> currPlayers = new HashMap<>();
 
-    // Agent initializations here
+    /**
+     * Agent initialization
+     */
     protected void setup() {
         final Object[] tableSettings = getArguments();
 
@@ -78,7 +83,7 @@ public class Dealer extends Agent {
      * @param player New player to be added
      * @return True if new player is added false otherwise
      */
-    public boolean updateCurrPlayers(AID player) {
+    boolean updateCurrPlayers(AID player) {
         if(this.currPlayers.size() < this.tableSettings.get("maxPlayers") && !this.currPlayers.containsKey(player.getName())) {
             this.currPlayers.put(player.getName(), player);
             return true;
@@ -86,11 +91,17 @@ public class Dealer extends Agent {
         return false;
     }
 
+    /**
+     * Retrieve table settings
+     */
     HashMap<String, Integer> getTableSettings() {
         return tableSettings;
     }
 
-    public HashMap<String, AID> getCurrPlayers() {
+    /**
+     * Retrieve current players structure
+     */
+    HashMap<String, AID> getCurrPlayers() {
         return currPlayers;
     }
 }

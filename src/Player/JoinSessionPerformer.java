@@ -50,71 +50,98 @@ public class JoinSessionPerformer extends Behaviour {
 
     @Override
     public void action() {
-        switch (step) {
-            case 0: // Send the CFP to all dealers
-                ACLMessage CFP = new ACLMessage(ACLMessage.CFP);
-                for (AID dealerAgent : this.dealerAgents) {
-                    CFP.addReceiver(dealerAgent);
-                }
-
-                // Configure message
-                CFP.setContent(Integer.toString(this.player.getBuyIn()));
-                CFP.setConversationId("searching-session");
-                CFP.setReplyWith("CFP" + System.currentTimeMillis()); // Unique value
-
-                // Send CFP
-                myAgent.send(CFP);
-
-                // Prepare the template to get proposals
-                this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("searching-session"),
-                        MessageTemplate.MatchInReplyTo(CFP.getReplyWith()));
-                step++;
-                break;
-            case 1: // Receive all proposals/refusals from dealer agents
-                ACLMessage reply = myAgent.receive(this.msgTemplate);
-                if (reply != null) {
-                    if (reply.getPerformative() == ACLMessage.PROPOSE) {
-                        this.dealer = reply.getSender();
+        if(this.player.getPlayerState() == Player.State.JOINING_SESSION) {
+            switch (step) {
+                case 0: // Send the CFP to all dealers
+                    ACLMessage CFP = new ACLMessage(ACLMessage.CFP);
+                    for (AID dealerAgent : this.dealerAgents) {
+                        CFP.addReceiver(dealerAgent);
                     }
 
-                    // Increment number of replies received
-                    repliesCnt++;
+                    // Configure message
+                    CFP.setContent(Integer.toString(this.player.getBuyIn()));
+                    CFP.setConversationId("searching-session");
+                    CFP.setReplyWith("CFP" + System.currentTimeMillis()); // Unique value
 
-                    // Check if there are some replies to be received
-                    if (repliesCnt >= this.dealerAgents.length) {
-                        step++;
+                    // Send CFP
+                    myAgent.send(CFP);
+
+                    // Prepare the template to get proposals
+                    this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("searching-session"),
+                            MessageTemplate.MatchInReplyTo(CFP.getReplyWith()));
+                    step++;
+                    break;
+                case 1: // Receive all proposals/refusals from dealer agents
+                    ACLMessage reply = myAgent.receive(this.msgTemplate);
+                    if (reply != null) {
+                        if (reply.getPerformative() == ACLMessage.PROPOSE) {
+                            this.dealer = reply.getSender();
+                        }
+
+                        // Increment number of replies received
+                        repliesCnt++;
+
+                        // Check if there are some replies to be received
+                        if (repliesCnt >= this.dealerAgents.length) {
+                            step++;
+                            repliesCnt = 0;
+                        }
                     }
-                }
-                else {
-                    block();
-                }
-                break;
-            case 2:
-                // Send the purchase order to the seller that provided the best offer
-                ACLMessage session = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
+                    else {
+                        block();
+                    }
+                    break;
+                case 2: // Send the intention to join the seller
+                    ACLMessage session = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
 
-                // Configure message
-                session.addReceiver(this.dealer);
-                session.setContent("joining-session");
-                session.setConversationId("session-join");
-                session.setReplyWith("session" + System.currentTimeMillis());
+                    // Configure message
+                    session.addReceiver(this.dealer);
+                    session.setContent("joining-session");
+                    session.setConversationId("session-join");
+                    session.setReplyWith("session" + System.currentTimeMillis());
 
-                // Send message
-                myAgent.send(session);
+                    // Send message
+                    myAgent.send(session);
 
-                // Prepare the template to get the purchase order reply
-                this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("session-join"),
-                        MessageTemplate.MatchInReplyTo(session.getReplyWith()));
-                step++;
-                break;
-            case 3:
-                // TODO 
-                break;
+                    // Prepare the template to get the reply
+                    this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("session-join"),
+                            MessageTemplate.MatchInReplyTo(session.getReplyWith()));
+                    step++;
+                    break;
+                case 3: // Receive the joining session reply
+                    reply = myAgent.receive(this.msgTemplate);
+                    if (reply != null) {
+                        // Increment number of replies received
+                        repliesCnt++;
+
+                        // Successfully joined a session
+                        if (reply.getPerformative() == ACLMessage.INFORM) {
+                            this.player.setDealer(reply.getSender());
+                            this.player.setPlayerState(Player.State.PLAYING);
+                            System.out.println(this.getAgent().getName() + " :: Successfully joined " +
+                                    reply.getSender().getName() + " session.");
+                            step++;
+                        }
+                        else {
+                            System.out.println(this.getAgent().getName() + " :: Attempt failed: Could not join" +
+                                    reply.getSender().getName() + " session.");
+                        }
+
+                        // Check if there are some replies to be received
+                        if (repliesCnt >= this.dealerAgents.length && this.player.getDealer() != null) {
+                            step++;
+                        }
+                    }
+                    else {
+                        block();
+                    }
+                    break;
+            }
         }
     }
 
     @Override
     public boolean done() {
-        return false;
+        return this.step == 4;
     }
 }
