@@ -42,7 +42,7 @@ public class Dealer extends Agent {
 
             ServiceDescription SD = new ServiceDescription();
             SD.setType("poker-session");
-            SD.setName("JADE-book-trading");
+            SD.setName("JADE-poker");
 
             DFD.addServices(SD);
             try {

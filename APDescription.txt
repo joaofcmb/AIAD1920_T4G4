@@ -1,1 +1,1 @@
-( ap-description  :name "JADE" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://host.docker.internal:7778/acc))))
+( ap-description  :name "JADE" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://LAPTOP-BL3M2V6T:7778/acc))))

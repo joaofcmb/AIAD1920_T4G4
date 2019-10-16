@@ -76,15 +76,18 @@ public class JoinSessionPerformer extends Behaviour {
                     if (reply != null) {
                         if (reply.getPerformative() == ACLMessage.PROPOSE) {
                             this.dealer = reply.getSender();
+                            step++;
                         }
 
                         // Increment number of replies received
                         repliesCnt++;
 
                         // Check if there are some replies to be received
-                        if (repliesCnt >= this.dealerAgents.length) {
-                            step++;
-                            repliesCnt = 0;
+                        if (repliesCnt >= this.dealerAgents.length && this.dealer == null) {
+                            this.player.setPlayerState(Player.State.SEARCHING_SESSION);
+                            System.out.println(this.player.getName() + " :: Could not join "
+                                    + reply.getSender().getName() + " session. Error: " + reply.getContent() );
+                            step = 4;
                         }
                     }
                     else {
@@ -111,8 +114,6 @@ public class JoinSessionPerformer extends Behaviour {
                 case 3: // Receive the joining session reply
                     reply = myAgent.receive(this.msgTemplate);
                     if (reply != null) {
-                        // Increment number of replies received
-                        repliesCnt++;
 
                         // Successfully joined a session
                         if (reply.getPerformative() == ACLMessage.INFORM) {
@@ -123,13 +124,11 @@ public class JoinSessionPerformer extends Behaviour {
                             step++;
                         }
                         else {
+                            // Reset player state
+                            this.player.setPlayerState(Player.State.SEARCHING_SESSION);
+
                             System.out.println(this.getAgent().getName() + " :: Attempt failed: Could not join" +
                                     reply.getSender().getName() + " session.");
-                        }
-
-                        // Check if there are some replies to be received
-                        if (repliesCnt >= this.dealerAgents.length && this.player.getDealer() != null) {
-                            step++;
                         }
                     }
                     else {
@@ -142,6 +141,6 @@ public class JoinSessionPerformer extends Behaviour {
 
     @Override
     public boolean done() {
-        return this.step == 4;
+        return this.step >= 4;
     }
 }

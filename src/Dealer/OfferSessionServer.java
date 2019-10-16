@@ -41,6 +41,9 @@ public class OfferSessionServer extends CyclicBehaviour {
                 reply.setContent("Player buy in do not fit the session buy in range [" +
                         this.dealer.getTableSettings().get("lowerBuyIn") + " : " +
                         this.dealer.getTableSettings().get("upperBuyIn") + "]");
+                System.out.println(this.dealer.getName() + " :: Player buy in do not fit the session buy in range [" +
+                        this.dealer.getTableSettings().get("lowerBuyIn") + " : " +
+                        this.dealer.getTableSettings().get("upperBuyIn") + "]");
             }
             myAgent.send(reply);
         }

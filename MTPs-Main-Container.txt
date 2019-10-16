@@ -1,1 +1,1 @@
-http://host.docker.internal:7778/acc
+http://LAPTOP-BL3M2V6T:7778/acc
