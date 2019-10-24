@@ -1,0 +1,510 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Gui.Gui">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridBagLayout">
+    <constraints>
+      <xy x="34" y="20" width="783" height="605"/>
+    </constraints>
+    <properties>
+      <background color="-15578368"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="8b1d4" binding="game" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="2.0" weighty="1.0" ipady="1"/>
+        </constraints>
+        <properties>
+          <background color="-15578368"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="b6fc8" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="29a7" class="javax.swing.JLabel" binding="card1">
+                <constraints/>
+                <properties>
+                  <icon value="images/1.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="67bb7" class="javax.swing.JLabel" binding="card2">
+                <constraints/>
+                <properties>
+                  <icon value="images/4.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="1abc7" class="javax.swing.JLabel" binding="card3">
+                <constraints/>
+                <properties>
+                  <icon value="images/8.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="3b85e" class="javax.swing.JLabel" binding="card4">
+                <constraints/>
+                <properties>
+                  <icon value="images/38.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="ac790" class="javax.swing.JLabel" binding="card5">
+                <constraints/>
+                <properties>
+                  <icon value="images/46.png"/>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <component id="4437" class="javax.swing.JLabel" binding="pot">
+            <constraints>
+              <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="3.0" weighty="1.0" ipadx="1"/>
+            </constraints>
+            <properties>
+              <font size="18"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <text value="POT: XXX€"/>
+            </properties>
+          </component>
+          <component id="e248d" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font size="14"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <text value="Table Cards"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <component id="ff848" class="javax.swing.JButton" binding="init">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <background color="-15578368"/>
+          <foreground color="-2431279"/>
+          <hideActionText value="false"/>
+          <text value="Init Game"/>
+        </properties>
+      </component>
+      <grid id="24ae7" binding="players" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="4.0" ipady="2"/>
+        </constraints>
+        <properties>
+          <background color="-15578368"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <grid id="122a2" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="2.0" weighty="1.5"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <grid id="8f859" binding="player1" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.1" weighty="0.1"/>
+                </constraints>
+                <properties>
+                  <background color="-15578368"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="27937" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="0"/>
+                      <text value="Player1"/>
+                    </properties>
+                  </component>
+                  <component id="d0035" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1" ipady="1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="10"/>
+                      <horizontalTextPosition value="11"/>
+                      <text value="Blind"/>
+                      <verticalAlignment value="0"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="74cbb" binding="chips1" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.1" weighty="0.1" ipadx="1"/>
+                </constraints>
+                <properties>
+                  <background color="-15578368"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="47b72" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="1.0" weighty="1.0"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <text value="4.7 M €"/>
+                    </properties>
+                  </component>
+                  <component id="7c339" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="1.0" weighty="1.0"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <text value="fold"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="46f47" binding="cards1" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.1" weighty="0.1" ipadx="2"/>
+                </constraints>
+                <properties>
+                  <background color="-15578368"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="763a7" class="javax.swing.JLabel" binding="p1c1">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/52.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="74307" class="javax.swing.JLabel" binding="p1c2">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/15.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+          <grid id="bd8a" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="2.0" weighty="1.5" ipady="1"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <grid id="7fa55" binding="player2" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.1" weighty="0.1"/>
+                </constraints>
+                <properties>
+                  <background color="-15578368"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="41596" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="0"/>
+                      <text value="Player2"/>
+                    </properties>
+                  </component>
+                  <component id="74a42" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1" ipady="1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="0"/>
+                      <text value="Big Blind"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="3e227" binding="chips2" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.1" weighty="0.1" ipadx="1"/>
+                </constraints>
+                <properties>
+                  <background color="-15578368"/>
+                  <foreground color="-1"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="709f3" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="0"/>
+                      <text value="1,2 M €"/>
+                    </properties>
+                  </component>
+                  <component id="719e7" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1" ipady="1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="0"/>
+                      <text value="raise"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="9a402" binding="cards2" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.1" weighty="0.1" ipadx="2"/>
+                </constraints>
+                <properties>
+                  <background color="-15578368"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="14938" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/3.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="82428" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/7.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+          <grid id="d873c" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="2.0" weighty="1.5" ipady="2"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="f4898" layout-manager="GridBagLayout">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="2.0" weighty="1.5" ipadx="1"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <grid id="dc156" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.1" weighty="0.1"/>
+                </constraints>
+                <properties>
+                  <background color="-15578368"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="51e59" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="0"/>
+                      <text value="Player5"/>
+                    </properties>
+                  </component>
+                  <component id="90fe5" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1" ipady="1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="0"/>
+                      <text value="Small Blind"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="2b723" layout-manager="GridBagLayout">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.1" weighty="0.1" ipadx="1"/>
+                </constraints>
+                <properties>
+                  <background color="-15578368"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="a4ee1" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="0"/>
+                      <text value="200 K €"/>
+                    </properties>
+                  </component>
+                  <component id="eed57" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <gridbag weightx="0.1" weighty="0.1" ipady="1"/>
+                    </constraints>
+                    <properties>
+                      <foreground color="-1"/>
+                      <horizontalAlignment value="0"/>
+                      <text value="call"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="6d00e" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.1" weighty="0.1" ipadx="2"/>
+                </constraints>
+                <properties>
+                  <background color="-15578368"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="6713f" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/12.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="bf169" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <icon value="images/18.png"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </grid>
+          <grid id="ad2e9" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="2.0" weighty="1.5" ipadx="1" ipady="2"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="1ae9b" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="2.0" weighty="1.5" ipadx="1" ipady="2"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="dd057" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="2.0" weighty="1.5" ipady="3"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <grid id="97cd2" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="2.0" weighty="1.5" ipadx="1" ipady="3"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
+          <component id="21534" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.1" weighty="0.1"/>
+            </constraints>
+            <properties>
+              <background color="-15578368"/>
+              <font size="20"/>
+              <foreground color="-518381"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <text value="Players"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
