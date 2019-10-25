@@ -38,7 +38,7 @@ public class StartingSession extends Behaviour {
 
         // Add all players as receivers
         for(int i = 0; i < this.dealer.getCurrPlayers().size(); i++)
-            msg.addReceiver(this.dealer.getCurrPlayers().get(i));
+            msg.addReceiver(this.dealer.getCurrPlayers().get(i).getPlayer());
 
         // Configure message
         msg.setContent("starting-session");
@@ -66,6 +66,10 @@ public class StartingSession extends Behaviour {
         }
 
         this.dealer.setDealerState(Dealer.State.DEALING);
+
+        System.out.println(this.dealer.getName() + " :: Session has started.");
+        this.dealer.createNewSession();
+
         this.terminate();
     }
 

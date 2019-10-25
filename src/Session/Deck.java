@@ -1,9 +1,9 @@
-package Game;
+package Session;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Deck {
+class Deck {
 
     /**
      * Decks suits

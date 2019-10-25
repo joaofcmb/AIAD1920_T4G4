@@ -101,7 +101,7 @@ public class JoinSessionPerformer extends Behaviour {
 
                     // Configure message
                     session.addReceiver(this.dealer);
-                    session.setContent("joining-session");
+                    session.setContent(Integer.toString(this.player.getBuyIn()));
                     session.setConversationId("session-join");
                     session.setReplyWith("session" + System.currentTimeMillis());
 
