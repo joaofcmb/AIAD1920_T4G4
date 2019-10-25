@@ -1,6 +1,7 @@
 package Gui;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumnModel;
@@ -79,31 +80,29 @@ public class Gui {
     private JLabel p8c1;
     private JLabel p8c2;
     private JLabel action8;
+    private JPanel pots;
 
     private static HashMap<Integer, String> cardMap;
 
     public Gui() {
-
         cardMap = new HashMap<Integer, String>();
         for (int i = 1; i <= 52; i++) {
             cardMap.put(i, IMAGE_FOLDER_LOCATION + i + ".png");
         }
 
+        float[] hsb = Color.RGBtoHSB(104,26,5, null);
+        Color dark_red = Color.getHSBColor(hsb[0],hsb[1],hsb[2]);
+        pots.setBorder(new LineBorder(dark_red, 5, true));
+
     }
 
     public static void main(String[] args) {
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame gui = new JFrame("Gui");
-                gui.setContentPane(new Gui().panel1);
-                gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                gui.setLocation(100,100);
-                gui.pack();
-                gui.setSize(750,600);
-                gui.setVisible(true);
-            }
-        });
+        JFrame gui = new JFrame("Gui");
+        gui.setContentPane(new Gui().panel1);
+        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gui.setLocation(100,100);
+        gui.pack();
+        gui.setSize(750,600);
+        gui.setVisible(true);
     }
 }

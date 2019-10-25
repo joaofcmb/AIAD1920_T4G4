@@ -33,35 +33,35 @@
                 <constraints/>
                 <properties>
                   <enabled value="true"/>
-                  <icon value="images/1.png"/>
+                  <icon value="images/emptyCard.png"/>
                   <text value=""/>
                 </properties>
               </component>
               <component id="67bb7" class="javax.swing.JLabel" binding="card2">
                 <constraints/>
                 <properties>
-                  <icon value="images/4.png"/>
+                  <icon value="images/emptyCard.png"/>
                   <text value=""/>
                 </properties>
               </component>
               <component id="1abc7" class="javax.swing.JLabel" binding="card3">
                 <constraints/>
                 <properties>
-                  <icon value="images/8.png"/>
+                  <icon value="images/emptyCard.png"/>
                   <text value=""/>
                 </properties>
               </component>
               <component id="3b85e" class="javax.swing.JLabel" binding="card4">
                 <constraints/>
                 <properties>
-                  <icon value="images/38.png"/>
+                  <icon value="images/emptyCard.png"/>
                   <text value=""/>
                 </properties>
               </component>
               <component id="ac790" class="javax.swing.JLabel" binding="card5">
                 <constraints/>
                 <properties>
-                  <icon value="images/46.png"/>
+                  <icon value="images/emptyCard.png"/>
                   <text value=""/>
                 </properties>
               </component>
@@ -79,15 +79,18 @@
               <text value="Table Cards"/>
             </properties>
           </component>
-          <grid id="89d7d" layout-manager="GridBagLayout">
+          <grid id="89d7d" binding="pots" layout-manager="GridBagLayout">
             <constraints>
               <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
               <gridbag weightx="1.5" weighty="1.0"/>
             </constraints>
             <properties>
-              <background color="-9954811"/>
+              <background color="-16752896"/>
             </properties>
-            <border type="none"/>
+            <border type="line">
+              <font/>
+              <color color="-10083067"/>
+            </border>
             <children>
               <component id="e7dbf" class="javax.swing.JLabel" binding="pot">
                 <constraints>
@@ -99,7 +102,7 @@
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
-                  <text value="Pot: XXX€"/>
+                  <text value="Pot: €"/>
                 </properties>
               </component>
               <component id="a994a" class="javax.swing.JLabel" binding="sidePot1">
@@ -269,7 +272,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="4,7M €"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -284,14 +287,14 @@
                   <component id="f5633" class="javax.swing.JLabel" binding="p1c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/3.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="4c2d" class="javax.swing.JLabel" binding="p1c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/47.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -303,7 +306,7 @@
                   <background color="-16752896"/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
-                  <text value="Action..."/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
@@ -343,7 +346,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="1,2M €"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -353,7 +356,7 @@
                 <properties>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
-                  <text value="Action"/>
+                  <text value=""/>
                 </properties>
               </component>
               <grid id="bd944" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
@@ -366,14 +369,14 @@
                   <component id="73265" class="javax.swing.JLabel" binding="p5c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/12.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="da495" class="javax.swing.JLabel" binding="p5c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/40.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -417,7 +420,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="Player1"/>
+                      <text value="Player2"/>
                     </properties>
                   </component>
                   <component id="f9347" class="javax.swing.JLabel" binding="p2chips">
@@ -426,7 +429,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="4,7M €"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -441,14 +444,14 @@
                   <component id="9b4a6" class="javax.swing.JLabel" binding="p2c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/3.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="d64ee" class="javax.swing.JLabel" binding="p2c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/47.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -460,7 +463,7 @@
                   <background color="-16752896"/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
-                  <text value="Action..."/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
@@ -489,7 +492,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="Player1"/>
+                      <text value="Player3"/>
                     </properties>
                   </component>
                   <component id="cfdb0" class="javax.swing.JLabel" binding="p3chips">
@@ -498,7 +501,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="4,7M €"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -513,14 +516,14 @@
                   <component id="f2341" class="javax.swing.JLabel" binding="p3c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/3.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="738ae" class="javax.swing.JLabel" binding="p3c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/47.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -532,7 +535,7 @@
                   <background color="-16752896"/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
-                  <text value="Action..."/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
@@ -562,7 +565,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="Player1"/>
+                      <text value="Player4"/>
                     </properties>
                   </component>
                   <component id="ba8e8" class="javax.swing.JLabel" binding="p4chips">
@@ -571,7 +574,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="4,7M €"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -586,14 +589,14 @@
                   <component id="78293" class="javax.swing.JLabel" binding="p4c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/3.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="b41c0" class="javax.swing.JLabel" binding="p4c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/47.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -605,7 +608,7 @@
                   <background color="-16752896"/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
-                  <text value="Action..."/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
@@ -634,7 +637,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="Player1"/>
+                      <text value="Player6"/>
                     </properties>
                   </component>
                   <component id="26bc" class="javax.swing.JLabel" binding="p6chips">
@@ -643,7 +646,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="4,7M €"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -658,14 +661,14 @@
                   <component id="a4761" class="javax.swing.JLabel" binding="p6c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/3.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="6fa4c" class="javax.swing.JLabel" binding="p6c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/47.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -677,7 +680,7 @@
                   <background color="-16752896"/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
-                  <text value="Action..."/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
@@ -707,7 +710,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="Player1"/>
+                      <text value="Player7"/>
                     </properties>
                   </component>
                   <component id="cf793" class="javax.swing.JLabel" binding="p7chips">
@@ -716,7 +719,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="4,7M €"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -731,14 +734,14 @@
                   <component id="2345e" class="javax.swing.JLabel" binding="p7c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/3.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="39df7" class="javax.swing.JLabel" binding="p7c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/47.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -750,7 +753,7 @@
                   <background color="-16752896"/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
-                  <text value="Action..."/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
@@ -779,7 +782,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="Player1"/>
+                      <text value="Player8"/>
                     </properties>
                   </component>
                   <component id="1af9a" class="javax.swing.JLabel" binding="p8chips">
@@ -788,7 +791,7 @@
                     </constraints>
                     <properties>
                       <foreground color="-1"/>
-                      <text value="4,7M €"/>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>
@@ -803,14 +806,14 @@
                   <component id="8016a" class="javax.swing.JLabel" binding="p8c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/3.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="d4d87" class="javax.swing.JLabel" binding="p8c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/47.png"/>
+                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -822,7 +825,7 @@
                   <background color="-16752896"/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
-                  <text value="Action..."/>
+                  <text value=""/>
                 </properties>
               </component>
             </children>
