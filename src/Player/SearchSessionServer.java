@@ -58,11 +58,16 @@ public class SearchSessionServer extends TickerBehaviour {
                 fe.printStackTrace();
             }
 
-            // Updates player state
-            this.player.setPlayerState(Player.State.JOINING_SESSION);
+            if(this.dealerAgents.length > 0) {
+                // Updates player state
+                this.player.setPlayerState(Player.State.JOINING_SESSION);
 
-            // Perform the session request
-            myAgent.addBehaviour(new JoinSessionPerformer(this.player, this.dealerAgents));
+                // Perform the session request
+                myAgent.addBehaviour(new JoinSessionPerformer(this.player, this.dealerAgents));
+
+                // Terminate behaviour
+                this.stop();
+            }
         }
     }
 }

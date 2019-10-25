@@ -8,6 +8,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Dealer extends Agent {
 
@@ -17,9 +18,19 @@ public class Dealer extends Agent {
     private HashMap<String, Integer> tableSettings = new HashMap<>();
 
     /**
+     * Dealer state machine
+     */
+    public enum State {INIT, SESSION_SETUP, STARTING_SESSION, DEALING}
+
+    /**
+     * Initial state
+     */
+    private State dealerState = State.INIT;
+
+    /**
      * Current players
      */
-    private HashMap<String, AID> currPlayers = new HashMap<>();
+    private LinkedList<AID> currPlayers = new LinkedList<>();
 
     /**
      * Agent initialization
@@ -58,6 +69,9 @@ public class Dealer extends Agent {
                 fe.printStackTrace();
             }
 
+            // Update dealer state
+            this.dealerState = State.SESSION_SETUP;
+
             // Periodically checks for players in current session
             addBehaviour(new SessionPlayersServer(this, 1000));
 
@@ -68,12 +82,15 @@ public class Dealer extends Agent {
             addBehaviour(new JoinSessionServer(this));
         }
         else {
-            System.out.println("Usage:: <name>:<package_name>.<class_name>(small_blind, big_blind, lower_buy_in, upper_buy_in");
+            System.out.println("Usage:: <name>:<package_name>.<class_name>(small_blind, big_blind, " +
+                    "lower_buy_in, upper_buy_in");
             doDelete();
         }
     }
 
-    // Agent clean-up operations
+    /**
+     * Agent clean-up operations
+     */
     protected void takeDown() {
         System.out.println(this.getName() + " :: Terminating.");
     }
@@ -84,8 +101,9 @@ public class Dealer extends Agent {
      * @return True if new player is added false otherwise
      */
     boolean updateCurrPlayers(AID player) {
-        if(this.currPlayers.size() < this.tableSettings.get("maxPlayers") && !this.currPlayers.containsKey(player.getName())) {
-            this.currPlayers.put(player.getName(), player);
+        if(this.currPlayers.size() < this.tableSettings.get("maxPlayers") &&
+                !this.containsPlayer(player.getName())) {
+            this.currPlayers.add(player);
             return true;
         }
         return false;
@@ -101,7 +119,35 @@ public class Dealer extends Agent {
     /**
      * Retrieve current players structure
      */
-    HashMap<String, AID> getCurrPlayers() {
+    LinkedList<AID> getCurrPlayers() {
         return currPlayers;
+    }
+
+    /**
+     * Checks whether player already joined session.
+     * @param playerName Player name
+     * @return True if already joined, false otherwise.
+     */
+    private boolean containsPlayer(String playerName) {
+        for (AID currPlayer : this.currPlayers) {
+            if (currPlayer.getName().equals(playerName))
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * Retrieve dealer current state
+     */
+    State getDealerState() {
+        return dealerState;
+    }
+
+    /**
+     * Set dealer's new state
+     * @param dealerState New state
+     */
+    void setDealerState(State dealerState) {
+        this.dealerState = dealerState;
     }
 }

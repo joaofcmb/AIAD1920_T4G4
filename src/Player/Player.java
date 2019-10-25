@@ -18,7 +18,7 @@ public class Player extends Agent {
     /**
      * Player state machine
      */
-    public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, PLAYING};
+    public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, PLAYING}
 
     /**
      * Initial state
@@ -50,7 +50,9 @@ public class Player extends Agent {
         }
     }
 
-    // Agent clean-up operations
+    /**
+     * Agent clean-up operations
+     */
     protected void takeDown() {
         System.out.println(this.getName() + " :: Terminating.");
     }
