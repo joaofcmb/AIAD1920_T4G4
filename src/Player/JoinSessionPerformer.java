@@ -85,9 +85,11 @@ public class JoinSessionPerformer extends Behaviour {
                         // Check if there are some replies to be received
                         if (repliesCnt >= this.dealerAgents.length && this.dealer == null) {
                             this.player.setPlayerState(Player.State.SEARCHING_SESSION);
+                            this.player.addBehaviour(new SearchSessionServer(this.player, 1000));
+
                             System.out.println(this.player.getName() + " :: Could not join "
                                     + reply.getSender().getName() + " session. Error: " + reply.getContent() );
-                            step = 4;
+                            step = 5;
                         }
                     }
                     else {
@@ -118,7 +120,6 @@ public class JoinSessionPerformer extends Behaviour {
                         // Successfully joined a session
                         if (reply.getPerformative() == ACLMessage.INFORM) {
                             this.player.setDealer(reply.getSender());
-                            this.player.setPlayerState(Player.State.PLAYING);
                             System.out.println(this.getAgent().getName() + " :: Successfully joined " +
                                     reply.getSender().getName() + " session.");
                             step++;
@@ -126,10 +127,32 @@ public class JoinSessionPerformer extends Behaviour {
                         else {
                             // Reset player state
                             this.player.setPlayerState(Player.State.SEARCHING_SESSION);
+                            this.player.addBehaviour(new SearchSessionServer(this.player, 1000));
 
                             System.out.println(this.getAgent().getName() + " :: Attempt failed: Could not join" +
                                     reply.getSender().getName() + " session.");
                         }
+                    }
+                    else {
+                        block();
+                    }
+                    break;
+                case 4:
+                    this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),
+                            MessageTemplate.MatchConversationId("session-start"));
+                    ACLMessage msg = myAgent.receive(msgTemplate);
+                    if(msg != null) {
+                        System.out.println(this.player.getName() + " :: " + msg.getSender().getName() +
+                                        " starting session.");
+                        // Create reply
+                        reply = msg.createReply();
+
+                        reply.setPerformative(ACLMessage.CONFIRM);
+                        reply.setContent("Session-start-confirmation");
+                        myAgent.send(reply);
+
+                        this.player.setPlayerState(Player.State.PLAYING);
+                        step++;
                     }
                     else {
                         block();
@@ -141,6 +164,6 @@ public class JoinSessionPerformer extends Behaviour {
 
     @Override
     public boolean done() {
-        return this.step >= 4;
+        return this.step >= 5;
     }
 }
