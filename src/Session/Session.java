@@ -25,4 +25,17 @@ public class Session {
         this.currPlayers = currPlayers;
     }
 
+    /**
+     * Returns deck of cards
+     */
+    public Deck getDeck() {
+        return deck;
+    }
+
+    /**
+     * Returns the current players list
+     */
+    public LinkedList<Player> getCurrPlayers() {
+        return currPlayers;
+    }
 }

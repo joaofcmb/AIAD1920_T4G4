@@ -3,7 +3,7 @@ package Session;
 import java.util.ArrayList;
 import java.util.Collections;
 
-class Deck {
+public class Deck {
 
     /**
      * Decks suits
@@ -20,7 +20,6 @@ class Deck {
      * Deck structure
      */
     private ArrayList<Card> deck = new ArrayList<>();
-
 
     /**
      * Deck default constructor
@@ -39,7 +38,7 @@ class Deck {
      * Retrieves the top card and removes it from deck
      * @return Top card
      */
-    Card getCard() {
+    public Card getCard() {
         return this.deck.remove(0);
     }
 }

@@ -65,10 +65,13 @@ public class StartingSession extends Behaviour {
             }
         }
 
-        this.dealer.setDealerState(Dealer.State.DEALING);
-
-        System.out.println(this.dealer.getName() + " :: Session has started.");
+        // Session start
+        this.dealer.setDealerState(Dealer.State.IN_SESSION);
         this.dealer.createNewSession();
+        System.out.println(this.dealer.getName() + " :: Session has started.");
+
+        // Add game logic behaviour
+        this.dealer.addBehaviour(new GameLogic(this.dealer));
 
         this.terminate();
     }

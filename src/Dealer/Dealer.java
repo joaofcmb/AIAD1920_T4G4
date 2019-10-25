@@ -21,7 +21,7 @@ public class Dealer extends Agent {
     /**
      * Dealer state machine
      */
-    public enum State {INIT, SESSION_SETUP, STARTING_SESSION, DEALING}
+    public enum State {INIT, SESSION_SETUP, STARTING_SESSION, IN_SESSION}
 
     /**
      * Initial state
@@ -33,6 +33,9 @@ public class Dealer extends Agent {
      */
     private LinkedList<Player> currPlayers = new LinkedList<>();
 
+    /**
+     * Current session
+     */
     private Session session = null;
 
     /**
@@ -159,5 +162,12 @@ public class Dealer extends Agent {
      */
     void createNewSession() {
         this.session = new Session(this.currPlayers);
+    }
+
+    /**
+     * Returns current session
+     */
+    public Session getSession() {
+        return session;
     }
 }
