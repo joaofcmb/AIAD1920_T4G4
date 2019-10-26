@@ -1,5 +1,6 @@
 package Dealer;
 
+import Session.Session;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.domain.DFService;
@@ -20,7 +21,7 @@ public class Dealer extends Agent {
     /**
      * Dealer state machine
      */
-    public enum State {INIT, SESSION_SETUP, STARTING_SESSION, DEALING}
+    public enum State {INIT, SESSION_SETUP, STARTING_SESSION, IN_SESSION}
 
     /**
      * Initial state
@@ -30,7 +31,12 @@ public class Dealer extends Agent {
     /**
      * Current players
      */
-    private LinkedList<AID> currPlayers = new LinkedList<>();
+    private LinkedList<Player> currPlayers = new LinkedList<>();
+
+    /**
+     * Current session
+     */
+    private Session session = null;
 
     /**
      * Agent initialization
@@ -100,10 +106,10 @@ public class Dealer extends Agent {
      * @param player New player to be added
      * @return True if new player is added false otherwise
      */
-    boolean updateCurrPlayers(AID player) {
+    boolean updateCurrPlayers(AID player, int buyIn) {
         if(this.currPlayers.size() < this.tableSettings.get("maxPlayers") &&
                 !this.containsPlayer(player.getName())) {
-            this.currPlayers.add(player);
+            this.currPlayers.add(new Player(buyIn, player));
             return true;
         }
         return false;
@@ -119,7 +125,7 @@ public class Dealer extends Agent {
     /**
      * Retrieve current players structure
      */
-    LinkedList<AID> getCurrPlayers() {
+    LinkedList<Player> getCurrPlayers() {
         return currPlayers;
     }
 
@@ -129,8 +135,8 @@ public class Dealer extends Agent {
      * @return True if already joined, false otherwise.
      */
     private boolean containsPlayer(String playerName) {
-        for (AID currPlayer : this.currPlayers) {
-            if (currPlayer.getName().equals(playerName))
+        for (Player currPlayer : this.currPlayers) {
+            if (currPlayer.getPlayer().getName().equals(playerName))
                 return true;
         }
         return false;
@@ -149,5 +155,19 @@ public class Dealer extends Agent {
      */
     void setDealerState(State dealerState) {
         this.dealerState = dealerState;
+    }
+
+    /**
+     * Create new session
+     */
+    void createNewSession() {
+        this.session = new Session(this.currPlayers);
+    }
+
+    /**
+     * Returns current session
+     */
+    public Session getSession() {
+        return session;
     }
 }

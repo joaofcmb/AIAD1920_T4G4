@@ -29,7 +29,7 @@ public class JoinSessionServer extends CyclicBehaviour {
                 ACLMessage reply = msg.createReply();
 
                 // Update current players structure
-                if (this.dealer.updateCurrPlayers(msg.getSender())) {
+                if (this.dealer.updateCurrPlayers(msg.getSender(), Integer.parseInt(msg.getContent()))) {
                     reply.setPerformative(ACLMessage.INFORM);
                     System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
                             " successfully joined current session.");
