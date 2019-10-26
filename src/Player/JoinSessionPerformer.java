@@ -101,7 +101,7 @@ public class JoinSessionPerformer extends Behaviour {
 
                     // Configure message
                     session.addReceiver(this.dealer);
-                    session.setContent("joining-session");
+                    session.setContent(Integer.toString(this.player.getBuyIn()));
                     session.setConversationId("session-join");
                     session.setReplyWith("session" + System.currentTimeMillis());
 
@@ -151,7 +151,8 @@ public class JoinSessionPerformer extends Behaviour {
                         reply.setContent("Session-start-confirmation");
                         myAgent.send(reply);
 
-                        this.player.setPlayerState(Player.State.PLAYING);
+                        this.player.setPlayerState(Player.State.IN_SESSION);
+                        this.player.addBehaviour(new GameLogic(this.player));
                         step++;
                     }
                     else {
