@@ -151,7 +151,8 @@ public class JoinSessionPerformer extends Behaviour {
                         reply.setContent("Session-start-confirmation");
                         myAgent.send(reply);
 
-                        this.player.setPlayerState(Player.State.PLAYING);
+                        this.player.setPlayerState(Player.State.IN_SESSION);
+                        this.player.addBehaviour(new GameLogic(this.player));
                         step++;
                     }
                     else {

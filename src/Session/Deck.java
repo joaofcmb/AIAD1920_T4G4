@@ -41,4 +41,8 @@ public class Deck {
     public Card getCard() {
         return this.deck.remove(0);
     }
+
+    public int getDeck() {
+        return deck.size();
+    }
 }

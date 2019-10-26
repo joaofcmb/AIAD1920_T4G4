@@ -1,6 +1,6 @@
 package Session;
 
-class Card {
+public class Card {
 
     /**
      * Card suit
@@ -17,7 +17,7 @@ class Card {
      * @param suit Card suit
      * @param rank Card rank
      */
-    Card(String suit, String rank) {
+    public Card(String suit, String rank) {
         this.suit = suit;
         this.rank = rank;
     }
@@ -38,6 +38,6 @@ class Card {
 
     @Override
     public String toString() {
-        return this.rank + " of " + this.suit;
+        return this.suit + "-" + this.rank;
     }
 }

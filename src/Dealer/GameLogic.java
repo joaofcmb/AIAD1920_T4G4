@@ -2,6 +2,9 @@ package Dealer;
 
 import Session.Session;
 import jade.core.behaviours.Behaviour;
+import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
+import Session.Card;
 
 public class GameLogic extends Behaviour {
 
@@ -44,13 +47,48 @@ public class GameLogic extends Behaviour {
         if(this.dealer.getDealerState() == Dealer.State.IN_SESSION) {
             switch (this.gameState) {
                 case PRE_FLOP:
-                    // TODO - Deal two cards for each player one at time
+                    // Create new message to inform about session start
+                    ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+
                     for(int i = 0; i < 2; i++) {
                         for (Player player: this.session.getCurrPlayers()) {
-                            System.out.println(player.getPlayer().getName() + " - " + this.session.getDeck().getCard());
+                            // Retrieve top card
+                            Card card = this.dealer.getSession().getDeck().getCard();
+
+                            // Reset receivers
+                            msg.clearAllReceiver();
+
+                            // Add new receiver
+                            msg.addReceiver(player.getPlayer());
+
+                            // Configure message
+                            msg.setContent(card.toString());
+                            msg.setConversationId("pre-flop");
+                            msg.setReplyWith("pre-flop" + System.currentTimeMillis());
+
+                            // Send message
+                            myAgent.send(msg);
                         }
                     }
 
+                    // Prepare the template to get the reply
+                    MessageTemplate msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("pre-flop"),
+                            MessageTemplate.MatchInReplyTo(msg.getReplyWith()));
+
+                    // Receive replies
+                    int repliesCnt = 0;
+
+                    while (repliesCnt < this.session.getCurrPlayers().size()*2) {
+                        msg = myAgent.receive(msgTemplate);
+                        if(msg != null) {
+                            System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
+                                    " has received both cards.");
+                            repliesCnt++;
+                        }
+                        else {
+                            block();
+                        }
+                    }
                     this.terminate();
                     break;
             }

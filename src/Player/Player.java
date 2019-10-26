@@ -18,7 +18,7 @@ public class Player extends Agent {
     /**
      * Player state machine
      */
-    public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, PLAYING}
+    public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, IN_SESSION}
 
     /**
      * Initial state
