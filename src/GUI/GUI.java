@@ -4,7 +4,6 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.File;
-import java.io.FileReader;
 import java.util.HashMap;
 
 public class GUI {
@@ -47,14 +46,14 @@ public class GUI {
     /**
      * Side pots
      */
-    private JLabel sidePot1;
-    private JLabel sidePot2;
-    private JLabel sidePot3;
-    private JLabel sidePot4;
-    private JLabel sidePot5;
-    private JLabel sidePot6;
-    private JLabel sidePot7;
-    private JLabel[] potsList = {pot, sidePot1, sidePot2, sidePot3, sidePot4, sidePot5, sidePot6, sidePot7};
+    private JLabel pot1;
+    private JLabel pot2;
+    private JLabel pot3;
+    private JLabel pot4;
+    private JLabel pot5;
+    private JLabel pot6;
+    private JLabel pot7;
+    private JLabel[] potsList = {pot, pot1, pot2, pot3, pot4, pot5, pot6, pot7};
 
     /**
      * Panel include all the players
@@ -155,10 +154,42 @@ public class GUI {
     private JLabel p8c1;
     private JLabel p8c2;
     private JLabel action8;
+    private JLabel pot8;
 
+    /**
+     * Number of player in the table
+     */
+    private int playerCounter;
+
+    /**
+     * List with all the attributes of each player
+     */
+    private JLabel[][] playersList = {{p1name, p1chips, p1c1, p1c2, action1}, {p2name, p2chips, p2c1, p2c2, action2},
+            {p3name, p3chips, p3c1, p3c2, action3}, {p4name, p4chips, p4c1, p4c2, action4},
+            {p5name, p5chips, p5c1, p5c2, action5}, {p6name, p6chips, p6c1, p6c2, action6},
+            {p7name, p7chips, p7c1, p7c2, action7}, {p8name, p8chips, p8c1, p8c2, action8}};
+
+    /**
+     * Index of the player with small blind
+     */
+    private int smallBlind;
+
+    /**
+     * Index of the player with big blind
+     */
+    private int bigBlind;
+
+    /**
+     * Map associating cards name to image path
+     * Card name: rank-suits
+     */
     private HashMap<String,String> cardMap;
 
-    public GUI() {
+    /**
+     * Create and display a GUI for a poker game
+     * @param frameTitle title of the window
+     */
+    public GUI(String frameTitle) {
         // Initialize all cards as empty
         JLabel[] allCards = {card1, card2, card3, card4, card5, p1c1, p1c2, p2c1, p2c2, p3c1, p3c2, p4c1, p4c2, p5c1,
                 p5c2, p6c1, p6c2, p7c1, p7c2, p8c1, p8c2};
@@ -169,7 +200,7 @@ public class GUI {
         // Create Red border in pots panel
         float[] hsb = Color.RGBtoHSB(104,26,5, null);
         Color dark_red = Color.getHSBColor(hsb[0],hsb[1],hsb[2]);
-        pots.setBorder(new LineBorder(dark_red, 5, true));
+        pots.setBorder(new LineBorder(dark_red, 2, true));
 
         // Initialization of map with cardName -> imagePath
         cardMap = new HashMap<>();
@@ -182,17 +213,114 @@ public class GUI {
 
             cardMap.put(ranks[rankIndex] + "-" + suits[suitsIndex], IMAGE_FOLDER_LOCATION + (i+1) + ".png");
         }
-    }
 
-
-
-    public static void main(String[] args) {
-        JFrame gui = new JFrame("GUI");
-        gui.setContentPane(new GUI().mainPanel);
+        JFrame gui = new JFrame(frameTitle);
+        gui.setContentPane(mainPanel);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gui.setLocation(100,100);
         gui.pack();
         gui.setSize(750,600);
         gui.setVisible(true);
+    }
+
+    /**
+     * Add a player to the table
+     * @param name name of the player
+     * @param buyIn initial buy-in of the player
+     * @return true if the player is added or false if the table is full
+     */
+    public boolean addPlayer(String name, float buyIn) {
+        if (playerCounter == 8) return false;
+
+        playersList[playerCounter][0].setText(name);
+
+        String chips = "";
+
+        if (buyIn > 1000000) chips += buyIn/1000000.0 + "M";
+        else if (buyIn > 1000) chips += buyIn/1000.0 + "K";
+        else chips += buyIn;
+
+        playersList[playerCounter][1].setText(chips + " €");
+        playerCounter++;
+        return true;
+    }
+
+    /**
+     * Add a blind to player
+     * @param playerIndex index of the player in the table
+     * @param blind blind to add
+     */
+    public void addPlayerBlind(int playerIndex, String blind) {
+        playersList[playerIndex][0].setText(playersList[playerIndex][0].getText() + " (" + blind + ")");
+
+        if (blind == "B") {
+            playersList[playerIndex][0].setForeground(Color.red);
+            bigBlind = playerIndex;
+        } else if (blind == "S") {
+            playersList[playerIndex][0].setForeground(Color.blue);
+            smallBlind = playerIndex;
+        }
+    }
+
+    /**
+     * Allows know if is a blind in the table
+     * @param blind blind to know
+     * @return true if the blind is associated with some player, false otherwise
+     */
+    public boolean hasBlind(String blind) {
+        if (blind == "B") {
+            return bigBlind != -1;
+        } else if (blind == "S") {
+            return smallBlind != -1;
+        }
+        return false;
+    }
+
+    /**
+     * Move the blind to the next player in the table
+     */
+    public void rotateBlinds() {
+        int newBigBlind = bigBlind + 1;
+        int newSmallBlind = smallBlind + 1;
+
+        removePlayerBlind("B");
+        removePlayerBlind("S");
+        addPlayerBlind(newBigBlind % playerCounter, "B");
+        addPlayerBlind(newSmallBlind % playerCounter, "S");
+    }
+
+    /**
+     * Remove a blind from player
+     * @param blind blind to remove
+     */
+    public void removePlayerBlind(String blind) {
+        String playerName;
+        if (blind == "B") {
+            playerName = playersList[bigBlind][0].getText();
+            playerName = playerName.substring(0, playerName.length()-4);
+            playersList[bigBlind][0].setText(playerName);
+            playersList[bigBlind][0].setForeground(Color.white);
+            bigBlind = -1;
+        } else if (blind == "S") {
+            playerName = playersList[smallBlind][0].getText();
+            playerName = playerName.substring(0, playerName.length()-4);
+            playersList[smallBlind][0].setText(playerName);
+            playersList[smallBlind][0].setForeground(Color.white);
+            smallBlind = -1;
+        }
+    }
+
+    public static void main(String[] args) {
+        GUI g = new GUI("GUI");
+
+        g.addPlayer("Rio", 1563000);
+        g.addPlayer("Paul", 5000);
+        g.addPlayer("John", 150);
+
+        g.addPlayerBlind(0, "S");
+        g.addPlayerBlind(2, "B");
+
+        g.rotateBlinds();
+//        g.rotateBlinds();
     }
 }
