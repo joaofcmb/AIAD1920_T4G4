@@ -13,7 +13,7 @@ public class Flop extends Behaviour {
 
     boolean status = false;
 
-    enum State {DEALING_TABLE_CARDS, BETTING}
+    enum State {DEALING_TABLE_CARDS, SMALL_BIG_BLIND, BETTING}
 
     State state = State.DEALING_TABLE_CARDS;
 
@@ -43,6 +43,15 @@ public class Flop extends Behaviour {
                 // Send message
                 myAgent.send(msg);
                 System.out.println(this.dealer.getName() + " :: Send table initial configuration: " + msg.getContent());
+
+                this.state = State.SMALL_BIG_BLIND;
+                break;
+            case SMALL_BIG_BLIND:
+                System.out.println(this.dealer.getTableSettings().get("smallBlind"));
+                System.out.println(this.dealer.getSession().getSmallBlind().getPlayer().getName());
+
+                System.out.println(this.dealer.getTableSettings().get("bigBlind"));
+                System.out.println(this.dealer.getSession().getBigBlind().getPlayer().getName());
 
                 this.state = State.BETTING;
                 break;

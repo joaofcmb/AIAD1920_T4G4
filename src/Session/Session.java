@@ -16,6 +16,9 @@ public class Session {
      */
     private LinkedList<Player> currPlayers;
 
+    /**
+     * Table cards
+     */
     private LinkedList<Card> table = new LinkedList<>();
 
     /**
@@ -42,16 +45,22 @@ public class Session {
     }
 
     /**
-     *
+     * Returns session table
      */
     public LinkedList<Card> getTable() {
         return table;
     }
 
+    /**
+     * Returns current small blind player
+     */
     public Player getSmallBlind() {
         return this.currPlayers.get(0);
     }
 
+    /**
+     * Returns current big blind player
+     */
     public Player getBigBlind() {
         return this.currPlayers.get(1);
     }
