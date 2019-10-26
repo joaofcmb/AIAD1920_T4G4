@@ -38,4 +38,13 @@ public class Session {
     public LinkedList<Player> getCurrPlayers() {
         return currPlayers;
     }
+
+    public Player getSmallBlind() {
+        return this.currPlayers.get(0);
+    }
+
+    public Player getBigBlind() {
+        return this.currPlayers.get(1);
+    }
 }
+

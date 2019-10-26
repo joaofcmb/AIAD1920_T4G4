@@ -68,7 +68,7 @@ public class Player {
     /**
      * Returns player AID
      */
-    AID getPlayer() {
+    public AID getPlayer() {
         return player;
     }
 }

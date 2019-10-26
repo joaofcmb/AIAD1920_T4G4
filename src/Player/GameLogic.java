@@ -28,7 +28,7 @@ public class GameLogic extends Behaviour {
     /**
      * Game logic state machine
      */
-    public enum State {PRE_FLOP}
+    public enum State {PRE_FLOP, FLOP}
 
     /**
      * Current game state
@@ -60,14 +60,12 @@ public class GameLogic extends Behaviour {
             switch (gameState) {
                 case PRE_FLOP:
                     while (this.cards.size() < 2) {
-                        this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),
-                                MessageTemplate.MatchConversationId("pre-flop"));
+                        this.msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
                         ACLMessage msg = myAgent.receive(this.msgTemplate);
                         if (msg != null) {
                             String[] content = msg.getContent().split("-");
 
                             this.cards.add(new Card(content[1], content[0]));
-                            System.out.println(this.player.getName() + " :: Received " + msg.getContent());
 
                             // Create reply
                             ACLMessage reply = msg.createReply();
@@ -75,12 +73,15 @@ public class GameLogic extends Behaviour {
                             reply.setPerformative(ACLMessage.CONFIRM);
                             reply.setContent("Card-reception-confirmation");
                             myAgent.send(reply);
+                            System.out.println(this.player.getName() + " :: Received " + msg.getContent() + ". Send card reception confirmation.");
                         } else {
                             block();
                         }
                     }
 
-                    this.terminate();
+                    this.gameState = State.FLOP;
+                    break;
+                case FLOP:
                     break;
             }
         }
