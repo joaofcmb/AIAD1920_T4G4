@@ -5,6 +5,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
+import java.util.HashMap;
 
 public class GUI {
 
@@ -155,29 +156,37 @@ public class GUI {
     private JLabel p8c2;
     private JLabel action8;
 
-    public GUI() {
+    private HashMap<String,String> cardMap;
 
+    public GUI() {
         // Initialize all cards as empty
-        JLabel[] allCards = {card1, card2, card3, card4, card5, p1c1, p1c2, p2c1, p2c2, p3c1, p3c2, p4c1, p4c2, p5c1, p5c2, p6c1, p6c2, p7c1, p7c2, p8c1, p8c2};
+        JLabel[] allCards = {card1, card2, card3, card4, card5, p1c1, p1c2, p2c1, p2c2, p3c1, p3c2, p4c1, p4c2, p5c1,
+                p5c2, p6c1, p6c2, p7c1, p7c2, p8c1, p8c2};
         for (JLabel c: allCards) {
             c.setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
         }
 
+        // Create Red border in pots panel
         float[] hsb = Color.RGBtoHSB(104,26,5, null);
         Color dark_red = Color.getHSBColor(hsb[0],hsb[1],hsb[2]);
         pots.setBorder(new LineBorder(dark_red, 5, true));
+
+        // Initialization of map with cardName -> imagePath
+        cardMap = new HashMap<>();
+        String[] suits = {"Clubs", "Spades", "Hearts", "Diamonds"};
+        String[] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+
+        for(int i = 0; i < 52; i++) {
+            int rankIndex = i % 13;
+            int suitsIndex = i / 13;
+
+            cardMap.put(ranks[rankIndex] + "-" + suits[suitsIndex], IMAGE_FOLDER_LOCATION + (i+1) + ".png");
+        }
     }
 
+
+
     public static void main(String[] args) {
-        System.out.println(IMAGE_FOLDER_LOCATION);
-
-        File n = new File(IMAGE_FOLDER_LOCATION);
-
-        for (File f: n.listFiles()
-             ) {
-            System.out.println(f.getName());
-        }
-
         JFrame gui = new JFrame("GUI");
         gui.setContentPane(new GUI().mainPanel);
         gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
