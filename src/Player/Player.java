@@ -34,6 +34,11 @@ public class Player extends Agent {
     private AID dealer = null;
 
     /**
+     * Table cards
+     */
+    private ArrayList<Card> table = new ArrayList<>();
+
+    /**
      * Player cards
      */
     private ArrayList<Card> cards = new ArrayList<>();
@@ -105,5 +110,12 @@ public class Player extends Agent {
      */
     public ArrayList<Card> getCards() {
         return cards;
+    }
+
+    /**
+     * Returns table cards
+     */
+    public ArrayList<Card> getTable() {
+        return table;
     }
 }

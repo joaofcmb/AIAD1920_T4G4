@@ -16,6 +16,8 @@ public class Session {
      */
     private LinkedList<Player> currPlayers;
 
+    private LinkedList<Card> table = new LinkedList<>();
+
     /**
      * Session constructor
      * @param currPlayers Players in session
@@ -37,6 +39,13 @@ public class Session {
      */
     public LinkedList<Player> getCurrPlayers() {
         return currPlayers;
+    }
+
+    /**
+     *
+     */
+    public LinkedList<Card> getTable() {
+        return table;
     }
 
     public Player getSmallBlind() {
