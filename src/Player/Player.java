@@ -1,7 +1,10 @@
 package Player;
 
+import Session.Card;
 import jade.core.AID;
 import jade.core.Agent;
+
+import java.util.ArrayList;
 
 public class Player extends Agent {
 
@@ -29,6 +32,11 @@ public class Player extends Agent {
      * Dealer of the current session
      */
     private AID dealer = null;
+
+    /**
+     * Player cards
+     */
+    private ArrayList<Card> cards = new ArrayList<>();
 
     /**
      * Agent initializations
@@ -90,5 +98,12 @@ public class Player extends Agent {
      */
     void setDealer(AID dealer) {
         this.dealer = dealer;
+    }
+
+    /**
+     * Returns player cards
+     */
+    public ArrayList<Card> getCards() {
+        return cards;
     }
 }

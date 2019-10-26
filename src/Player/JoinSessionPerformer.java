@@ -1,5 +1,6 @@
 package Player;
 
+import Player.GameLogic.Logic;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -152,7 +153,7 @@ public class JoinSessionPerformer extends Behaviour {
                         myAgent.send(reply);
 
                         this.player.setPlayerState(Player.State.IN_SESSION);
-                        this.player.addBehaviour(new GameLogic(this.player));
+                        this.player.addBehaviour(new Logic(this.player));
                         step++;
                     }
                     else {
