@@ -31,7 +31,7 @@ public class PreFlop extends Behaviour {
     /**
      * Pre-flop state machine
      */
-    public enum State {CARD_DELIVERY, CARD_RECEPTION_CONFIRMATION, SMALL_BIG_BLIND, BETTING}
+    public enum State {CARD_DELIVERY, CARD_RECEPTION_CONFIRMATION, SMALL_BIG_BLIND}
 
     /**
      * Current state
@@ -116,9 +116,7 @@ public class PreFlop extends Behaviour {
                 myAgent.send(msg);
                 System.out.println(this.dealer.getName() + " :: Sent information about blinds: " + msg.getContent());
 
-                this.state = State.BETTING;
-                break;
-            case BETTING:
+                this.terminate();
                 break;
         }
     }

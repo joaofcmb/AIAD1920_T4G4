@@ -16,9 +16,17 @@ public class PreFlop extends Behaviour {
     /**
      * Pre-flop state machine
      */
-    public enum State {CARD_RECEPTION, SMALL_BIG_BLIND, BETTING}
+    public enum State {CARD_RECEPTION, SMALL_BIG_BLIND}
 
+    /**
+     * Current player state
+     */
     private State state = State.CARD_RECEPTION;
+
+    /**
+     * Behaviour status. True if ended, false otherwise
+     */
+    private boolean status = false;
 
     /**
      * Pre-flop constructor
@@ -73,22 +81,30 @@ public class PreFlop extends Behaviour {
                         this.player.updateCurrBet(Integer.parseInt(smallBlind[1]));
                     else if(bigBlind[0].equals(this.player.getName()))
                         this.player.updateCurrBet(Integer.parseInt(bigBlind[1]));
+                    else {
+                        this.player.addBet(smallBlind[0], smallBlind[1]);
+                        this.player.addBet(bigBlind[0], bigBlind[1]);
+                    }
 
                     System.out.println(this.player.getName() + " :: Current bet " + this.player.getCurrBet());
-                    this.state = State.BETTING;
+                    this.terminate();
                 }
                 else {
                     block();
                 }
-
-                break;
-            case BETTING:
                 break;
         }
     }
 
+    /**
+     * Terminates behaviour
+     */
+    private void terminate() {
+        this.status = true;
+    }
+
     @Override
     public boolean done() {
-        return false;
+        return status;
     }
 }

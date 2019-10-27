@@ -26,6 +26,7 @@ public class Logic extends SequentialBehaviour {
 
     private void addBehaviours() {
         addSubBehaviour(new PreFlop(this.player));
+        addSubBehaviour(new Bet(this.player));
         addSubBehaviour(new Flop(this.player));
     }
 
