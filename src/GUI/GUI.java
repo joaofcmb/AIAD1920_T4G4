@@ -243,6 +243,10 @@ public class GUI {
         return true;
     }
 
+    /**
+     * Remove a player from the table
+     * @param playerIndex index of the player to remove
+     */
     public void removePlayer(int playerIndex) {
         playerCounter--;
         playersList[playerIndex][0].setText("Player" + (playerIndex + 1));
@@ -334,19 +338,9 @@ public class GUI {
     public void addChipsToPot(int potIndex, int chips) {
         String[] potText = potsList[potIndex].getText().split(" : ");
         String chipsText = potText[1].substring(0, potText[1].length()-2);
-        float actualChips;
 
-        if(chipsText.contains("M")){
-            chipsText = chipsText.substring(0, chipsText.length()-1);
-            actualChips = Float.parseFloat(chipsText) * 1000000;
-        } else if (chipsText.contains("K")) {
-            chipsText = chipsText.substring(0, chipsText.length()-1);
-            actualChips = Float.parseFloat(chipsText) * 1000;
-        } else {
-            actualChips = Float.parseFloat(chipsText);
-        }
+        float actualChips = expandNumber(chipsText) + chips;
 
-        actualChips += chips;
         potsList[potIndex].setText(potText[0] + " : " + reduceNumber(actualChips) + " €");
     }
 
@@ -354,10 +348,10 @@ public class GUI {
      * Remove the last pot of the list
      */
     public void removePot() {
-        if (potCounter > 0)
-            potsList[potCounter-1].setText("");
-
-        potCounter--;
+        if (potCounter > 0) {
+            potCounter--;
+            potsList[potCounter].setText("");
+        }
     }
 
     /**
@@ -425,13 +419,47 @@ public class GUI {
         }
     }
 
-    // TODO: Update player's actions
-    // TODO: Update dealer actions
+    /**
+     * Decrease or increment the chips of a player
+     * @param playerIndex index of the player
+     * @param chips quantity of chips to add or remove
+     * @param operation if true the chips are added to the player, otherwise the chips are remove from the player
+     */
+    public void managePlayerChips(int playerIndex, int chips, boolean operation) {
+        String actualChips = playersList[playerIndex][1].getText();
+        actualChips = actualChips.substring(0, actualChips.length()-2);
+
+        float totalChips = expandNumber(actualChips);
+
+        if (operation)
+            totalChips += chips;
+        else
+            totalChips -= chips;
+
+        playersList[playerIndex][1].setText(reduceNumber(totalChips) + " €");
+    }
+
+    /**
+     * Display of the action of a player
+     * @param playerIndex index of the player
+     * @param action action to display
+     */
+    public void updatePlayerAction(int playerIndex, String action) {
+        playersList[playerIndex][4].setText(action);
+    }
+
+    /**
+     * Display of the action of the dealer
+     * @param action action to display
+     */
+    public void updateDealerAction(String action) {
+        dealerAction.setText(action);
+    }
 
     /**
      * Reduce a number to the format "x.x(M/K)". Ex: 5.0M or 8.5K
      * @param number number to format
-     * @return return a string with th number representation
+     * @return return a string with the number representation
      */
     private String reduceNumber(float number) {
         String text = "";
@@ -441,6 +469,27 @@ public class GUI {
         else text += number;
 
         return text;
+    }
+
+    /**
+     * Decode a string with a number in format "x.x(M/K)" in a float number
+     * @param text text to decode
+     * @return float number with the value of text
+     */
+    private float expandNumber(String text) {
+        float number;
+
+        if(text.contains("M")){
+            text = text.substring(0, text.length()-1);
+            number = Float.parseFloat(text) * 1000000;
+        } else if (text.contains("K")) {
+            text = text.substring(0, text.length()-1);
+            number = Float.parseFloat(text) * 1000;
+        } else {
+            number = Float.parseFloat(text);
+        }
+
+        return number;
     }
 
     public static void main(String[] args) throws InterruptedException {
@@ -472,20 +521,32 @@ public class GUI {
         g.addChipsToPot(1, 190000);
 
         sleep(1000);
+        g.updateDealerAction("Dealing cards");
         g.addCardsToTable(new String[]{"Ace-Hearts", "8-Hearts", "Ace-Clubs"});
         sleep(1000);
         g.addCardsToTable(new String[]{"Ace-Spades"});
         sleep(1000);
         g.addCardsToTable(new String[]{"Ace-Diamonds"});
         sleep(1000);
-
         g.addCardsToPlayers(new String[]{"2-Hearts", "4-Hearts", "6-Clubs", "King-Hearts", "9-Hearts", "10-Clubs",
                 "8-Spades", "4-Spades", "3-Clubs", "7-Diamonds" });
+
+        sleep(1000);
+        g.updateDealerAction("Receiving bets...");
+        g.updatePlayerAction(0,"raise");
+        g.updatePlayerAction(2,"fold");
+        g.managePlayerChips(1, 200, false);
+        g.updatePlayerAction(1,"call - 200");
+        g.managePlayerChips(3, 300, false);
+        g.updatePlayerAction(3,"call - 300");
+        g.updatePlayerAction(4,"fold");
+
         sleep(1000);
         g.removeCardFromPlayer(2);
         sleep(1000);
         g.removeAllCardsFromPlayers();
 
+        g.updateDealerAction("Playing !!!");
         g.removePot();
         sleep(1000);
         g.removePlayer(4);
