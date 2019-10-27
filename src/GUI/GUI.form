@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Gui.Gui">
-  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridBagLayout">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="GUI.GUI">
+  <grid id="27dc6" binding="mainPanel" layout-manager="GridBagLayout">
     <constraints>
       <xy x="16" y="11" width="757" height="545"/>
     </constraints>
@@ -9,7 +9,7 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="8b1d4" binding="game" layout-manager="GridBagLayout">
+      <grid id="8b1d4" layout-manager="GridBagLayout">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
           <gridbag weightx="2.0" weighty="1.0" ipady="1"/>
@@ -19,54 +19,6 @@
         </properties>
         <border type="none"/>
         <children>
-          <grid id="b6fc8" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-            <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-              <gridbag weightx="1.0" weighty="1.0"/>
-            </constraints>
-            <properties>
-              <background color="-16752896"/>
-            </properties>
-            <border type="none"/>
-            <children>
-              <component id="29a7" class="javax.swing.JLabel" binding="card1">
-                <constraints/>
-                <properties>
-                  <enabled value="true"/>
-                  <icon value="images/emptyCard.png"/>
-                  <text value=""/>
-                </properties>
-              </component>
-              <component id="67bb7" class="javax.swing.JLabel" binding="card2">
-                <constraints/>
-                <properties>
-                  <icon value="images/emptyCard.png"/>
-                  <text value=""/>
-                </properties>
-              </component>
-              <component id="1abc7" class="javax.swing.JLabel" binding="card3">
-                <constraints/>
-                <properties>
-                  <icon value="images/emptyCard.png"/>
-                  <text value=""/>
-                </properties>
-              </component>
-              <component id="3b85e" class="javax.swing.JLabel" binding="card4">
-                <constraints/>
-                <properties>
-                  <icon value="images/emptyCard.png"/>
-                  <text value=""/>
-                </properties>
-              </component>
-              <component id="ac790" class="javax.swing.JLabel" binding="card5">
-                <constraints/>
-                <properties>
-                  <icon value="images/emptyCard.png"/>
-                  <text value=""/>
-                </properties>
-              </component>
-            </children>
-          </grid>
           <component id="e248d" class="javax.swing.JLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -81,38 +33,42 @@
           </component>
           <grid id="89d7d" binding="pots" layout-manager="GridBagLayout">
             <constraints>
-              <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
               <gridbag weightx="1.5" weighty="1.0"/>
             </constraints>
             <properties>
               <background color="-16752896"/>
             </properties>
-            <border type="line">
+            <border type="none">
               <font/>
               <color color="-10083067"/>
             </border>
             <children>
-              <component id="e7dbf" class="javax.swing.JLabel" binding="pot">
+              <component id="a994a" class="javax.swing.JLabel" binding="pot1">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="8.0"/>
+                  <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
-                  <font size="16"/>
+                  <enabled value="true"/>
+                  <font/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
-                  <text value="Pot: €"/>
+                  <text value=""/>
                 </properties>
+                <clientProperties>
+                  <html.disable class="java.lang.Boolean" value="false"/>
+                </clientProperties>
               </component>
-              <component id="a994a" class="javax.swing.JLabel" binding="sidePot1">
+              <component id="a36d3" class="javax.swing.JLabel" binding="pot2">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <enabled value="true"/>
-                  <font size="14"/>
+                  <font/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
@@ -122,14 +78,14 @@
                   <html.disable class="java.lang.Boolean" value="false"/>
                 </clientProperties>
               </component>
-              <component id="a36d3" class="javax.swing.JLabel" binding="sidePot2">
+              <component id="7ffdd" class="javax.swing.JLabel" binding="pot3">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <enabled value="true"/>
-                  <font size="14"/>
+                  <font/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
@@ -139,14 +95,14 @@
                   <html.disable class="java.lang.Boolean" value="false"/>
                 </clientProperties>
               </component>
-              <component id="7ffdd" class="javax.swing.JLabel" binding="sidePot3">
+              <component id="c0a8c" class="javax.swing.JLabel" binding="pot4">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <enabled value="true"/>
-                  <font size="14"/>
+                  <font/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
@@ -156,14 +112,14 @@
                   <html.disable class="java.lang.Boolean" value="false"/>
                 </clientProperties>
               </component>
-              <component id="c0a8c" class="javax.swing.JLabel" binding="sidePot4">
+              <component id="a7e1e" class="javax.swing.JLabel" binding="pot5">
                 <constraints>
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <enabled value="true"/>
-                  <font size="14"/>
+                  <font/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
@@ -173,14 +129,14 @@
                   <html.disable class="java.lang.Boolean" value="false"/>
                 </clientProperties>
               </component>
-              <component id="a7e1e" class="javax.swing.JLabel" binding="sidePot5">
+              <component id="d09ca" class="javax.swing.JLabel" binding="pot6">
                 <constraints>
                   <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <enabled value="true"/>
-                  <font size="14"/>
+                  <font/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
@@ -190,14 +146,14 @@
                   <html.disable class="java.lang.Boolean" value="false"/>
                 </clientProperties>
               </component>
-              <component id="d09ca" class="javax.swing.JLabel" binding="sidePot6">
+              <component id="8d53" class="javax.swing.JLabel" binding="pot7">
                 <constraints>
                   <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <enabled value="true"/>
-                  <font size="14"/>
+                  <font/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
@@ -207,14 +163,14 @@
                   <html.disable class="java.lang.Boolean" value="false"/>
                 </clientProperties>
               </component>
-              <component id="8d53" class="javax.swing.JLabel" binding="sidePot7">
+              <component id="34beb" class="javax.swing.JLabel" binding="pot8">
                 <constraints>
                   <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <enabled value="true"/>
-                  <font size="14"/>
+                  <font/>
                   <foreground color="-1"/>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
@@ -226,12 +182,79 @@
               </component>
             </children>
           </grid>
+          <component id="e7dbf" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font size="16"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <text value="Pot"/>
+            </properties>
+          </component>
+          <grid id="b6fc8" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <background color="-16752896"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="29a7" class="javax.swing.JLabel" binding="card1">
+                <constraints/>
+                <properties>
+                  <enabled value="true"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="67bb7" class="javax.swing.JLabel" binding="card2">
+                <constraints/>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="1abc7" class="javax.swing.JLabel" binding="card3">
+                <constraints/>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="3b85e" class="javax.swing.JLabel" binding="card4">
+                <constraints/>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="ac790" class="javax.swing.JLabel" binding="card5">
+                <constraints/>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <grid id="e7664" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="0" column="2" row-span="2" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="0.3" weighty="0.3"/>
+            </constraints>
+            <properties>
+              <background color="-16752896"/>
+            </properties>
+            <border type="none"/>
+            <children/>
+          </grid>
         </children>
       </grid>
-      <grid id="24ae7" binding="players" layout-manager="GridBagLayout">
+      <grid id="24ae7" layout-manager="GridBagLayout">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="4.0" ipady="2"/>
+          <gridbag weightx="1.0" weighty="4.0" ipady="2"/>
         </constraints>
         <properties>
           <background color="-16752896"/>
@@ -287,14 +310,12 @@
                   <component id="f5633" class="javax.swing.JLabel" binding="p1c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="4c2d" class="javax.swing.JLabel" binding="p1c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -369,14 +390,12 @@
                   <component id="73265" class="javax.swing.JLabel" binding="p5c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="da495" class="javax.swing.JLabel" binding="p5c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -390,7 +409,8 @@
               <gridbag weightx="1.0" weighty="0.0"/>
             </constraints>
             <properties>
-              <foreground color="-2431279"/>
+              <font size="16"/>
+              <foreground color="-1"/>
               <horizontalAlignment value="0"/>
               <horizontalTextPosition value="0"/>
               <text value="Players"/>
@@ -444,14 +464,12 @@
                   <component id="9b4a6" class="javax.swing.JLabel" binding="p2c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="d64ee" class="javax.swing.JLabel" binding="p2c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -516,14 +534,12 @@
                   <component id="f2341" class="javax.swing.JLabel" binding="p3c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="738ae" class="javax.swing.JLabel" binding="p3c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -589,14 +605,12 @@
                   <component id="78293" class="javax.swing.JLabel" binding="p4c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="b41c0" class="javax.swing.JLabel" binding="p4c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -661,14 +675,12 @@
                   <component id="a4761" class="javax.swing.JLabel" binding="p6c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="6fa4c" class="javax.swing.JLabel" binding="p6c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -734,14 +746,12 @@
                   <component id="2345e" class="javax.swing.JLabel" binding="p7c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="39df7" class="javax.swing.JLabel" binding="p7c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -806,14 +816,12 @@
                   <component id="8016a" class="javax.swing.JLabel" binding="p8c1">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
                   <component id="d4d87" class="javax.swing.JLabel" binding="p8c2">
                     <constraints/>
                     <properties>
-                      <icon value="images/emptyCard.png"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -830,6 +838,41 @@
               </component>
             </children>
           </grid>
+        </children>
+      </grid>
+      <grid id="5d628" layout-manager="GridBagLayout">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="1.0" weighty="1.0"/>
+        </constraints>
+        <properties>
+          <background color="-16752896"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="e9d03" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="1.0"/>
+            </constraints>
+            <properties>
+              <font size="16"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <text value="Dealer"/>
+            </properties>
+          </component>
+          <component id="a9785" class="javax.swing.JLabel" binding="dealerAction">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+              <gridbag weightx="1.0" weighty="2.0"/>
+            </constraints>
+            <properties>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <text value=""/>
+            </properties>
+          </component>
         </children>
       </grid>
     </children>
