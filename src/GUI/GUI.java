@@ -355,7 +355,9 @@ public class GUI {
      */
     public void removePot() {
         if (potCounter > 0)
-            potsList[potCounter--].setText("");
+            potsList[potCounter-1].setText("");
+
+        potCounter--;
     }
 
     /**
@@ -466,6 +468,10 @@ public class GUI {
         g.addChipsToPot(0, 4000);
 
         sleep(1000);
+        g.addNewPot(900000);
+        g.addChipsToPot(1, 190000);
+
+        sleep(1000);
         g.addCardsToTable(new String[]{"Ace-Hearts", "8-Hearts", "Ace-Clubs"});
         sleep(1000);
         g.addCardsToTable(new String[]{"Ace-Spades"});
@@ -480,9 +486,11 @@ public class GUI {
         sleep(1000);
         g.removeAllCardsFromPlayers();
 
+        g.removePot();
         sleep(1000);
         g.removePlayer(4);
 
+        g.removePot();
         sleep(1000);
         g.removeCardsFromTable();
     }
