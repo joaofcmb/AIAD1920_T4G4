@@ -6,12 +6,19 @@ import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 
+import static java.lang.Thread.sleep;
+
 public class GUI {
 
     /**
      * Images folder path
      */
     public final static String IMAGE_FOLDER_LOCATION = "resources" + File.separator + "images" + File.separator;
+
+    /**
+     * Window of the game
+     */
+    private JFrame mainFrame;
 
     /**
      * Main panel, include all the window
@@ -36,12 +43,7 @@ public class GUI {
     /**
      * Panel include all the pots and side pots
      */
-    private JPanel pots;
-
-    /**
-     * Pot
-     */
-    private JLabel pot;
+    public JPanel pots;
 
     /**
      * Side pots
@@ -53,7 +55,8 @@ public class GUI {
     private JLabel pot5;
     private JLabel pot6;
     private JLabel pot7;
-    private JLabel[] potsList = {pot, pot1, pot2, pot3, pot4, pot5, pot6, pot7};
+    private JLabel pot8;
+    private JLabel[] potsList = {pot1, pot2, pot3, pot4, pot5, pot6, pot7, pot8};
 
     /**
      * Panel include all the players
@@ -154,7 +157,11 @@ public class GUI {
     private JLabel p8c1;
     private JLabel p8c2;
     private JLabel action8;
-    private JLabel pot8;
+
+    /**
+     * Action of the dealer
+     */
+    private JLabel dealerAction;
 
     /**
      * Number of player in the table
@@ -185,6 +192,8 @@ public class GUI {
      */
     private HashMap<String,String> cardMap;
 
+    private int cardCounter = 0;
+
     /**
      * Create and display a GUI for a poker game
      * @param frameTitle title of the window
@@ -214,13 +223,14 @@ public class GUI {
             cardMap.put(ranks[rankIndex] + "-" + suits[suitsIndex], IMAGE_FOLDER_LOCATION + (i+1) + ".png");
         }
 
-        JFrame gui = new JFrame(frameTitle);
-        gui.setContentPane(mainPanel);
-        gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gui.setLocation(100,100);
-        gui.pack();
-        gui.setSize(750,600);
-        gui.setVisible(true);
+        // Create GUI frame
+        mainFrame = new JFrame(frameTitle);
+        mainFrame.setContentPane(mainPanel);
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setLocation(100,100);
+        mainFrame.pack();
+        mainFrame.setSize(750,600);
+        mainFrame.setVisible(true);
     }
 
     /**
@@ -243,6 +253,16 @@ public class GUI {
         playersList[playerCounter][1].setText(chips + " €");
         playerCounter++;
         return true;
+    }
+
+    public void removePlayer(int playerIndex) {
+        playerCounter--;
+        playersList[playerIndex][0].setText("Player" + playerIndex);
+        playersList[playerIndex][0].setForeground(Color.white);
+        playersList[playerIndex][1].setText("");
+        playersList[playerIndex][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        playersList[playerIndex][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        playersList[playerIndex][4].setText("");
     }
 
     /**
@@ -279,7 +299,7 @@ public class GUI {
     /**
      * Move the blind to the next player in the table
      */
-    public void rotateBlinds() {
+    public void rotatePlayerBlinds() {
         int newBigBlind = bigBlind + 1;
         int newSmallBlind = smallBlind + 1;
 
@@ -310,17 +330,35 @@ public class GUI {
         }
     }
 
-    public static void main(String[] args) {
+    public void addCardsToTable(String[] cardsName) {
+        for (String card :
+                cardsName) {
+            cards[cardCounter].setIcon(new ImageIcon(cardMap.get(card)));
+            cardCounter++;
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
         GUI g = new GUI("GUI");
 
         g.addPlayer("Rio", 1563000);
         g.addPlayer("Paul", 5000);
         g.addPlayer("John", 150);
+        g.addPlayer("Mary", 341000);
+        g.addPlayer("Ellen", 17590);
 
         g.addPlayerBlind(0, "S");
         g.addPlayerBlind(2, "B");
 
-        g.rotateBlinds();
-//        g.rotateBlinds();
+        sleep(1000);
+        g.rotatePlayerBlinds();
+        sleep(1000);
+        g.rotatePlayerBlinds();
+        sleep(1000);
+        g.addCardsToTable(new String[]{"Ace-Hearts", "8-Hearts", "Ace-Clubs"});
+        sleep(1000);
+        g.addCardsToTable(new String[]{"Ace-Spades"});
+        sleep(1000);
+        g.addCardsToTable(new String[]{"Ace-Diamonds"});
     }
 }
