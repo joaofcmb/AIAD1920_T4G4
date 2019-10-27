@@ -4,6 +4,7 @@ import Dealer.Dealer;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import Dealer.Player;
 
 public class PreFlop extends Behaviour {
 
@@ -30,12 +31,12 @@ public class PreFlop extends Behaviour {
     /**
      * Pre-flop state machine
      */
-    public enum State {SENDING_MESSAGE, RECEIVING_MESSAGE}
+    public enum State {CARD_DELIVERY, CARD_RECEPTION_CONFIRMATION, SMALL_BIG_BLIND, BETTING}
 
     /**
      * Current state
      */
-    public State state = State.SENDING_MESSAGE;
+    public State state = State.CARD_DELIVERY;
 
     /**
      * Pre-flop constructor
@@ -48,7 +49,7 @@ public class PreFlop extends Behaviour {
     @Override
     public void action() {
         switch (state){
-            case SENDING_MESSAGE:
+            case CARD_DELIVERY:
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
                 // Add all players as receivers
@@ -68,22 +69,56 @@ public class PreFlop extends Behaviour {
                         MessageTemplate.MatchInReplyTo(msg.getReplyWith()));
 
                 this.targetPlayer++;
-                this.state = State.RECEIVING_MESSAGE;
+                this.state = State.CARD_RECEPTION_CONFIRMATION;
                 break;
-            case RECEIVING_MESSAGE:
+            case CARD_RECEPTION_CONFIRMATION:
                 // Receive replies
                 msg = myAgent.receive(msgTemplate);
 
                 if(msg != null) {
                     System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
                             " has sent session start confirmation.");
-                    this.state = State.SENDING_MESSAGE;
+                    this.state = State.CARD_DELIVERY;
                     if(targetPlayer >= this.dealer.getSession().getCurrPlayers().size()*2)
-                        this.terminate();
+                        this.state = State.SMALL_BIG_BLIND;
                 }
                 else {
                     block();
                 }
+                break;
+            case SMALL_BIG_BLIND:
+                // Small blind bet
+                this.dealer.getSession().getSmallBlind().updatePot(this.dealer.getTableSettings().get("smallBlind"));
+                this.dealer.getSession().addBet(this.dealer.getSession().getSmallBlind().getPlayer().getName(),
+                        "Bet-" + this.dealer.getTableSettings().get("smallBlind"));
+
+                // Big blind bet
+                this.dealer.getSession().getBigBlind().updatePot(this.dealer.getTableSettings().get("bigBlind"));
+                this.dealer.getSession().addBet(this.dealer.getSession().getBigBlind().getPlayer().getName(),
+                        "Bet-" + this.dealer.getTableSettings().get("bigBlind"));
+
+                // Send small and big blind information
+                msg = new ACLMessage(ACLMessage.INFORM);
+
+                // Add all players as receivers
+                for(Player player : this.dealer.getSession().getCurrPlayers())
+                    msg.addReceiver(player.getPlayer());
+
+                // Configure message
+                msg.setContent(this.dealer.getSession().getSmallBlind().getPlayer().getName() + "-" +
+                        this.dealer.getTableSettings().get("smallBlind") + ":" +
+                        this.dealer.getSession().getBigBlind().getPlayer().getName() + "-" +
+                        this.dealer.getTableSettings().get("bigBlind"));
+                msg.setConversationId("pre-flop-blinds");
+                msg.setReplyWith("pre-flop-blinds" + System.currentTimeMillis());
+
+                // Send message
+                myAgent.send(msg);
+                System.out.println(this.dealer.getName() + " :: Sent information about blinds: " + msg.getContent());
+
+                this.state = State.BETTING;
+                break;
+            case BETTING:
                 break;
         }
     }

@@ -49,6 +49,7 @@ public class Player {
      */
     public void updatePot(int value) {
         this.pot += value;
+        this.updateChips(-value);
     }
 
     /**

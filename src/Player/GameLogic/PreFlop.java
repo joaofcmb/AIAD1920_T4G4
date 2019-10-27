@@ -14,6 +14,13 @@ public class PreFlop extends Behaviour {
     private Player player;
 
     /**
+     * Pre-flop state machine
+     */
+    public enum State {CARD_RECEPTION, SMALL_BIG_BLIND, BETTING}
+
+    private State state = State.CARD_RECEPTION;
+
+    /**
      * Pre-flop constructor
      * @param player agent
      */
@@ -23,32 +30,65 @@ public class PreFlop extends Behaviour {
 
     @Override
     public void action() {
-        MessageTemplate msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
-        ACLMessage msg = myAgent.receive(msgTemplate);
+        switch (this.state) {
+            case CARD_RECEPTION:
+                MessageTemplate msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+                ACLMessage msg = myAgent.receive(msgTemplate);
 
-        if (msg != null) {
-            String[] content = msg.getContent().split("-");
+                if (msg != null) {
+                    String[] content = msg.getContent().split("-");
 
-            this.player.getCards().add(new Card(content[1], content[0]));
+                    this.player.getCards().add(new Card(content[1], content[0]));
 
-            // Create reply
-            ACLMessage reply = msg.createReply();
+                    // Create reply
+                    ACLMessage reply = msg.createReply();
 
-            reply.setPerformative(ACLMessage.CONFIRM);
-            reply.setContent("Card-reception-confirmation");
+                    reply.setPerformative(ACLMessage.CONFIRM);
+                    reply.setContent("Card-reception-confirmation");
 
-            myAgent.send(reply);
+                    myAgent.send(reply);
 
-            System.out.println(this.player.getName() + " :: Received " + msg.getContent() +
-                    ". Send card reception confirmation.");
-        }
-        else {
-            block();
+                    System.out.println(this.player.getName() + " :: Received " + msg.getContent() +
+                            ". Send card reception confirmation.");
+
+                    if(this.player.getCards().size() == 2) {
+                        this.state = State.SMALL_BIG_BLIND;
+                    }
+                }
+                else {
+                    block();
+                }
+                break;
+            case SMALL_BIG_BLIND:
+
+                msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
+                msg = myAgent.receive(msgTemplate);
+
+                if (msg != null) {
+                    String[] content = msg.getContent().split(":");
+                    String[] smallBlind = content[0].split("-");
+                    String[] bigBlind = content[1].split("-");
+
+                    if(smallBlind[0].equals(this.player.getName()))
+                        this.player.updateCurrBet(Integer.parseInt(smallBlind[1]));
+                    else if(bigBlind[0].equals(this.player.getName()))
+                        this.player.updateCurrBet(Integer.parseInt(bigBlind[1]));
+
+                    System.out.println(this.player.getName() + " :: Current bet " + this.player.getCurrBet());
+                    this.state = State.BETTING;
+                }
+                else {
+                    block();
+                }
+
+                break;
+            case BETTING:
+                break;
         }
     }
 
     @Override
     public boolean done() {
-        return this.player.getCards().size() == 2;
+        return false;
     }
 }

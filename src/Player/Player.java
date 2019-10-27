@@ -34,6 +34,11 @@ public class Player extends Agent {
     private AID dealer = null;
 
     /**
+     * Player current bet
+     */
+    private int currBet = 0;
+
+    /**
      * Table cards
      */
     private ArrayList<Card> table = new ArrayList<>();
@@ -117,5 +122,13 @@ public class Player extends Agent {
      */
     public ArrayList<Card> getTable() {
         return table;
+    }
+
+    public int getCurrBet() {
+        return currBet;
+    }
+
+    public void updateCurrBet(int value) {
+        this.currBet += value;
     }
 }
