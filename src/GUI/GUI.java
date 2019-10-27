@@ -200,10 +200,12 @@ public class GUI {
      */
     public GUI(String frameTitle) {
         // Initialize all cards as empty
-        JLabel[] allCards = {card1, card2, card3, card4, card5, p1c1, p1c2, p2c1, p2c2, p3c1, p3c2, p4c1, p4c2, p5c1,
-                p5c2, p6c1, p6c2, p7c1, p7c2, p8c1, p8c2};
-        for (JLabel c: allCards) {
-            c.setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        for (JLabel card : cards) {
+            card.setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        }
+        for (JLabel[] player : playersList) {
+            player[2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+            player[3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
         }
 
         // Create Red border in pots panel
@@ -330,11 +332,69 @@ public class GUI {
         }
     }
 
+    /**
+     * Add cards to the table
+     * @param cardsName list of names of cards to add
+     */
     public void addCardsToTable(String[] cardsName) {
         for (String card :
                 cardsName) {
             cards[cardCounter].setIcon(new ImageIcon(cardMap.get(card)));
             cardCounter++;
+        }
+    }
+
+    /**
+     * Remove the cards from the table
+     */
+    public void removeCardsFromTable() {
+        for (JLabel card :
+                cards) {
+            card.setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        }
+    }
+
+    /**
+     * Add card to the players
+     * @param cardsName list of names of cards to add
+     * @return true if the cards are added to the player, false if don't have sufficient card for all the players
+     */
+    public boolean addCardsToPlayers(String[] cardsName) {
+        if (cardsName.length < playerCounter)
+            return false;
+
+        int cardNameIndex = 0;
+
+        for (int i = 0 ; i < playerCounter ; i++) {
+            playersList[i][2].setIcon(new ImageIcon(cardMap.get(cardsName[cardNameIndex++])));
+            playersList[i][3].setIcon(new ImageIcon(cardMap.get(cardsName[cardNameIndex++])));
+        }
+
+        return true;
+    }
+
+    /**
+     * Collects a player's cards
+     * @param playerIndex index of the player
+     * @return true if the cards are collected, false if the index is invalid
+     */
+    public boolean  removeCardFromPlayer(int playerIndex) {
+        if (playerIndex >= playerCounter || playerIndex < 0)
+            return false;
+
+        playersList[playerIndex][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        playersList[playerIndex][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+
+        return true;
+    }
+
+    /**
+     * Collect cards from all players
+     */
+    public void removeAllCardsFromPlayers() {
+        for (int i = 0 ; i < playerCounter ; i++) {
+            playersList[i][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+            playersList[i][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
         }
     }
 
@@ -350,6 +410,9 @@ public class GUI {
         g.addPlayerBlind(0, "S");
         g.addPlayerBlind(2, "B");
 
+        System.out.println(g.hasBlind("B"));
+        System.out.println(g.hasBlind("S"));
+
         sleep(1000);
         g.rotatePlayerBlinds();
         sleep(1000);
@@ -360,5 +423,16 @@ public class GUI {
         g.addCardsToTable(new String[]{"Ace-Spades"});
         sleep(1000);
         g.addCardsToTable(new String[]{"Ace-Diamonds"});
+        sleep(1000);
+
+        g.addCardsToPlayers(new String[]{"2-Hearts", "4-Hearts", "6-Clubs", "King-Hearts", "9-Hearts", "10-Clubs",
+                "8-Spades", "4-Spades", "3-Clubs", "7-Diamonds" });
+        sleep(1000);
+        g.removeCardFromPlayer(2);
+        sleep(1000);
+        g.removeAllCardsFromPlayers();
+
+        sleep(1000);
+        g.removeCardsFromTable();
     }
 }
