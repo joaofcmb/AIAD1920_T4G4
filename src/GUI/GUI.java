@@ -13,22 +13,12 @@ public class GUI {
     /**
      * Images folder path
      */
-    public final static String IMAGE_FOLDER_LOCATION = "resources" + File.separator + "images" + File.separator;
-
-    /**
-     * Window of the game
-     */
-    private JFrame mainFrame;
+    private final static String IMAGE_FOLDER_LOCATION = "resources" + File.separator + "images" + File.separator;
 
     /**
      * Main panel, include all the window
      */
     private JPanel mainPanel;
-
-    /**
-     * Panel representing the game table
-     */
-    private JPanel game;
 
     /**
      * Cards in the table
@@ -57,11 +47,6 @@ public class GUI {
     private JLabel pot7;
     private JLabel pot8;
     private JLabel[] potsList = {pot1, pot2, pot3, pot4, pot5, pot6, pot7, pot8};
-
-    /**
-     * Panel include all the players
-     */
-    private JPanel players;
 
     /**
      * Name of the player 1
@@ -192,7 +177,15 @@ public class GUI {
      */
     private HashMap<String,String> cardMap;
 
+    /**
+     * Number of cards in the table
+     */
     private int cardCounter = 0;
+
+    /**
+     * Number of existing pots
+     */
+    private int potCounter = 0;
 
     /**
      * Create and display a GUI for a poker game
@@ -226,7 +219,7 @@ public class GUI {
         }
 
         // Create GUI frame
-        mainFrame = new JFrame(frameTitle);
+        JFrame mainFrame = new JFrame(frameTitle);
         mainFrame.setContentPane(mainPanel);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLocation(100,100);
@@ -245,21 +238,14 @@ public class GUI {
         if (playerCounter == 8) return false;
 
         playersList[playerCounter][0].setText(name);
-
-        String chips = "";
-
-        if (buyIn > 1000000) chips += buyIn/1000000.0 + "M";
-        else if (buyIn > 1000) chips += buyIn/1000.0 + "K";
-        else chips += buyIn;
-
-        playersList[playerCounter][1].setText(chips + " €");
+        playersList[playerCounter][1].setText(reduceNumber(buyIn) + " €");
         playerCounter++;
         return true;
     }
 
     public void removePlayer(int playerIndex) {
         playerCounter--;
-        playersList[playerIndex][0].setText("Player" + playerIndex);
+        playersList[playerIndex][0].setText("Player" + (playerIndex + 1));
         playersList[playerIndex][0].setForeground(Color.white);
         playersList[playerIndex][1].setText("");
         playersList[playerIndex][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
@@ -333,6 +319,46 @@ public class GUI {
     }
 
     /**
+     * Create a new pot to present
+     * @param chips money in the pot
+     */
+    public void addNewPot(float chips) {
+        potsList[potCounter++].setText("Pot " + potCounter + " : " + reduceNumber(chips) + " €");
+    }
+
+    /**
+     * Add new bets to a pot
+     * @param potIndex pot to add the bets
+     * @param chips quantity to add
+     */
+    public void addChipsToPot(int potIndex, int chips) {
+        String[] potText = potsList[potIndex].getText().split(" : ");
+        String chipsText = potText[1].substring(0, potText[1].length()-2);
+        float actualChips;
+
+        if(chipsText.contains("M")){
+            chipsText = chipsText.substring(0, chipsText.length()-1);
+            actualChips = Float.parseFloat(chipsText) * 1000000;
+        } else if (chipsText.contains("K")) {
+            chipsText = chipsText.substring(0, chipsText.length()-1);
+            actualChips = Float.parseFloat(chipsText) * 1000;
+        } else {
+            actualChips = Float.parseFloat(chipsText);
+        }
+
+        actualChips += chips;
+        potsList[potIndex].setText(potText[0] + " : " + reduceNumber(actualChips) + " €");
+    }
+
+    /**
+     * Remove the last pot of the list
+     */
+    public void removePot() {
+        if (potCounter > 0)
+            potsList[potCounter--].setText("");
+    }
+
+    /**
      * Add cards to the table
      * @param cardsName list of names of cards to add
      */
@@ -369,7 +395,6 @@ public class GUI {
             playersList[i][2].setIcon(new ImageIcon(cardMap.get(cardsName[cardNameIndex++])));
             playersList[i][3].setIcon(new ImageIcon(cardMap.get(cardsName[cardNameIndex++])));
         }
-
         return true;
     }
 
@@ -398,6 +423,24 @@ public class GUI {
         }
     }
 
+    // TODO: Update player's actions
+    // TODO: Update dealer actions
+
+    /**
+     * Reduce a number to the format "x.x(M/K)". Ex: 5.0M or 8.5K
+     * @param number number to format
+     * @return return a string with th number representation
+     */
+    private String reduceNumber(float number) {
+        String text = "";
+
+        if (number > 1000000) text += number/1000000.0 + "M";
+        else if (number > 1000) text += number/1000.0 + "K";
+        else text += number;
+
+        return text;
+    }
+
     public static void main(String[] args) throws InterruptedException {
         GUI g = new GUI("GUI");
 
@@ -415,8 +458,13 @@ public class GUI {
 
         sleep(1000);
         g.rotatePlayerBlinds();
+
         sleep(1000);
-        g.rotatePlayerBlinds();
+        g.addNewPot(5000);
+
+        sleep(1000);
+        g.addChipsToPot(0, 4000);
+
         sleep(1000);
         g.addCardsToTable(new String[]{"Ace-Hearts", "8-Hearts", "Ace-Clubs"});
         sleep(1000);
@@ -431,6 +479,9 @@ public class GUI {
         g.removeCardFromPlayer(2);
         sleep(1000);
         g.removeAllCardsFromPlayers();
+
+        sleep(1000);
+        g.removePlayer(4);
 
         sleep(1000);
         g.removeCardsFromTable();
