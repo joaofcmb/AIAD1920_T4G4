@@ -24,17 +24,20 @@ public class Logic extends SequentialBehaviour {
         this.addBehaviours();
     }
 
+    /**
+     * Adds logic sequential behaviours
+     */
     private void addBehaviours() {
         addSubBehaviour(new PreFlop(this.dealer));
-        addSubBehaviour(new Bet(this.dealer, this.dealer.getSession().getInGamePlayers().size() == 2 ? 0 : 2));
+        addSubBehaviour(new Bet(this.dealer, this.dealer.getSession().getInGamePlayers().size() == 2 ? 0 : 2, this.dealer.getTableSettings().get("bigBlind")));
         addSubBehaviour(new Flop(this.dealer));
+        addSubBehaviour(new Bet(this.dealer, 0, 0));
     }
 
     @Override
     public int onEnd() {
-        System.out.println(status);
-       // reset();
-       // this.dealer.addBehaviour(this);
+        // reset();
+        // this.dealer.addBehaviour(this);
         return super.onEnd();
     }
 }

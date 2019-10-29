@@ -131,19 +131,32 @@ public class Player extends Agent {
         return table;
     }
 
+    /**
+     * Returns current bet value
+     */
     public int getCurrBet() {
         return currBet;
     }
 
+    /**
+     * Updates current bet value
+     */
     public void updateCurrBet(int value) {
         this.currBet += value;
     }
 
-
+    /**
+     * Retrieves other players bets
+     */
     public HashMap<String, LinkedList<String>> getBets() {
         return bets;
     }
 
+    /**
+     * Adds a new bet
+     * @param playerName player name
+     * @param bet player bet
+     */
     public void addBet(String playerName, String bet) {
         if(this.bets.containsKey(playerName)) {
             this.bets.get(playerName).push(bet);

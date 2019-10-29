@@ -1,5 +1,6 @@
 package Player.GameLogic;
 
+import Player.GameLogic.BetLogic.Bet;
 import Player.Player;
 import jade.core.behaviours.SequentialBehaviour;
 
@@ -24,15 +25,18 @@ public class Logic extends SequentialBehaviour {
         this.addBehaviours();
     }
 
+    /**
+     * Adds logic behaviours
+     */
     private void addBehaviours() {
         addSubBehaviour(new PreFlop(this.player));
         addSubBehaviour(new Bet(this.player));
         addSubBehaviour(new Flop(this.player));
+        addSubBehaviour(new Bet(this.player));
     }
 
     @Override
     public int onEnd() {
-        System.out.println(status);
         // reset();
         // this.dealer.addBehaviour(this);
         return super.onEnd();

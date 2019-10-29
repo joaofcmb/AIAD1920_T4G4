@@ -23,11 +23,6 @@ public class Session {
     private LinkedList<Player> inGamePlayers;
 
     /**
-     * Current game maximum bet
-     */
-    private int maxBet;
-
-    /**
      * Stores players bets history
      */
     private HashMap<String, LinkedList<String>> bets = new HashMap<>();
@@ -41,11 +36,10 @@ public class Session {
      * Session constructor
      * @param currPlayers Players in session
      */
-    public Session(LinkedList<Player> currPlayers, int bigBlind) {
+    public Session(LinkedList<Player> currPlayers) {
         this.deck = new Deck();
         this.currPlayers = currPlayers;
         this.inGamePlayers = currPlayers;
-        this.maxBet = bigBlind;
     }
 
     /**
@@ -73,14 +67,14 @@ public class Session {
      * Returns current small blind player
      */
     public Player getSmallBlind() {
-        return this.currPlayers.get(0);
+        return this.inGamePlayers.get(0);
     }
 
     /**
      * Returns current big blind player
      */
     public Player getBigBlind() {
-        return this.currPlayers.get(1);
+        return this.inGamePlayers.get(1);
     }
 
 
@@ -96,14 +90,6 @@ public class Session {
             LinkedList<String> bets = new LinkedList<>(); bets.push(bet);
             this.bets.put(playerName, bets);
         }
-    }
-
-    public int getMaxBet() {
-        return maxBet;
-    }
-
-    public void updateMaxBet(int value) {
-        this.maxBet = value;
     }
 
     public LinkedList<Player> getInGamePlayers() {

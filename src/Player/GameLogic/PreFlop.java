@@ -68,7 +68,6 @@ public class PreFlop extends Behaviour {
                 }
                 break;
             case SMALL_BIG_BLIND:
-
                 msgTemplate = MessageTemplate.MatchPerformative(ACLMessage.INFORM);
                 msg = myAgent.receive(msgTemplate);
 

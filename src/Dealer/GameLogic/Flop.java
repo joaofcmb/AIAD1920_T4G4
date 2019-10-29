@@ -19,42 +19,39 @@ public class Flop extends Behaviour {
 
     Flop(Dealer dealer) {
         this.dealer = dealer;
+        // Removes card from deck [RULE]
+        this.dealer.getSession().getDeck().getCard();
     }
 
     @Override
     public void action() {
-        switch (state){
-            case DEALING_TABLE_CARDS:
-                for(int i = 0; i < 3; i++)
-                    this.dealer.getSession().getTable().add(this.dealer.getSession().getDeck().getCard());
+        for(int i = 0; i < 3; i++)
+            this.dealer.getSession().getTable().add(this.dealer.getSession().getDeck().getCard());
 
-                ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
-                // Add all players as receivers
-                for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++)
-                    msg.addReceiver(this.dealer.getSession().getCurrPlayers().get(i).getPlayer());
+        // Add all players as receivers
+        for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++)
+            msg.addReceiver(this.dealer.getSession().getInGamePlayers().get(i).getPlayer());
 
-                LinkedList<Card> table = this.dealer.getSession().getTable();
+        LinkedList<Card> table = this.dealer.getSession().getTable();
 
-                // Configure message
-                msg.setContent(table.get(0) + ":" + table.get(1) + ":" + table.get(2));
-                msg.setConversationId("flop-table-cards");
+        // Configure message
+        msg.setContent(table.get(0) + ":" + table.get(1) + ":" + table.get(2));
+        msg.setConversationId("flop-table-cards");
 
-                // Send message
-                myAgent.send(msg);
-                System.out.println(this.dealer.getName() + " :: Send table initial configuration: " + msg.getContent());
+        // Send message
+        myAgent.send(msg);
+        System.out.println(this.dealer.getName() + " :: Send table initial configuration: " + msg.getContent());
 
-                this.state = State.SMALL_BIG_BLIND;
-                break;
-            case SMALL_BIG_BLIND:
-                break;
-            case BETTING:
-
-                break;
-        }
+        // Terminates behaviour
+        this.terminate();
     }
 
-    void terminate() {
+    /**
+     * Terminates behaviour
+     */
+    private void terminate() {
         status = true;
     }
 

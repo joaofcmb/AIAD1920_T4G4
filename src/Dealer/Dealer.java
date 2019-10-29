@@ -161,7 +161,7 @@ public class Dealer extends Agent {
      * Create new session
      */
     void createNewSession() {
-        this.session = new Session(this.currPlayers, this.tableSettings.get("bigBlind"));
+        this.session = new Session(this.currPlayers);
     }
 
     /**

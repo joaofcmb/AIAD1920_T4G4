@@ -24,30 +24,25 @@ public class Flop extends Behaviour {
 
     @Override
     public void action() {
-        switch (state) {
-            case RECEIVING_TABLE_CARDS:
-                this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),
-                        MessageTemplate.MatchConversationId("flop-table-cards"));
-                ACLMessage msg = myAgent.receive(msgTemplate);
-                if(msg != null) {
-                    System.out.println(this.player.getName() + " :: Received table initial configuration: " +
-                            msg.getContent());
+        this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),
+                MessageTemplate.MatchConversationId("flop-table-cards"));
+        ACLMessage msg = myAgent.receive(msgTemplate);
 
-                    String[] content = msg.getContent().split(":");
+        if(msg != null) {
+            System.out.println(this.player.getName() + " :: Received table initial configuration: " +
+                    msg.getContent());
 
-                    for(int i = 0; i < 3; i++) {
-                        String[] card = content[i].split("-");
-                        this.player.getTable().add(new Card(card[1], card[0]));
-                    }
+            String[] content = msg.getContent().split(":");
 
-                    this.state = State.BETTING;
-                }
-                else {
-                    block();
-                }
-                break;
-            case BETTING:
-                break;
+            for(int i = 0; i < 3; i++) {
+                String[] card = content[i].split("-");
+                this.player.getTable().add(new Card(card[1], card[0]));
+            }
+
+            this.terminate();
+        }
+        else {
+            block();
         }
     }
 

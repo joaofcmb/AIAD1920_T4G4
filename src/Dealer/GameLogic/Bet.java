@@ -1,10 +1,14 @@
 package Dealer.GameLogic;
 
 import Dealer.Dealer;
+import Dealer.Player;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Bet extends Behaviour {
 
@@ -23,19 +27,34 @@ public class Bet extends Behaviour {
      */
     private MessageTemplate msgTemplate;
 
+    /**
+     * Current game maximum bet
+     */
+    private int maxBet;
+
+    /**
+     * Stores players current betting phase bets history
+     */
+    private HashMap<String, LinkedList<String>> bets = new HashMap<>();
+
     enum State {PLAYER_BET_TURN, RECEIVE_PLAYER_BET}
 
     private State state = State.PLAYER_BET_TURN;
 
-    int playerTurn;
+    private int playerTurn;
 
     /**
      *
      * @param dealer
      */
-    Bet(Dealer dealer, int playerTurn) {
-     this.dealer = dealer;
-     this.playerTurn = playerTurn;
+    Bet(Dealer dealer, int playerTurn, int maxBet) {
+        this.dealer = dealer;
+        this.playerTurn = playerTurn;
+        this.maxBet = maxBet;
+
+        // Special betting phase (small and big blind)
+        if(this.maxBet != 0)
+            this.bets = this.dealer.getSession().getBets();
     }
 
     @Override
@@ -44,38 +63,61 @@ public class Bet extends Behaviour {
             case PLAYER_BET_TURN:
                 AID playerTurn = this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getPlayer();
 
-                String bettingOptions = "Fold:Raise " + this.dealer.getSession().getMaxBet() * 2 + "$ or more:";
-
-                if(this.dealer.getSession().getMaxBet() == 0)
-                    bettingOptions += "Check";
-                else
-                    bettingOptions += "Call for " + this.dealer.getSession().getMaxBet() + "$";
-
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
                 // Configure message
                 msg.addReceiver(playerTurn);
-                msg.setContent(bettingOptions);
+                msg.setContent(this.getBettingOptions(playerTurn));
                 msg.setConversationId("betting-phase");
                 msg.setReplyWith("betting-phase" + System.currentTimeMillis());
 
                 // Send message
+                System.out.println(this.dealer.getName() + " :: Send betting options to " + playerTurn.getName()
+                        + " :: " + msg.getContent());
+
                 myAgent.send(msg);
 
                 // Prepare the template to get the reply
                 this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("betting-phase"),
                         MessageTemplate.MatchInReplyTo(msg.getReplyWith()));
 
-                System.out.println(this.dealer.getName() + " :: Send betting options to " + playerTurn.getName());
                 this.state = State.RECEIVE_PLAYER_BET;
                 break;
             case RECEIVE_PLAYER_BET:
                 // Receive replies
-                msg = myAgent.receive(msgTemplate);
+                ACLMessage reply = myAgent.receive(msgTemplate);
 
-                if(msg != null) {
-                    System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
-                            " has sent his betting option.");
+                if(reply != null) {
+                    System.out.println(this.dealer.getName() + " :: " + reply.getSender().getName() +
+                            " has sent his betting option :: " + reply.getContent());
+
+                    // Inform other players about player bet
+                    msg = new ACLMessage(ACLMessage.INFORM);
+
+                    // Configure message
+                    for(Player player : this.dealer.getSession().getInGamePlayers())
+                        if(!player.getPlayer().getName().equals(reply.getSender().getName()))
+                            msg.addReceiver(player.getPlayer());
+
+                    msg.setContent(reply.getSender().getName() + ":" + reply.getContent());
+                    msg.setConversationId("betting-storage");
+                    msg.setReplyWith("betting-storage" + System.currentTimeMillis());
+
+                    // Send message
+                    System.out.println(this.dealer.getName() + " :: Sharing " + reply.getSender().getName() +
+                            " bet with other players :: " + msg.getContent());
+
+                    myAgent.send(msg);
+
+                    // Parse bet
+                    this.parseBet(reply.getSender(), reply.getContent());
+
+                    // Update player turn
+                    this.playerTurn = (this.playerTurn == this.dealer.getSession().getInGamePlayers().size() - 1) ? 0 :
+                            this.playerTurn + 1;
+
+                    // Determines whether betting phase has ended or not
+                    this.terminate();
                 }
                 else {
                     block();
@@ -84,18 +126,93 @@ public class Bet extends Behaviour {
         }
     }
 
+    /**
+     * Retrieves player betting options
+     * @param player agent
+     * @return betting options
+     */
+    private String getBettingOptions(AID player) {
+        return this.maxBet == 0 ? "Check:Bet:Fold:All in" :
+                "Call-" + (this.maxBet - this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getCurrBet()) + ":Fold:Raise-" +
+                        this.maxBet * 2 + ":All in";
+    }
+
+    /**
+     * Parses bet and performs respective operations
+     * @param player agent
+     * @param bet bet in string format
+     */
+    private void parseBet(AID player, String bet) {
+        String[] content = bet.split("-");
+        int value = 0;  // Check as default value
+
+        if(content.length == 1) {
+            if(content[0].equals("Fold"))
+                System.out.println("FOLD"); // TODO - Fold
+            else if(content[0].equals("All in"))
+                System.out.println("ALL IN"); // TODO - All in
+        }
+        else {
+            value = Integer.parseInt(content[1]);
+
+            if(!content[0].equals("Call"))
+                this.maxBet = value;
+        }
+
+        // Add bet and update pot
+        this.addBet(player.getName(), bet);
+        this.dealer.getSession().getInGamePlayers().get(playerTurn).updatePot(value);
+    }
+
+    private void addBet(String playerName, String bet) {
+        // Updates session bets history
+        this.dealer.getSession().addBet(playerName, bet);
+
+        if(this.bets.containsKey(playerName))
+            this.bets.get(playerName).push(bet);
+        else {
+            LinkedList<String> bets = new LinkedList<>(); bets.push(bet);
+            this.bets.put(playerName, bets);
+        }
+    }
+
+    /**
+     * Terminates behaviour if conditions required met
+     */
+    private void terminate() {
+        if(this.bets.containsKey(this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getPlayer().getName()))
+            if(this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getCurrBet() == this.maxBet)
+                this.status = true;
+            
+        this.state = State.PLAYER_BET_TURN;
+    }
+
     @Override
     public boolean done() {
-        for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++) {
-            String playerName = this.dealer.getSession().getInGamePlayers().get(i).getPlayer().getName();
-            if(!this.dealer.getSession().getBets().containsKey(playerName))
-                return false;
-            else {
-                int lastBet = Integer.parseInt(this.dealer.getSession().getBets().get(playerName).get(0).split("-")[1]);
-                if(lastBet < this.dealer.getSession().getMaxBet())
-                    return false;
-            }
-        }
-        return true;
+        return this.status;
     }
+
+    @Override
+    public int onEnd() {
+        // Inform other players about player bet
+        ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+
+        // Configure message
+        for(Player player : this.dealer.getSession().getInGamePlayers())
+            msg.addReceiver(player.getPlayer());
+
+        msg.setConversationId("end-betting-phase");
+        msg.setReplyWith("end-betting-phase" + System.currentTimeMillis());
+
+        // Send message
+        System.out.println(this.dealer.getName() + " :: Terminating betting phase ");
+        myAgent.send(msg);
+
+        // Reset betting variables
+        for(Player player : this.dealer.getSession().getInGamePlayers())
+            player.resetCurrBet();
+
+        return super.onEnd();
+    }
+
 }

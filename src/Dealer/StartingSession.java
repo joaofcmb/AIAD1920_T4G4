@@ -75,6 +75,7 @@ public class StartingSession extends Behaviour {
         // Add game logic behaviour
         this.dealer.addBehaviour(new Logic(this.dealer));
 
+        // Terminates behaviour
         this.terminate();
     }
 
