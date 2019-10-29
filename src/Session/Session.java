@@ -77,11 +77,18 @@ public class Session {
         return this.inGamePlayers.get(1);
     }
 
-
+    /**
+     * Returns session bets history
+     */
     public HashMap<String, LinkedList<String>> getBets() {
         return bets;
     }
 
+    /**
+     * Adds a new bet
+     * @param playerName player name
+     * @param bet bet made
+     */
     public void addBet(String playerName, String bet) {
         if(this.bets.containsKey(playerName)) {
             this.bets.get(playerName).push(bet);
@@ -92,6 +99,9 @@ public class Session {
         }
     }
 
+    /**
+     * Returns player current in game
+     */
     public LinkedList<Player> getInGamePlayers() {
         return inGamePlayers;
     }

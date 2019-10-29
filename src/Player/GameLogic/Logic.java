@@ -12,11 +12,6 @@ public class Logic extends SequentialBehaviour {
     private Player player;
 
     /**
-     * Behaviour status. True if ended, false otherwise
-     */
-    private boolean status = false;
-
-    /**
      * Game logic constructor
      * @param player agent
      */

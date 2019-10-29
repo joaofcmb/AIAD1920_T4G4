@@ -9,22 +9,28 @@ import java.util.LinkedList;
 
 public class Flop extends Behaviour {
 
-    Dealer dealer;
+    /**
+     * Dealer agent
+     */
+    private Dealer dealer;
 
-    boolean status = false;
+    /**
+     * Behaviour status. True if ended, false otherwise
+     */
+    private boolean status = false;
 
-    enum State {DEALING_TABLE_CARDS, SMALL_BIG_BLIND, BETTING}
-
-    State state = State.DEALING_TABLE_CARDS;
-
+    /**
+     * Flop constructor
+     * @param dealer agent
+     */
     Flop(Dealer dealer) {
         this.dealer = dealer;
-        // Removes card from deck [RULE]
-        this.dealer.getSession().getDeck().getCard();
+        this.dealer.getSession().getDeck().getCard();   // Removes card from deck [RULE]
     }
 
     @Override
     public void action() {
+        // Adds three cards on table
         for(int i = 0; i < 3; i++)
             this.dealer.getSession().getTable().add(this.dealer.getSession().getDeck().getCard());
 

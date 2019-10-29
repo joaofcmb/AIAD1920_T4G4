@@ -37,15 +37,24 @@ public class Bet extends Behaviour {
      */
     private HashMap<String, LinkedList<String>> bets = new HashMap<>();
 
+    /**
+     * Possible betting states
+     */
     enum State {PLAYER_BET_TURN, RECEIVE_PLAYER_BET}
 
+    /**
+     * Current state
+     */
     private State state = State.PLAYER_BET_TURN;
 
+    /**
+     * Index referent to the player which is has to bet
+     */
     private int playerTurn;
 
     /**
-     *
-     * @param dealer
+     * Bet constructor
+     * @param dealer agent
      */
     Bet(Dealer dealer, int playerTurn, int maxBet) {
         this.dealer = dealer;
@@ -67,7 +76,7 @@ public class Bet extends Behaviour {
 
                 // Configure message
                 msg.addReceiver(playerTurn);
-                msg.setContent(this.getBettingOptions(playerTurn));
+                msg.setContent(this.getBettingOptions());
                 msg.setConversationId("betting-phase");
                 msg.setReplyWith("betting-phase" + System.currentTimeMillis());
 
@@ -128,10 +137,8 @@ public class Bet extends Behaviour {
 
     /**
      * Retrieves player betting options
-     * @param player agent
-     * @return betting options
      */
-    private String getBettingOptions(AID player) {
+    private String getBettingOptions() {
         return this.maxBet == 0 ? "Check:Bet:Fold:All in" :
                 "Call-" + (this.maxBet - this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getCurrBet()) + ":Fold:Raise-" +
                         this.maxBet * 2 + ":All in";
@@ -164,6 +171,11 @@ public class Bet extends Behaviour {
         this.dealer.getSession().getInGamePlayers().get(playerTurn).updatePot(value);
     }
 
+    /**
+     * Adds a new bet to the betting phase
+     * @param playerName player name
+     * @param bet bet made
+     */
     private void addBet(String playerName, String bet) {
         // Updates session bets history
         this.dealer.getSession().addBet(playerName, bet);
@@ -177,13 +189,13 @@ public class Bet extends Behaviour {
     }
 
     /**
-     * Terminates behaviour if conditions required met
+     * Terminates behaviour if all players made their bets and its value is the same for each player
      */
     private void terminate() {
         if(this.bets.containsKey(this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getPlayer().getName()))
             if(this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getCurrBet() == this.maxBet)
                 this.status = true;
-            
+
         this.state = State.PLAYER_BET_TURN;
     }
 
@@ -194,7 +206,7 @@ public class Bet extends Behaviour {
 
     @Override
     public int onEnd() {
-        // Inform other players about player bet
+        // Inform other players that betting phase has ended
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
         // Configure message

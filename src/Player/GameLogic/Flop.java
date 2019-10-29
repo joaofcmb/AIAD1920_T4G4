@@ -8,16 +8,25 @@ import jade.lang.acl.MessageTemplate;
 
 public class Flop extends Behaviour {
 
-    Player player;
+    /**
+     * PLayer agent
+     */
+    private Player player;
 
-    MessageTemplate msgTemplate;
+    /**
+     * Message template
+     */
+    private MessageTemplate msgTemplate;
 
-    boolean status = false;
+    /**
+     * Behaviour status. True if ended, false otherwise
+     */
+    private boolean status = false;
 
-    enum State {RECEIVING_TABLE_CARDS, BETTING}
-
-    State state = State.RECEIVING_TABLE_CARDS;
-
+    /**
+     * Flop constructor
+     * @param player agent
+     */
     Flop(Player player) {
         this.player = player;
     }
@@ -46,7 +55,10 @@ public class Flop extends Behaviour {
         }
     }
 
-    void terminate() {
+    /**
+     * Terminates behaviour
+     */
+    private void terminate() {
         status = true;
     }
 

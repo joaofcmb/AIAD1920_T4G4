@@ -8,7 +8,7 @@ import jade.lang.acl.MessageTemplate;
 public class BetHandler extends Behaviour {
 
     /**
-     *
+     * Player agent
      */
     private Player player;
 
@@ -17,10 +17,10 @@ public class BetHandler extends Behaviour {
      */
     private MessageTemplate msgTemplate;
 
-    enum State {TURN_WAITING, BETTING}
-
-    private State state = State.TURN_WAITING;
-
+    /**
+     * Bet handler constructor
+     * @param player agent
+     */
     BetHandler(Player player) {
         this.player = player;
     }

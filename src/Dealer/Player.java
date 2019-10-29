@@ -20,7 +20,7 @@ public class Player {
     private AID player;
 
     /**
-     *
+     * Player current bet in a specific betting phase
      */
     private int currBet;
 
@@ -79,14 +79,23 @@ public class Player {
         return player;
     }
 
+    /**
+     * Returns current bet
+     */
     public int getCurrBet() {
         return currBet;
     }
 
+    /**
+     * Updates current bet value
+     */
     public void updateCurrBet(int value) {
         this.currBet += value;
     }
 
+    /**
+     * Resets current bet value to 0
+     */
     public void resetCurrBet() {
         this.currBet = 0;
     }
