@@ -20,12 +20,18 @@ public class Player {
     private AID player;
 
     /**
+     * Player current bet in a specific betting phase
+     */
+    private int currBet;
+
+    /**
      * Player constructor
      * @param chips player buy in
      * @param player agent
      */
     Player(int chips, AID player) {
         this.pot = 0;
+        this.currBet = 0;
         this.chips = chips;
         this.player = player;
     }
@@ -49,6 +55,7 @@ public class Player {
      */
     public void updatePot(int value) {
         this.pot += value;
+        this.currBet += value;
     }
 
     /**
@@ -68,7 +75,28 @@ public class Player {
     /**
      * Returns player AID
      */
-    AID getPlayer() {
+    public AID getPlayer() {
         return player;
+    }
+
+    /**
+     * Returns current bet
+     */
+    public int getCurrBet() {
+        return currBet;
+    }
+
+    /**
+     * Updates current bet value
+     */
+    public void updateCurrBet(int value) {
+        this.currBet += value;
+    }
+
+    /**
+     * Resets current bet value to 0
+     */
+    public void resetCurrBet() {
+        this.currBet = 0;
     }
 }

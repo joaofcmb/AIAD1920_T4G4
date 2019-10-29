@@ -118,7 +118,7 @@ public class Dealer extends Agent {
     /**
      * Retrieve table settings
      */
-    HashMap<String, Integer> getTableSettings() {
+    public HashMap<String, Integer> getTableSettings() {
         return tableSettings;
     }
 

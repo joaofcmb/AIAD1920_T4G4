@@ -1,7 +1,12 @@
 package Player;
 
+import Session.Card;
 import jade.core.AID;
 import jade.core.Agent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class Player extends Agent {
 
@@ -29,6 +34,26 @@ public class Player extends Agent {
      * Dealer of the current session
      */
     private AID dealer = null;
+
+    /**
+     * Player current bet
+     */
+    private int currBet = 0;
+
+    /**
+     * Table cards
+     */
+    private ArrayList<Card> table = new ArrayList<>();
+
+    /**
+     * Player cards
+     */
+    private ArrayList<Card> cards = new ArrayList<>();
+
+    /**
+     * Stores players bets history
+     */
+    private HashMap<String, LinkedList<String>> bets = new HashMap<>();
 
     /**
      * Agent initializations
@@ -90,5 +115,55 @@ public class Player extends Agent {
      */
     void setDealer(AID dealer) {
         this.dealer = dealer;
+    }
+
+    /**
+     * Returns player cards
+     */
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
+
+    /**
+     * Returns table cards
+     */
+    public ArrayList<Card> getTable() {
+        return table;
+    }
+
+    /**
+     * Returns current bet value
+     */
+    public int getCurrBet() {
+        return currBet;
+    }
+
+    /**
+     * Updates current bet value
+     */
+    public void updateCurrBet(int value) {
+        this.currBet += value;
+    }
+
+    /**
+     * Retrieves other players bets
+     */
+    public HashMap<String, LinkedList<String>> getBets() {
+        return bets;
+    }
+
+    /**
+     * Adds a new bet
+     * @param playerName player name
+     * @param bet player bet
+     */
+    public void addBet(String playerName, String bet) {
+        if(this.bets.containsKey(playerName)) {
+            this.bets.get(playerName).push(bet);
+        }
+        else {
+            LinkedList<String> bets = new LinkedList<>(); bets.push(bet);
+            this.bets.put(playerName, bets);
+        }
     }
 }

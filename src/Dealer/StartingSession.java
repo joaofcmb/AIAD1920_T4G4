@@ -1,5 +1,6 @@
 package Dealer;
 
+import Dealer.GameLogic.Logic;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -72,8 +73,9 @@ public class StartingSession extends Behaviour {
         System.out.println(this.dealer.getName() + " :: Session has started.");
 
         // Add game logic behaviour
-        this.dealer.addBehaviour(new GameLogic(this.dealer));
+        this.dealer.addBehaviour(new Logic(this.dealer));
 
+        // Terminates behaviour
         this.terminate();
     }
 
