@@ -21,6 +21,7 @@ public class EndTurn extends Behaviour {
         }
         System.out.println();
         this.terminate();
+
     }
 
     private void terminate() {
