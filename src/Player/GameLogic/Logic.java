@@ -28,6 +28,10 @@ public class Logic extends SequentialBehaviour {
         addSubBehaviour(new Bet(this.player));
         addSubBehaviour(new Flop(this.player));
         addSubBehaviour(new Bet(this.player));
+        addSubBehaviour(new TurnRiver(this.player, "turn"));
+        addSubBehaviour(new Bet(this.player));
+        addSubBehaviour(new TurnRiver(this.player, "river"));
+        addSubBehaviour(new Bet(this.player));
     }
 
     @Override

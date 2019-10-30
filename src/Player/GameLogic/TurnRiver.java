@@ -6,7 +6,7 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-public class Flop extends Behaviour {
+public class TurnRiver extends Behaviour {
 
     /**
      * PLayer agent
@@ -14,35 +14,35 @@ public class Flop extends Behaviour {
     private Player player;
 
     /**
+     * Type of moment: turn or river
+     */
+    private String moment;
+
+    /**
      * Behaviour status. True if ended, false otherwise
      */
     private boolean status = false;
 
-    /**
-     * Flop constructor
-     * @param player agent
-     */
-    Flop(Player player) {
+    TurnRiver(Player player, String moment) {
         this.player = player;
+        this.moment = moment;
     }
 
     @Override
     public void action() {
         MessageTemplate msgTemplate = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),
-                MessageTemplate.MatchConversationId("flop-table-cards"));
+                MessageTemplate.MatchConversationId(this.moment + "-table-cards"));
         ACLMessage msg = myAgent.receive(msgTemplate);
 
         if(msg != null) {
-            System.out.println(this.player.getName() + " :: Received table initial configuration: " +
+            System.out.println(this.player.getName() + " :: Received new card added to the table :: " +
                     msg.getContent());
 
-            String[] content = msg.getContent().split(":");
+            // Adds new card to table
+            String[] card = msg.getContent().split("-");
+            this.player.getTable().add(new Card(card[1], card[0]));
 
-            for(int i = 0; i < 3; i++) {
-                String[] card = content[i].split("-");
-                this.player.getTable().add(new Card(card[1], card[0]));
-            }
-
+            // Terminates behaviour
             this.terminate();
         }
         else {

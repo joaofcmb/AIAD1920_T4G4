@@ -27,6 +27,11 @@ public class Logic extends SequentialBehaviour {
         addSubBehaviour(new Bet(this.dealer, this.dealer.getSession().getInGamePlayers().size() == 2 ? 0 : 2, this.dealer.getTableSettings().get("bigBlind")));
         addSubBehaviour(new Flop(this.dealer));
         addSubBehaviour(new Bet(this.dealer, 0, 0));
+        addSubBehaviour(new TurnRiver(this.dealer, "turn"));
+        addSubBehaviour(new Bet(this.dealer, 0, 0));
+        addSubBehaviour(new TurnRiver(this.dealer, "river"));
+        addSubBehaviour(new Bet(this.dealer, 0, 0));
+        // addSubBehaviour(new EndTurn(this.dealer));
     }
 
     @Override
