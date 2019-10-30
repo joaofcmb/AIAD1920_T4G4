@@ -1,5 +1,6 @@
 package Session;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Card {
@@ -19,9 +20,15 @@ public class Card {
      */
     public static HashMap<String, Integer> cardValue = new HashMap<>() {{
         put("2", 1); put("3", 2); put("4", 3); put("5", 4); put("6", 5);
-        put("7", 6); put("8", 7); put("9", 8); put("10", 9); put("J", 10);
-        put("Q", 11); put("K", 12); put("A", 13);
+        put("7", 6); put("8", 7); put("9", 8); put("10", 9); put("Jack", 10);
+        put("Queen", 11); put("King", 12); put("Ace", 13);
     }};
+
+    /**
+     * Poker hand ratings
+     */
+    public static enum State {ROYAL_FLUSH, STRAIGHT_FLUSH, FOUR_OF_A_KIND, FULL_HOUSE, FLUSH, STRAIGHT,
+                              THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD}
 
     /**
      * Card constructor
@@ -47,17 +54,6 @@ public class Card {
         return suit;
     }
 
-    public static void main(String[] args) {
-        LinkedList<Card> hand = new LinkedList<>(Arrays.asList(
-                new Card("Diamonds","2"), new Card("Clubs","6"),
-                new Card("Clubs","5"), new Card("Spades","J"),
-                new Card("Diamonds","A"), new Card("Clubs","4"),
-                new Card("Clubs","3")
-                ));
-
-        Card.rankHand(hand);
-    }
-
     /**
      * Sorts an hand in descending order
      * @param hand player hand
@@ -67,65 +63,169 @@ public class Card {
     }
 
     /**
-     * Checks if there exists five cards in sequence
+     * Parse end to obtain as much information as possible
      * @param hand player hand
-     * @return True if exists, false otherwise
+     * @return Returns information
      */
-    public static boolean inSequence(LinkedList<Card> hand) {
-        for(int i = 0; i < hand.size() - 4; i++)
-            for(int j = i; j < i + 4; j++)
-                if((Card.cardValue.get(hand.get(j).getRank()) - (Card.cardValue.get(hand.get(j+1).getRank()))) != 1)
-                    break;
-                else if(j == i + 3)
-                    return true;
+    public static HashMap<String, Integer> parseHand(LinkedList<Card> hand) {
+        HashMap<String, Integer> info = new HashMap<>() {{
+                put("2", 0); put("3", 0); put("4", 0); put("5", 0); put("6", 0);
+                put("7", 0); put("8", 0); put("9", 0); put("10", 0); put("Jack", 0);
+                put("Queen", 0); put("King", 0); put("Ace", 0); put("Clubs", 0);
+                put("Diamonds", 0); put("Hearts", 0); put("Spades", 0);
+            }};
 
-        return false;
+        for(Card card : hand) {
+            info.put(card.getRank(), info.get(card.getRank()) + 1);
+            info.put(card.getSuit(), info.get(card.getSuit()) + 1);
+        }
+
+        return info;
     }
 
     /**
      * Checks if there exists five cards of the same suit
+     * @param handInfo player hand information
+     * @return True if exists, false otherwise
+     */
+    public static String sameSuit(HashMap<String, Integer> handInfo) {
+        String[] suits = {"Clubs", "Diamonds", "Hearts", "Spades"};
+
+        for(String suit : suits)
+            if(handInfo.get(suit) >= 5)
+                return suit;
+
+        return "";
+    }
+
+    /**
+     * Checks existence of possible groups
+     * @param handInfo hand information
+     * @param X group size
+     * @return Array list of encountered groups
+     */
+    public static ArrayList<String> groupOfX(HashMap<String, Integer> handInfo, int X) {
+        ArrayList<String> result = new ArrayList<>();
+        String[] ranks = {"Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
+
+        for(String rank : ranks)
+            if(handInfo.get(rank) == X)
+                result.add(rank);
+
+        return result;
+    }
+
+    /**
+     * Checks if there exists five cards in sequence
      * @param hand player hand
      * @return True if exists, false otherwise
      */
-    public static boolean sameSuit(LinkedList<Card> hand) {
-        HashMap<String, Integer> suitCards = new HashMap<>() {{
-            put("Clubs", 0); put("Diamonds", 0);
-            put("Hearts", 0); put("Spades", 0);
-        }};
+    public static String inSequence(LinkedList<Card> hand) {
+        for(int i = 0; i < hand.size() - 4; i++)
+            for (int j = i; j < i + 4; j++)
+                if ((Card.cardValue.get(hand.get(j).getRank()) - (Card.cardValue.get(hand.get(j + 1).getRank()))) != 1)
+                    break;
+                else if (j == i + 3)
+                    return hand.get(j - 3).getRank() + "-" + hand.get(j - 3).getSuit();
+        return "";
+    }
 
-        for(Card card : hand)
-            suitCards.put(card.getSuit(), suitCards.get(card.getSuit()) + 1);
+    public static void main(String[] args) {
+        LinkedList<Card> hand = new LinkedList<>(Arrays.asList(
+                new Card("Diamonds","9"), new Card("Clubs","Queen"),
+                new Card("Clubs","King"), new Card("Clubs","4"),
+                new Card("Clubs","Queen"), new Card("Hearts","3"),
+                new Card("Spades","6")
+        ));
 
-        return suitCards.get("Clubs") >= 5 || suitCards.get("Diamonds") >= 5 || suitCards.get("Hearts") >= 5 ||
-                suitCards.get("Spades") >= 5;
+        System.out.println(Card.rankHand(hand));
     }
 
     public static int rankHand(LinkedList<Card> hand) {
         // Sort hand
         Card.sort(hand);
 
-        // Suit and sequence variables
-        boolean sameSuit = Card.sameSuit(hand);
-        boolean inSequence = Card.inSequence(hand);
+        // Hand variables
+        HashMap<String, Integer> handInfo = Card.parseHand(hand);
+        String sameSuit = Card.sameSuit(handInfo);
+        String inSequence = Card.inSequence(hand);  // IMPROVE
+        //String[] seqInfo = inSequence.split("-");
+
+        // State machine variables
+        State state = !sameSuit.equals("") && !inSequence.equals("") ? State.ROYAL_FLUSH : State.FOUR_OF_A_KIND;
 
         for (Card card : hand)
             System.out.print(card + " || ");
 
         System.out.println();
 
-        if(sameSuit)
-            System.out.println("SAME SUIT");
+        if(!sameSuit.equals(""))
+            System.out.println("SAME SUIT - " + sameSuit);
         else {
             System.out.println("NOT SAME SUIT");
         }
 
-        if(inSequence)
-            System.out.println("SEQ");
+        if(!inSequence.equals(""))
+            System.out.println("SEQ - " + inSequence);
         else {
             System.out.println("NOT SEQ");
         }
 
-        return Card.cardValue.get("4");
+        while(true) {
+            switch (state) {
+                case ROYAL_FLUSH:   // Points [900]
+                    state = State.STRAIGHT_FLUSH;
+                    break;
+                case STRAIGHT_FLUSH: // Points [800-899]
+                    state = State.FOUR_OF_A_KIND;
+                    break;
+                case FOUR_OF_A_KIND: // Points [700-799]
+                    ArrayList<String> groups = Card.groupOfX(handInfo, 4);
+
+                    if(groups.size() > 0)
+                        return Card.cardValue.get(groups.get(0)) + 700;
+                    else
+                        state = State.FULL_HOUSE;
+                    break;
+                case FULL_HOUSE: // Points [600-699]
+                    state = State.FLUSH;
+                    break;
+                case FLUSH: // Points [500-599]
+
+                    state = State.STRAIGHT;
+                    break;
+                case STRAIGHT: // Points [400-499]
+                    state = State.THREE_OF_A_KIND;
+                    break;
+                case THREE_OF_A_KIND: // Points [300-399]
+                    groups = Card.groupOfX(handInfo, 3);
+
+                    if(groups.size() > 0)
+                        return Card.cardValue.get(groups.get(0)) + 300;
+                    else
+                        state = State.TWO_PAIR;
+                    break;
+                case TWO_PAIR: // Points [200-299]
+                    groups = Card.groupOfX(handInfo, 2);
+
+                    if(groups.size() > 1)
+                        return Card.cardValue.get(groups.get(0)) + Card.cardValue.get(groups.get(1)) + 200;
+                    else
+                        state = State.ONE_PAIR;
+                    break;
+                case ONE_PAIR:  // Points [100-199]
+                    groups = Card.groupOfX(handInfo, 2);
+
+                    if(groups.size() > 0)
+                        return Card.cardValue.get(groups.get(0)) + 100;
+                    else
+                        state = State.HIGH_CARD;
+                    break;
+                case HIGH_CARD: // Points [1-99]
+                    return Card.cardValue.get(hand.get(0).getRank());
+            }
+        }
+
     }
 
     @Override
