@@ -34,9 +34,9 @@ public class Card {
      * @param suit Card suit
      * @param rank Card rank
      */
-    public Card(String suit, String rank) {
-        this.suit = suit;
+    public Card(String rank, String suit) {
         this.rank = rank;
+        this.suit = suit;
     }
 
     /**
@@ -203,7 +203,7 @@ public class Card {
                     ArrayList<String> pair = Card.groupOfX(handInfo, 2);
 
                     if(toak.size() > 0 && pair.size() > 0)
-                        return Card.cardValue.get(toak.get(0)) + Card.cardValue.get(pair.get(0)) + 600;
+                        return Card.cardValue.get(toak.get(0))*2 + Card.cardValue.get(pair.get(0)) + 600;
                     else
                         state = State.FLUSH;
                     break;
@@ -259,6 +259,6 @@ public class Card {
 
     @Override
     public String toString() {
-        return this.suit + "-" + this.rank;
+        return this.rank + "-" + this.suit;
     }
 }

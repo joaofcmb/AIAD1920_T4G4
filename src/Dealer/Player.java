@@ -25,6 +25,11 @@ public class Player {
     private int currBet;
 
     /**
+     * Player current hand final value
+     */
+    private int currHandFinalValue;
+
+    /**
      * Player constructor
      * @param chips player buy in
      * @param player agent
@@ -32,6 +37,7 @@ public class Player {
     Player(int chips, AID player) {
         this.pot = 0;
         this.currBet = 0;
+        this.currHandFinalValue = 0;
         this.chips = chips;
         this.player = player;
     }
@@ -98,5 +104,20 @@ public class Player {
      */
     public void resetCurrBet() {
         this.currBet = 0;
+    }
+
+    /**
+     * Returns current hand final value
+     */
+    public int getCurrHandFinalValue() {
+        return currHandFinalValue;
+    }
+
+    /**
+     * Updates current hand final value
+     * @param currHandFinalValue new value
+     */
+    public void setCurrHandFinalValue(int currHandFinalValue) {
+        this.currHandFinalValue = currHandFinalValue;
     }
 }

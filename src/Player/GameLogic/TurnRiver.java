@@ -40,7 +40,7 @@ public class TurnRiver extends Behaviour {
 
             // Adds new card to table
             String[] card = msg.getContent().split("-");
-            this.player.getTable().add(new Card(card[1], card[0]));
+            this.player.getTable().add(new Card(card[0], card[1]));
 
             // Terminates behaviour
             this.terminate();

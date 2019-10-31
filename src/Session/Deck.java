@@ -25,8 +25,8 @@ public class Deck {
      * Deck default constructor
      */
     Deck() {
-        for (String rank : this.ranks) {
-            for (String suit : this.suits) {
+        for (String suit : this.suits) {
+            for (String rank : this.ranks) {
                 this.deck.add(new Card(rank, suit));
             }
         }
