@@ -50,13 +50,24 @@ public class EndTurn extends Behaviour {
                     System.out.println(this.player.getName() + " :: Showing up cards :: " + reply.getContent());
                     myAgent.send(reply);
 
-                    //this.state = State.EARNINGS_DISTRIBUTION;
+                    this.state = State.EARNINGS_DISTRIBUTION;
                 }
                 else {
                     block();
                 }
                 break;
             case EARNINGS_DISTRIBUTION:
+                this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("earnings"),
+                        MessageTemplate.MatchPerformative(ACLMessage.INFORM));
+                msg = myAgent.receive(msgTemplate);
+
+                if(msg != null) {
+                    System.out.println(this.player.getName() + " :: Receiving earnings :: " + msg.getContent());
+                    this.terminate();
+                }
+                else {
+                    block();
+                }
                 break;
         }
     }

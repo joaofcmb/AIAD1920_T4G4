@@ -52,7 +52,7 @@ public class Player {
     /**
      * Resets player pot
      */
-    void resetPot() {
+    public void resetPot() {
         this.pot = 0;
     }
 

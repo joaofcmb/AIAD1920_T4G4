@@ -76,8 +76,10 @@ public class EndTurn extends Behaviour {
                     System.out.println(this.dealer.getName() + " :: " + reply.getSender().getName() +
                             " has shown up his cards :: " + reply.getContent() + " :: Hand value = " + handValue);
 
-                    if(this.targetPlayer == this.dealer.getSession().getInGamePlayers().size() - 1)
+                    if(this.targetPlayer == this.dealer.getSession().getInGamePlayers().size() - 1) {
+                        this.targetPlayer = 0;
                         this.state = State.DISTRIBUTING_EARNINGS;
+                    }
                     else {
                         this.targetPlayer++;
                         this.state = State.INFORM_PLAYER_TO_SHOW_HAND;
@@ -90,40 +92,74 @@ public class EndTurn extends Behaviour {
             case DISTRIBUTING_EARNINGS:
                 this.computeEarnings();
 
-                this.terminate();
+                msg = new ACLMessage(ACLMessage.INFORM);
+
+                // Configure message
+                msg.addReceiver(this.dealer.getSession().getInGamePlayers().get(targetPlayer).getPlayer());
+                msg.setContent(Integer.toString(this.playerEarnings.get(this.targetPlayer)));
+                msg.setConversationId("earnings");
+                msg.setReplyWith("earnings" + System.currentTimeMillis());
+
+                // Send message
+                System.out.println(this.dealer.getName() + " :: " +
+                        this.dealer.getSession().getInGamePlayers().get(targetPlayer).getPlayer().getName()
+                        + (this.playerEarnings.get(targetPlayer) > 0 ? " has won " + this.playerEarnings.get(targetPlayer) : " has lost"));
+
+                myAgent.send(msg);
+
+                if(targetPlayer == this.playerEarnings.size() - 1)
+                    this.terminate();
+                else
+                    targetPlayer++;
                 break;
         }
 
     }
-    // METo e dou sort
-    //
-    // [0-> X , 1-> Y , 2 -> Z]
-    // 200 200 200
 
+    /**
+     * Computes earnings por each player in game
+     */
     private void computeEarnings() {
         while (this.valueInPot()) {
-            System.out.println("asdasdasdasd");
+            // Initial variables
+            int maxHandValue = 0;
+            ArrayList<Integer> winners = new ArrayList<>();
+
+            for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++) {
+                if(this.dealer.getSession().getInGamePlayers().get(i).getCurrHandFinalValue() > maxHandValue &&
+                   this.dealer.getSession().getInGamePlayers().get(i).getPot() > 0)
+                    maxHandValue = this.dealer.getSession().getInGamePlayers().get(i).getCurrHandFinalValue();
+            }
+
+            for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++) {
+                if(this.dealer.getSession().getInGamePlayers().get(i).getCurrHandFinalValue() == maxHandValue &&
+                   this.dealer.getSession().getInGamePlayers().get(i).getPot() > 0)
+                    winners.add(i);
+            }
+
+            // Intermediate variables
+            int winnerPot = 0;
+            int earnings = 0;
+
+            // Due to possible existence of side pots always select the smaller pot
+            for(int i = 0; i < winners.size(); i++) {
+                if(winnerPot == 0)
+                    winnerPot = this.dealer.getSession().getInGamePlayers().get(i).getPot();
+                else if(winnerPot > this.dealer.getSession().getInGamePlayers().get(i).getPot())
+                    winnerPot = this.dealer.getSession().getInGamePlayers().get(i).getPot();
+            }
+
+            // Calculate earnings
+            for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++) {
+                earnings += winnerPot;
+                this.dealer.getSession().getInGamePlayers().get(i).updatePot(-winnerPot);
+            }
+
+            // Update earnings
+            for(int i = 0; i < winners.size(); i++) {
+                this.playerEarnings.put(winners.get(i), this.playerEarnings.get(i) + earnings/winners.size());
+            }
         }
-        ArrayList<Integer> winners = new ArrayList<>();
-        int maxHandValue = this.dealer.getSession().getInGamePlayers().get(0).getCurrHandFinalValue();
-
-        for(int i = 1; i < this.dealer.getSession().getInGamePlayers().size(); i++) {
-            if(this.dealer.getSession().getInGamePlayers().get(i).getCurrHandFinalValue() > maxHandValue)
-                maxHandValue = this.dealer.getSession().getInGamePlayers().get(i).getCurrHandFinalValue();
-        }
-
-        for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++) {
-            if(this.dealer.getSession().getInGamePlayers().get(i).getCurrHandFinalValue() == maxHandValue)
-                winners.add(i);
-        }
-
-        int winnerPot = this.dealer.getSession().getInGamePlayers().get(winners.get(0)).getPot();
-        // 200 1000 1000
-        //
-        for(int id : winners)
-            System.out.println(id);
-        System.out.println(maxHandValue);
-
 
     }
 
@@ -139,6 +175,9 @@ public class EndTurn extends Behaviour {
         return false;
     }
 
+    /**
+     * Terminates behaviour
+     */
     private void terminate() {
         this.status = true;
     }
