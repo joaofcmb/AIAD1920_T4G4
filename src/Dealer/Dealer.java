@@ -1,5 +1,8 @@
 package Dealer;
 
+import Dealer.SessionServer.JoinSessionServer;
+import Dealer.SessionServer.OfferSessionServer;
+import Dealer.SessionServer.SessionPlayersServer;
 import Session.Session;
 import jade.core.AID;
 import jade.core.Agent;
@@ -64,11 +67,11 @@ public class Dealer extends Agent {
             DFD.addServices(SD);
             try {
                 DFService.register(this, DFD);
-                System.out.println(this.getName() + " :: Has started a new poker session: " +
-                        "SMALL_BLIND (" + this.tableSettings.get("smallBlind") + "$), " +
-                        "BIG_BLIND (" + this.tableSettings.get("bigBlind") + "$), " +
-                        "LOWER_BUY_IN (" + this.tableSettings.get("lowerBuyIn") + "$), " +
-                        "UPPER_BUY_IN (" + this.tableSettings.get("upperBuyIn") + "$)."
+                System.out.println(this.getName() + " :: Has started a new poker session :: " +
+                        "SMALL_BLIND[" + this.tableSettings.get("smallBlind") + "] - " +
+                        "BIG_BLIND[" + this.tableSettings.get("bigBlind") + "] - " +
+                        "LOWER_BUY_IN[" + this.tableSettings.get("lowerBuyIn") + "] - " +
+                        "UPPER_BUY_IN[" + this.tableSettings.get("upperBuyIn") + "]"
                 );
             }
             catch (FIPAException fe) {
@@ -98,7 +101,7 @@ public class Dealer extends Agent {
      * Agent clean-up operations
      */
     protected void takeDown() {
-        System.out.println(this.getName() + " :: Terminating.");
+        System.out.println(this.getName() + " :: Terminating");
     }
 
     /**
@@ -106,7 +109,7 @@ public class Dealer extends Agent {
      * @param player New player to be added
      * @return True if new player is added false otherwise
      */
-    boolean updateCurrPlayers(AID player, int buyIn) {
+    public boolean updateCurrPlayers(AID player, int buyIn) {
         if(this.currPlayers.size() < this.tableSettings.get("maxPlayers") &&
                 !this.containsPlayer(player.getName())) {
             this.currPlayers.add(new Player(buyIn, player));
@@ -125,7 +128,7 @@ public class Dealer extends Agent {
     /**
      * Retrieve current players structure
      */
-    LinkedList<Player> getCurrPlayers() {
+    public LinkedList<Player> getCurrPlayers() {
         return currPlayers;
     }
 
@@ -145,7 +148,7 @@ public class Dealer extends Agent {
     /**
      * Retrieve dealer current state
      */
-    State getDealerState() {
+    public State getDealerState() {
         return dealerState;
     }
 
@@ -153,14 +156,14 @@ public class Dealer extends Agent {
      * Set dealer's new state
      * @param dealerState New state
      */
-    void setDealerState(State dealerState) {
+    public void setDealerState(State dealerState) {
         this.dealerState = dealerState;
     }
 
     /**
      * Create new session
      */
-    void createNewSession() {
+    public void createNewSession() {
         this.session = new Session(this.currPlayers);
     }
 

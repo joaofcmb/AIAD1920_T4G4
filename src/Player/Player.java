@@ -1,5 +1,6 @@
 package Player;
 
+import Player.SessionServer.SearchSessionServer;
 import Session.Card;
 import jade.core.AID;
 import jade.core.Agent;
@@ -79,20 +80,20 @@ public class Player extends Agent {
      * Agent clean-up operations
      */
     protected void takeDown() {
-        System.out.println(this.getName() + " :: Terminating.");
+        System.out.println(this.getName() + " :: Terminating");
     }
 
     /**
      * Get player state
      */
-    State getPlayerState() {
+    public State getPlayerState() {
         return playerState;
     }
 
     /**
      * Get player buy in
      */
-    int getBuyIn() {
+    public int getBuyIn() {
         return buyIn;
     }
 
@@ -106,14 +107,14 @@ public class Player extends Agent {
     /**
      * Set player state
      */
-    void setPlayerState(State playerState) {
+    public void setPlayerState(State playerState) {
         this.playerState = playerState;
     }
 
     /**
      * Set player current session dealer
      */
-    void setDealer(AID dealer) {
+    public void setDealer(AID dealer) {
         this.dealer = dealer;
     }
 

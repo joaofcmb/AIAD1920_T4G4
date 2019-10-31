@@ -77,7 +77,7 @@ public class PreFlop extends Behaviour {
 
                 if(msg != null) {
                     System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
-                            " has sent session start confirmation.");
+                            " has sent card reception confirmation");
                     this.state = State.CARD_DELIVERY;
                     if(targetPlayer >= this.dealer.getSession().getCurrPlayers().size()*2)
                         this.state = State.SMALL_BIG_BLIND;

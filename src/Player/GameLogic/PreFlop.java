@@ -56,8 +56,7 @@ public class PreFlop extends Behaviour {
 
                     myAgent.send(reply);
 
-                    System.out.println(this.player.getName() + " :: Received " + msg.getContent() +
-                            ". Send card reception confirmation.");
+                    System.out.println(this.player.getName() + " :: Received " + msg.getContent());
 
                     if(this.player.getCards().size() == 2) {
                         this.state = State.SMALL_BIG_BLIND;
