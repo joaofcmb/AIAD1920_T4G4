@@ -6,6 +6,8 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
+import java.io.IOException;
+
 public class StartingSession extends Behaviour {
 
     /**
@@ -55,6 +57,12 @@ public class StartingSession extends Behaviour {
         this.dealer.createNewSession();
 
         System.out.println(this.dealer.getName() + " :: Session has started");
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Add game logic behaviour
         this.dealer.addBehaviour(new Logic(this.dealer));

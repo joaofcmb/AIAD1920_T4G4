@@ -7,6 +7,7 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
+import java.io.IOException;
 import java.util.*;
 
 public class EndTurn extends Behaviour {
@@ -28,7 +29,13 @@ public class EndTurn extends Behaviour {
     EndTurn(Dealer dealer) {
         this.dealer = dealer;
 
-        for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++)
+        // First player who has not folded
+        while(this.dealer.getSession().getCurrPlayers().get(targetPlayer).isFoldStatus()) {
+            this.targetPlayer++;
+        }
+
+        // Initialize player earnings with 0 values
+        for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++)
             this.playerEarnings.put(i, 0);
     }
 
@@ -39,13 +46,13 @@ public class EndTurn extends Behaviour {
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
                 // Configure message
-                msg.addReceiver(this.dealer.getSession().getInGamePlayers().get(targetPlayer).getPlayer());
+                msg.addReceiver(this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer());
                 msg.setConversationId("show-up-cards");
                 msg.setReplyWith("show-up-cards" + System.currentTimeMillis());
 
                 // Send message
                 System.out.println(this.dealer.getName() + " :: Retrieving " +
-                        this.dealer.getSession().getInGamePlayers().get(targetPlayer).getPlayer().getName() + " cards");
+                        this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName() + " cards");
                 myAgent.send(msg);
 
                 // Prepare the template to get the reply
@@ -64,24 +71,40 @@ public class EndTurn extends Behaviour {
                     String[] firstCard = content[0].split("-");
                     String[] secondCard = content[1].split("-");
 
-                    LinkedList<Card> playerHand = this.dealer.getSession().getTable();
+                    LinkedList<Card> playerHand = (LinkedList) this.dealer.getSession().getTable().clone();
 
                     playerHand.add(new Card(firstCard[0], firstCard[1]));
                     playerHand.add(new Card(secondCard[0], secondCard[1]));
 
                     // Retrieve hand value
+                    StringBuilder hand = new StringBuilder();
                     int handValue = Card.rankHand(playerHand);
 
-                    this.dealer.getSession().getInGamePlayers().get(this.targetPlayer).setCurrHandFinalValue(handValue);
-                    System.out.println(this.dealer.getName() + " :: " + reply.getSender().getName() +
-                            " has shown up his cards :: " + reply.getContent() + " :: Hand value = " + handValue);
+                    for(Card card : playerHand)
+                        hand.append(card.toString()).append(" ");
 
-                    if(this.targetPlayer == this.dealer.getSession().getInGamePlayers().size() - 1) {
+                    this.dealer.getSession().getCurrPlayers().get(this.targetPlayer).setCurrHandFinalValue(handValue);
+                    System.out.println(this.dealer.getName() + " :: " + reply.getSender().getName() +
+                            " has shown up his cards :: " + reply.getContent() + " :: Hand (" + hand + ") value = " + handValue);
+
+                    if(this.targetPlayer == this.dealer.getSession().getCurrPlayers().size() - 1) {
                         this.targetPlayer = 0;
+                        this.computeEarnings();
                         this.state = State.DISTRIBUTING_EARNINGS;
                     }
                     else {
                         this.targetPlayer++;
+
+                        while(this.dealer.getSession().getCurrPlayers().get(targetPlayer).isFoldStatus()) {
+                            if(this.targetPlayer == this.dealer.getSession().getCurrPlayers().size() - 1) {
+                                this.targetPlayer = 0;
+                                this.computeEarnings();
+                                this.state = State.DISTRIBUTING_EARNINGS;
+                            }
+                            else
+                                this.targetPlayer++;
+                        }
+
                         this.state = State.INFORM_PLAYER_TO_SHOW_HAND;
                     }
                 }
@@ -90,27 +113,39 @@ public class EndTurn extends Behaviour {
                 }
                 break;
             case DISTRIBUTING_EARNINGS:
-                this.computeEarnings();
+                try {
+                    System.in.read();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 msg = new ACLMessage(ACLMessage.INFORM);
 
                 // Configure message
-                msg.addReceiver(this.dealer.getSession().getInGamePlayers().get(targetPlayer).getPlayer());
+                msg.addReceiver(this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer());
                 msg.setContent(Integer.toString(this.playerEarnings.get(this.targetPlayer)));
                 msg.setConversationId("earnings");
                 msg.setReplyWith("earnings" + System.currentTimeMillis());
 
                 // Send message
                 System.out.println(this.dealer.getName() + " :: " +
-                        this.dealer.getSession().getInGamePlayers().get(targetPlayer).getPlayer().getName()
+                        this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName()
                         + (this.playerEarnings.get(targetPlayer) > 0 ? " has won " + this.playerEarnings.get(targetPlayer) : " has lost"));
 
                 myAgent.send(msg);
 
                 if(targetPlayer == this.playerEarnings.size() - 1)
                     this.terminate();
-                else
+                else {
                     targetPlayer++;
+
+                    while(this.dealer.getSession().getCurrPlayers().get(targetPlayer).isFoldStatus()) {
+                        if(this.targetPlayer == this.dealer.getSession().getCurrPlayers().size() - 1)
+                            this.terminate();
+                        else
+                            this.targetPlayer++;
+                    }
+                }
                 break;
         }
 
@@ -125,15 +160,15 @@ public class EndTurn extends Behaviour {
             int maxHandValue = 0;
             ArrayList<Integer> winners = new ArrayList<>();
 
-            for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++) {
-                if(this.dealer.getSession().getInGamePlayers().get(i).getCurrHandFinalValue() > maxHandValue &&
-                   this.dealer.getSession().getInGamePlayers().get(i).getPot() > 0)
-                    maxHandValue = this.dealer.getSession().getInGamePlayers().get(i).getCurrHandFinalValue();
+            for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++) {
+                if(this.dealer.getSession().getCurrPlayers().get(i).getCurrHandFinalValue() > maxHandValue &&
+                   this.dealer.getSession().getCurrPlayers().get(i).getPot() > 0)
+                    maxHandValue = this.dealer.getSession().getCurrPlayers().get(i).getCurrHandFinalValue();
             }
 
-            for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++) {
-                if(this.dealer.getSession().getInGamePlayers().get(i).getCurrHandFinalValue() == maxHandValue &&
-                   this.dealer.getSession().getInGamePlayers().get(i).getPot() > 0)
+            for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++) {
+                if(this.dealer.getSession().getCurrPlayers().get(i).getCurrHandFinalValue() == maxHandValue &&
+                   this.dealer.getSession().getCurrPlayers().get(i).getPot() > 0)
                     winners.add(i);
             }
 
@@ -144,15 +179,15 @@ public class EndTurn extends Behaviour {
             // Due to possible existence of side pots always select the smaller pot
             for(int i = 0; i < winners.size(); i++) {
                 if(winnerPot == 0)
-                    winnerPot = this.dealer.getSession().getInGamePlayers().get(i).getPot();
-                else if(winnerPot > this.dealer.getSession().getInGamePlayers().get(i).getPot())
-                    winnerPot = this.dealer.getSession().getInGamePlayers().get(i).getPot();
+                    winnerPot = this.dealer.getSession().getCurrPlayers().get(i).getPot();
+                else if(winnerPot > this.dealer.getSession().getCurrPlayers().get(i).getPot())
+                    winnerPot = this.dealer.getSession().getCurrPlayers().get(i).getPot();
             }
 
             // Calculate earnings
-            for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++) {
-                earnings += winnerPot;
-                this.dealer.getSession().getInGamePlayers().get(i).updatePot(-winnerPot);
+            for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++) {
+                earnings += Math.min(this.dealer.getSession().getCurrPlayers().get(i).getPot(), winnerPot);
+                this.dealer.getSession().getCurrPlayers().get(i).updatePot(-Math.min(this.dealer.getSession().getCurrPlayers().get(i).getPot(), winnerPot));
             }
 
             // Update earnings
@@ -168,7 +203,7 @@ public class EndTurn extends Behaviour {
      * @return True it there are, false otherwise
      */
     private boolean valueInPot() {
-        for(Player player : this.dealer.getSession().getInGamePlayers())
+        for(Player player : this.dealer.getSession().getCurrPlayers())
             if(player.getPot() > 0)
                 return true;
 
@@ -185,5 +220,15 @@ public class EndTurn extends Behaviour {
     @Override
     public boolean done() {
         return this.status;
+    }
+
+    @Override
+    public int onEnd() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return super.onEnd();
     }
 }

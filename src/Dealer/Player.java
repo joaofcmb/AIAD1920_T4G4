@@ -30,6 +30,17 @@ public class Player {
     private int currHandFinalValue;
 
     /**
+     * All in status: true if all in false otherwise
+     */
+    private boolean allInStatus = false;
+
+    /**
+     * Fold status: true if all in false otherwise
+     */
+    private boolean foldStatus = false;
+
+
+    /**
      * Player constructor
      * @param chips player buy in
      * @param player agent
@@ -119,5 +130,21 @@ public class Player {
      */
     public void setCurrHandFinalValue(int currHandFinalValue) {
         this.currHandFinalValue = currHandFinalValue;
+    }
+
+    public boolean isAllInStatus() {
+        return allInStatus;
+    }
+
+    public void setAllInStatus() {
+        this.allInStatus = !this.allInStatus;
+    }
+
+    public boolean isFoldStatus() {
+        return foldStatus;
+    }
+
+    public void setFoldStatus() {
+        this.foldStatus = !this.foldStatus;
     }
 }
