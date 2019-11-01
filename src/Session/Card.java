@@ -162,6 +162,9 @@ public class Card {
      * @return hand ranking
      */
     public static int rankHand(LinkedList<Card> hand) {
+        // Player cards
+        int playerCardMaxValue = Math.max(Card.cardValue.get(hand.get(5).rank), Card.cardValue.get(hand.get(6).rank));
+
         // Sort hand
         Card.sort(hand);
 
@@ -218,7 +221,7 @@ public class Card {
                                 cardCounter++;
                             }
                             if(cardCounter == 5)
-                                return handValue;
+                                return handValue + playerCardMaxValue;
                         }
                     }
                     else
@@ -226,7 +229,7 @@ public class Card {
                     break;
                 case STRAIGHT: // Points [400-499]
                     if(sequences.size() > 0)
-                        return Card.cardValue.get(sequences.get(0).get(0).split("-")[0]) + 400;
+                        return Card.cardValue.get(sequences.get(0).get(0).split("-")[0]) + playerCardMaxValue + 400;
                     else
                         state = State.THREE_OF_A_KIND;
                     break;
@@ -247,12 +250,12 @@ public class Card {
                 case ONE_PAIR:  // Points [100-199]
                     pair = Card.groupOfX(handInfo, 2);
                     if(pair.size() > 0)
-                        return Card.cardValue.get(pair.get(0)) + 100;
+                        return Card.cardValue.get(pair.get(0)) + playerCardMaxValue + 100;
                     else
                         state = State.HIGH_CARD;
                     break;
                 case HIGH_CARD: // Points [1-99]
-                    return Card.cardValue.get(hand.get(0).getRank());
+                    return playerCardMaxValue;
             }
         }
     }

@@ -133,6 +133,7 @@ public class EndTurn extends Behaviour {
                         this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName()
                         + (this.playerEarnings.get(targetPlayer) > 0 ? " has won " + this.playerEarnings.get(targetPlayer) : " has lost"));
 
+                this.dealer.getSession().getCurrPlayers().get(targetPlayer).updateChips(this.playerEarnings.get(targetPlayer));
                 myAgent.send(msg);
 
                 if(targetPlayer == this.playerEarnings.size() - 1)
