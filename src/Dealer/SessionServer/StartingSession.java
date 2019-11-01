@@ -58,11 +58,11 @@ public class StartingSession extends Behaviour {
 
         System.out.println(this.dealer.getName() + " :: Session has started");
 
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            System.in.read();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         // Add game logic behaviour
         this.dealer.addBehaviour(new Logic(this.dealer));

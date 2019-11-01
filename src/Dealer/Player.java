@@ -147,4 +147,12 @@ public class Player {
     public void setFoldStatus() {
         this.foldStatus = !this.foldStatus;
     }
+
+    public void resetAll() {
+        this.pot = 0;
+        this.currBet = 0;
+        this.currHandFinalValue = 0;
+        this.allInStatus = false;
+        this.foldStatus = false;
+    }
 }

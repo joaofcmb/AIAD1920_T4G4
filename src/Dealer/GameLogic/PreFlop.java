@@ -137,13 +137,13 @@ public class PreFlop extends Behaviour {
         return status;
     }
 
-    @Override
-    public int onEnd() {
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return super.onEnd();
-    }
+//    @Override
+//    public int onEnd() {
+//        try {
+//            System.in.read();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return super.onEnd();
+//    }
 }

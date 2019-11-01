@@ -32,13 +32,14 @@ public class Logic extends SequentialBehaviour {
         addSubBehaviour(new Bet(this.player));
         addSubBehaviour(new TurnRiver(this.player, "river"));
         addSubBehaviour(new Bet(this.player));
-        addSubBehaviour(new EndTurn(this.player));
+        addSubBehaviour(new EndGame(this.player));
+        addSubBehaviour(new BetweenGames(this.player));
     }
 
     @Override
     public int onEnd() {
-        // reset();
-        // this.dealer.addBehaviour(this);
+        reset();
+        this.player.addBehaviour(this);
         return super.onEnd();
     }
 }

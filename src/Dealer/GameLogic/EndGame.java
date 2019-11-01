@@ -10,7 +10,7 @@ import jade.lang.acl.MessageTemplate;
 import java.io.IOException;
 import java.util.*;
 
-public class EndTurn extends Behaviour {
+public class EndGame extends Behaviour {
 
     /**
      * Dealer agent
@@ -51,7 +51,7 @@ public class EndTurn extends Behaviour {
      * End turn constructor
      * @param dealer agent
      */
-    EndTurn(Dealer dealer) {
+    EndGame(Dealer dealer) {
         this.dealer = dealer;
         this.targetPlayer = 0;
 
@@ -139,11 +139,11 @@ public class EndTurn extends Behaviour {
                 }
                 break;
             case DISTRIBUTING_EARNINGS:
-                try {
-                    System.in.read();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    System.in.read();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
                 msg = new ACLMessage(ACLMessage.INFORM);
 
@@ -244,11 +244,11 @@ public class EndTurn extends Behaviour {
 
     @Override
     public int onEnd() {
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            System.in.read();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
         return super.onEnd();
     }
 }

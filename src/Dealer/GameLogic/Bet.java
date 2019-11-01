@@ -238,11 +238,11 @@ public class Bet extends Behaviour {
         for(Player player : this.dealer.getSession().getCurrPlayers())
             player.resetCurrBet();
 
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            System.in.read();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
         return super.onEnd();
     }

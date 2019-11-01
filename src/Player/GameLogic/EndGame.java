@@ -8,7 +8,7 @@ import jade.lang.acl.MessageTemplate;
 
 import java.util.ArrayList;
 
-public class EndTurn extends Behaviour {
+public class EndGame extends Behaviour {
 
     /**
      * PLayer agent
@@ -34,7 +34,7 @@ public class EndTurn extends Behaviour {
      * End turn constructor
      * @param player agent
      */
-    EndTurn(Player player) {
+    EndGame(Player player) {
         this.player = player;
     }
 
