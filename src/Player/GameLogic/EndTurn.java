@@ -20,12 +20,20 @@ public class EndTurn extends Behaviour {
      */
     private boolean status = false;
 
-    MessageTemplate msgTemplate;
-
+    /**
+     * Behaviour possible states
+     */
     enum State {SHOWING_HAND, EARNINGS_DISTRIBUTION}
 
+    /**
+     * Current behaviour state
+     */
     private State state = State.SHOWING_HAND;
 
+    /**
+     * End turn constructor
+     * @param player agent
+     */
     EndTurn(Player player) {
         this.player = player;
     }
@@ -34,7 +42,7 @@ public class EndTurn extends Behaviour {
     public void action() {
         switch (state) {
             case SHOWING_HAND:
-                this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("show-up-cards"),
+                MessageTemplate msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("show-up-cards"),
                         MessageTemplate.MatchPerformative(ACLMessage.INFORM));
                 ACLMessage msg = myAgent.receive(msgTemplate);
 
@@ -57,7 +65,7 @@ public class EndTurn extends Behaviour {
                 }
                 break;
             case EARNINGS_DISTRIBUTION:
-                this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("earnings"),
+                msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("earnings"),
                         MessageTemplate.MatchPerformative(ACLMessage.INFORM));
                 msg = myAgent.receive(msgTemplate);
 

@@ -12,20 +12,45 @@ import java.util.*;
 
 public class EndTurn extends Behaviour {
 
-    Dealer dealer;
+    /**
+     * Dealer agent
+     */
+    private Dealer dealer;
 
-    boolean status = false;
+    /**
+     * Behaviour status
+     */
+    private boolean status = false;
 
-    MessageTemplate msgTemplate;
+    /**
+     * Message template
+     */
+    private MessageTemplate msgTemplate;
 
+    /**
+     * Behaviour possible states
+     */
     enum State {INFORM_PLAYER_TO_SHOW_HAND, RECEIVING_PLAYER_HAND, DISTRIBUTING_EARNINGS}
 
+    /**
+     * Current behaviour state
+     */
     private State state = State.INFORM_PLAYER_TO_SHOW_HAND;
 
-    int targetPlayer;
+    /**
+     * Player which dealer is referencing to
+     */
+    private int targetPlayer;
 
-    HashMap<Integer, Integer> playerEarnings = new HashMap<>();
+    /**
+     * Each player earnings
+     */
+    private HashMap<Integer, Integer> playerEarnings = new HashMap<>();
 
+    /**
+     * End turn constructor
+     * @param dealer agent
+     */
     EndTurn(Dealer dealer) {
         this.dealer = dealer;
         this.targetPlayer = 0;
