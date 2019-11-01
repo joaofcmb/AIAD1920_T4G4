@@ -22,12 +22,13 @@ public class EndTurn extends Behaviour {
 
     private State state = State.INFORM_PLAYER_TO_SHOW_HAND;
 
-    int targetPlayer = 0;
+    int targetPlayer;
 
     HashMap<Integer, Integer> playerEarnings = new HashMap<>();
 
     EndTurn(Dealer dealer) {
         this.dealer = dealer;
+        this.targetPlayer = 0;
 
         // First player who has not folded
         while(this.dealer.getSession().getCurrPlayers().get(targetPlayer).isFoldStatus()) {
@@ -136,16 +137,9 @@ public class EndTurn extends Behaviour {
 
                 if(targetPlayer == this.playerEarnings.size() - 1)
                     this.terminate();
-                else {
+                else
                     targetPlayer++;
 
-                    while(this.dealer.getSession().getCurrPlayers().get(targetPlayer).isFoldStatus()) {
-                        if(this.targetPlayer == this.dealer.getSession().getCurrPlayers().size() - 1)
-                            this.terminate();
-                        else
-                            this.targetPlayer++;
-                    }
-                }
                 break;
         }
 

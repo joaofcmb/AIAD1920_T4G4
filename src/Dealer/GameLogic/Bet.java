@@ -126,8 +126,9 @@ public class Bet extends Behaviour {
                     this.playerTurn = (this.playerTurn == this.dealer.getSession().getCurrPlayers().size() - 1) ? 0 :
                             this.playerTurn + 1;
 
-                    // Avoid folded players
-                    while (this.dealer.getSession().getCurrPlayers().get(this.playerTurn).isFoldStatus()) {
+                    // Avoid folded players and all in players
+                    while (this.dealer.getSession().getCurrPlayers().get(this.playerTurn).isFoldStatus() ||
+                            this.dealer.getSession().getCurrPlayers().get(this.playerTurn).isAllInStatus()) {
                         this.playerTurn = (this.playerTurn == this.dealer.getSession().getCurrPlayers().size() - 1) ? 0 :
                                 this.playerTurn + 1;;
                     }
@@ -165,8 +166,11 @@ public class Bet extends Behaviour {
                 this.dealer.getSession().getCurrPlayers().get(playerTurn).setFoldStatus();
                 return;
             }
-            else if(content[0].equals("All in"))
-                System.out.println("ALL IN"); // TODO - All in
+            else if(content[0].equals("All in")) {
+                this.dealer.getSession().getCurrPlayers().get(playerTurn).setAllInStatus();
+                value = this.dealer.getSession().getCurrPlayers().get(playerTurn).getChips();
+                this.maxBet = value;
+            }
         }
         else {
             value = Integer.parseInt(content[1]);
