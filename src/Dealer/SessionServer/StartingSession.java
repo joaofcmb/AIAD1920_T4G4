@@ -1,9 +1,12 @@
-package Dealer;
+package Dealer.SessionServer;
 
+import Dealer.Dealer;
 import Dealer.GameLogic.Logic;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+
+import java.io.IOException;
 
 public class StartingSession extends Behaviour {
 
@@ -35,7 +38,7 @@ public class StartingSession extends Behaviour {
         // Create new message to inform about session start
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
-        System.out.println(this.dealer.getName() + " :: Informing players about session start.");
+        System.out.println(this.dealer.getName() + " :: Informing players about session start");
 
         // Add all players as receivers
         for(int i = 0; i < this.dealer.getCurrPlayers().size(); i++)
@@ -49,28 +52,17 @@ public class StartingSession extends Behaviour {
         // Send message
         myAgent.send(msg);
 
-        // Prepare the template to get the reply
-        MessageTemplate msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("session-start"),
-                MessageTemplate.MatchInReplyTo(msg.getReplyWith()));
-
-        // Receive replies
-        while (repliesCnt < this.dealer.getCurrPlayers().size()) {
-            msg = myAgent.receive(msgTemplate);
-            if(msg != null) {
-                System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
-                        " has sent session start confirmation.");
-                repliesCnt++;
-            }
-            else {
-                block();
-            }
-        }
-
         // Session start
         this.dealer.setDealerState(Dealer.State.IN_SESSION);
         this.dealer.createNewSession();
 
-        System.out.println(this.dealer.getName() + " :: Session has started.");
+        System.out.println(this.dealer.getName() + " :: Session has started");
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         // Add game logic behaviour
         this.dealer.addBehaviour(new Logic(this.dealer));

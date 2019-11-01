@@ -4,6 +4,8 @@ import Dealer.Dealer;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
+import java.io.IOException;
+
 public class TurnRiver extends Behaviour {
 
     /**
@@ -40,8 +42,8 @@ public class TurnRiver extends Behaviour {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
         // Add all players as receivers
-        for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++)
-            msg.addReceiver(this.dealer.getSession().getInGamePlayers().get(i).getPlayer());
+        for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++)
+            msg.addReceiver(this.dealer.getSession().getCurrPlayers().get(i).getPlayer());
 
         // Configure message
         msg.setContent(this.moment.equals("turn") ? this.dealer.getSession().getTable().get(3).toString() :
@@ -66,5 +68,15 @@ public class TurnRiver extends Behaviour {
     @Override
     public boolean done() {
         return status;
+    }
+
+    @Override
+    public int onEnd() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return super.onEnd();
     }
 }

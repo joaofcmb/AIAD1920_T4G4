@@ -1,5 +1,6 @@
-package Dealer;
+package Dealer.SessionServer;
 
+import Dealer.Dealer;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -15,7 +16,7 @@ public class JoinSessionServer extends CyclicBehaviour {
      * Default constructor
      * @param dealer Agent
      */
-    JoinSessionServer(Dealer dealer) {
+    public JoinSessionServer(Dealer dealer) {
         this.dealer = dealer;
     }
 
@@ -32,7 +33,7 @@ public class JoinSessionServer extends CyclicBehaviour {
                 if (this.dealer.updateCurrPlayers(msg.getSender(), Integer.parseInt(msg.getContent()))) {
                     reply.setPerformative(ACLMessage.INFORM);
                     System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
-                            " successfully joined current session.");
+                            " successfully joined current session");
                 } else {
                     reply.setPerformative(ACLMessage.FAILURE);
                     reply.setContent("join-not-possible");
@@ -40,9 +41,10 @@ public class JoinSessionServer extends CyclicBehaviour {
 
                 // Send reply
                 myAgent.send(reply);
-            } else {
-                block();
             }
+            else
+                block();
+
         }
     }
 }

@@ -40,7 +40,7 @@ public class Flop extends Behaviour {
 
             for(int i = 0; i < 3; i++) {
                 String[] card = content[i].split("-");
-                this.player.getTable().add(new Card(card[1], card[0]));
+                this.player.getTable().add(new Card(card[0], card[1]));
             }
 
             this.terminate();

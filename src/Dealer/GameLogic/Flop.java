@@ -5,6 +5,7 @@ import Session.Card;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class Flop extends Behaviour {
@@ -37,8 +38,8 @@ public class Flop extends Behaviour {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
         // Add all players as receivers
-        for(int i = 0; i < this.dealer.getSession().getInGamePlayers().size(); i++)
-            msg.addReceiver(this.dealer.getSession().getInGamePlayers().get(i).getPlayer());
+        for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++)
+            msg.addReceiver(this.dealer.getSession().getCurrPlayers().get(i).getPlayer());
 
         LinkedList<Card> table = this.dealer.getSession().getTable();
 
@@ -64,5 +65,15 @@ public class Flop extends Behaviour {
     @Override
     public boolean done() {
         return status;
+    }
+
+    @Override
+    public int onEnd() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return super.onEnd();
     }
 }

@@ -46,7 +46,7 @@ public class PreFlop extends Behaviour {
                 if (msg != null) {
                     String[] content = msg.getContent().split("-");
 
-                    this.player.getCards().add(new Card(content[1], content[0]));
+                    this.player.getCards().add(new Card(content[0], content[1]));
 
                     // Create reply
                     ACLMessage reply = msg.createReply();
@@ -56,8 +56,7 @@ public class PreFlop extends Behaviour {
 
                     myAgent.send(reply);
 
-                    System.out.println(this.player.getName() + " :: Received " + msg.getContent() +
-                            ". Send card reception confirmation.");
+                    System.out.println(this.player.getName() + " :: Received " + msg.getContent());
 
                     if(this.player.getCards().size() == 2) {
                         this.state = State.SMALL_BIG_BLIND;

@@ -6,6 +6,8 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import Dealer.Player;
 
+import java.io.IOException;
+
 public class PreFlop extends Behaviour {
 
     /**
@@ -77,7 +79,7 @@ public class PreFlop extends Behaviour {
 
                 if(msg != null) {
                     System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
-                            " has sent session start confirmation.");
+                            " has sent card reception confirmation");
                     this.state = State.CARD_DELIVERY;
                     if(targetPlayer >= this.dealer.getSession().getCurrPlayers().size()*2)
                         this.state = State.SMALL_BIG_BLIND;
@@ -89,11 +91,13 @@ public class PreFlop extends Behaviour {
             case SMALL_BIG_BLIND:
                 // Small blind bet
                 this.dealer.getSession().getSmallBlind().updatePot(this.dealer.getTableSettings().get("smallBlind"));
+                this.dealer.getSession().getSmallBlind().updateChips(-this.dealer.getTableSettings().get("smallBlind"));
                 this.dealer.getSession().addBet(this.dealer.getSession().getSmallBlind().getPlayer().getName(),
                         "Bet-" + this.dealer.getTableSettings().get("smallBlind"));
 
                 // Big blind bet
                 this.dealer.getSession().getBigBlind().updatePot(this.dealer.getTableSettings().get("bigBlind"));
+                this.dealer.getSession().getBigBlind().updateChips(-this.dealer.getTableSettings().get("bigBlind"));
                 this.dealer.getSession().addBet(this.dealer.getSession().getBigBlind().getPlayer().getName(),
                         "Bet-" + this.dealer.getTableSettings().get("bigBlind"));
 
@@ -131,5 +135,15 @@ public class PreFlop extends Behaviour {
     @Override
     public boolean done() {
         return status;
+    }
+
+    @Override
+    public int onEnd() {
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return super.onEnd();
     }
 }

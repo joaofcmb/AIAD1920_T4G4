@@ -18,9 +18,9 @@ public class Session {
     private LinkedList<Player> currPlayers;
 
     /**
-     * Players in current game. Don´t contains those players who fold theirs hands
+     * Chips of players of have folded
      */
-    private LinkedList<Player> inGamePlayers;
+    private int foldPot = 0;
 
     /**
      * Stores players bets history
@@ -39,7 +39,6 @@ public class Session {
     public Session(LinkedList<Player> currPlayers) {
         this.deck = new Deck();
         this.currPlayers = currPlayers;
-        this.inGamePlayers = currPlayers;
     }
 
     /**
@@ -67,14 +66,14 @@ public class Session {
      * Returns current small blind player
      */
     public Player getSmallBlind() {
-        return this.inGamePlayers.get(0);
+        return this.currPlayers.get(0);
     }
 
     /**
      * Returns current big blind player
      */
     public Player getBigBlind() {
-        return this.inGamePlayers.get(1);
+        return this.currPlayers.get(1);
     }
 
     /**
@@ -100,10 +99,18 @@ public class Session {
     }
 
     /**
-     * Returns player current in game
+     *  Retrieves chips of folded players
      */
-    public LinkedList<Player> getInGamePlayers() {
-        return inGamePlayers;
+    public int getFoldPot() {
+        return foldPot;
+    }
+
+    /**
+     * Updates fold pot
+     * @param foldPot new value
+     */
+    public void updateFoldPot(int foldPot) {
+        this.foldPot += foldPot;
     }
 }
 

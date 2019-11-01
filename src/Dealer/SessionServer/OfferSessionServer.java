@@ -1,5 +1,6 @@
-package Dealer;
+package Dealer.SessionServer;
 
+import Dealer.Dealer;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
@@ -15,7 +16,7 @@ public class OfferSessionServer extends CyclicBehaviour {
      * Default constructor
      * @param dealer Agent
      */
-    OfferSessionServer(Dealer dealer) {
+    public OfferSessionServer(Dealer dealer) {
         this.dealer = dealer;
     }
 
@@ -49,9 +50,8 @@ public class OfferSessionServer extends CyclicBehaviour {
                 }
                 myAgent.send(reply);
             }
-            else {
+            else
                 block();
-            }
         }
     }
 }

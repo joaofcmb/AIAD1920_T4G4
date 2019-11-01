@@ -1,5 +1,6 @@
-package Dealer;
+package Dealer.SessionServer;
 
+import Dealer.Dealer;
 import jade.core.behaviours.TickerBehaviour;
 
 public class SessionPlayersServer extends TickerBehaviour {
@@ -14,7 +15,7 @@ public class SessionPlayersServer extends TickerBehaviour {
      * @param dealer Agent
      * @param period Tick period
      */
-    SessionPlayersServer(Dealer dealer, long period) {
+    public SessionPlayersServer(Dealer dealer, long period) {
         super(dealer, period);
         this.dealer = dealer;
     }

@@ -7,6 +7,7 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -70,7 +71,7 @@ public class Bet extends Behaviour {
     public void action() {
         switch (this.state) {
             case PLAYER_BET_TURN:
-                AID playerTurn = this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getPlayer();
+                AID playerTurn = this.dealer.getSession().getCurrPlayers().get(this.playerTurn).getPlayer();
 
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
@@ -104,7 +105,7 @@ public class Bet extends Behaviour {
                     msg = new ACLMessage(ACLMessage.INFORM);
 
                     // Configure message
-                    for(Player player : this.dealer.getSession().getInGamePlayers())
+                    for(Player player : this.dealer.getSession().getCurrPlayers())
                         if(!player.getPlayer().getName().equals(reply.getSender().getName()))
                             msg.addReceiver(player.getPlayer());
 
@@ -122,8 +123,15 @@ public class Bet extends Behaviour {
                     this.parseBet(reply.getSender(), reply.getContent());
 
                     // Update player turn
-                    this.playerTurn = (this.playerTurn == this.dealer.getSession().getInGamePlayers().size() - 1) ? 0 :
+                    this.playerTurn = (this.playerTurn == this.dealer.getSession().getCurrPlayers().size() - 1) ? 0 :
                             this.playerTurn + 1;
+
+                    // Avoid folded players and all in players
+                    while (this.dealer.getSession().getCurrPlayers().get(this.playerTurn).isFoldStatus() ||
+                            this.dealer.getSession().getCurrPlayers().get(this.playerTurn).isAllInStatus()) {
+                        this.playerTurn = (this.playerTurn == this.dealer.getSession().getCurrPlayers().size() - 1) ? 0 :
+                                this.playerTurn + 1;;
+                    }
 
                     // Determines whether betting phase has ended or not
                     this.terminate();
@@ -140,7 +148,7 @@ public class Bet extends Behaviour {
      */
     private String getBettingOptions() {
         return this.maxBet == 0 ? "Check:Bet:Fold:All in" :
-                "Call-" + (this.maxBet - this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getCurrBet()) + ":Fold:Raise-" +
+                "Call-" + (this.maxBet - this.dealer.getSession().getCurrPlayers().get(this.playerTurn).getCurrBet()) + ":Fold:Raise-" +
                         this.maxBet * 2 + ":All in";
     }
 
@@ -154,10 +162,15 @@ public class Bet extends Behaviour {
         int value = 0;  // Check as default value
 
         if(content.length == 1) {
-            if(content[0].equals("Fold"))
-                System.out.println("FOLD"); // TODO - Fold
-            else if(content[0].equals("All in"))
-                System.out.println("ALL IN"); // TODO - All in
+            if(content[0].equals("Fold")) {
+                this.dealer.getSession().getCurrPlayers().get(playerTurn).setFoldStatus();
+                return;
+            }
+            else if(content[0].equals("All in")) {
+                this.dealer.getSession().getCurrPlayers().get(playerTurn).setAllInStatus();
+                value = this.dealer.getSession().getCurrPlayers().get(playerTurn).getChips();
+                this.maxBet = value;
+            }
         }
         else {
             value = Integer.parseInt(content[1]);
@@ -168,7 +181,8 @@ public class Bet extends Behaviour {
 
         // Add bet and update pot
         this.addBet(player.getName(), bet);
-        this.dealer.getSession().getInGamePlayers().get(playerTurn).updatePot(value);
+        this.dealer.getSession().getCurrPlayers().get(playerTurn).updatePot(value);
+        this.dealer.getSession().getCurrPlayers().get(playerTurn).updateChips(-value);
     }
 
     /**
@@ -192,8 +206,8 @@ public class Bet extends Behaviour {
      * Terminates behaviour if all players made their bets and its value is the same for each player
      */
     private void terminate() {
-        if(this.bets.containsKey(this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getPlayer().getName()))
-            if(this.dealer.getSession().getInGamePlayers().get(this.playerTurn).getCurrBet() == this.maxBet)
+        if(this.bets.containsKey(this.dealer.getSession().getCurrPlayers().get(this.playerTurn).getPlayer().getName()))
+            if(this.dealer.getSession().getCurrPlayers().get(this.playerTurn).getCurrBet() == this.maxBet)
                 this.status = true;
 
         this.state = State.PLAYER_BET_TURN;
@@ -210,7 +224,7 @@ public class Bet extends Behaviour {
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
         // Configure message
-        for(Player player : this.dealer.getSession().getInGamePlayers())
+        for(Player player : this.dealer.getSession().getCurrPlayers())
             msg.addReceiver(player.getPlayer());
 
         msg.setConversationId("end-betting-phase");
@@ -221,8 +235,14 @@ public class Bet extends Behaviour {
         myAgent.send(msg);
 
         // Reset betting variables
-        for(Player player : this.dealer.getSession().getInGamePlayers())
+        for(Player player : this.dealer.getSession().getCurrPlayers())
             player.resetCurrBet();
+
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return super.onEnd();
     }

@@ -1,6 +1,7 @@
-package Player;
+package Player.SessionServer;
 
 import Player.GameLogic.Logic;
+import Player.Player;
 import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -93,9 +94,8 @@ public class JoinSessionPerformer extends Behaviour {
                             step = 5;
                         }
                     }
-                    else {
+                    else
                         block();
-                    }
                     break;
                 case 2: // Send the intention to join the seller
                     ACLMessage session = new ACLMessage(ACLMessage.ACCEPT_PROPOSAL);
@@ -122,7 +122,7 @@ public class JoinSessionPerformer extends Behaviour {
                         if (reply.getPerformative() == ACLMessage.INFORM) {
                             this.player.setDealer(reply.getSender());
                             System.out.println(this.getAgent().getName() + " :: Successfully joined " +
-                                    reply.getSender().getName() + " session.");
+                                    reply.getSender().getName() + " session");
                             step++;
                         }
                         else {
@@ -131,12 +131,11 @@ public class JoinSessionPerformer extends Behaviour {
                             this.player.addBehaviour(new SearchSessionServer(this.player, 1000));
 
                             System.out.println(this.getAgent().getName() + " :: Attempt failed: Could not join" +
-                                    reply.getSender().getName() + " session.");
+                                    reply.getSender().getName() + " session");
                         }
                     }
-                    else {
+                    else
                         block();
-                    }
                     break;
                 case 4:
                     this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchPerformative(ACLMessage.INFORM),
@@ -145,20 +144,13 @@ public class JoinSessionPerformer extends Behaviour {
                     if(msg != null) {
                         System.out.println(this.player.getName() + " :: " + msg.getSender().getName() +
                                         " starting session.");
-                        // Create reply
-                        reply = msg.createReply();
-
-                        reply.setPerformative(ACLMessage.CONFIRM);
-                        reply.setContent("Session-start-confirmation");
-                        myAgent.send(reply);
 
                         this.player.setPlayerState(Player.State.IN_SESSION);
                         this.player.addBehaviour(new Logic(this.player));
                         step++;
                     }
-                    else {
+                    else
                         block();
-                    }
                     break;
             }
         }
