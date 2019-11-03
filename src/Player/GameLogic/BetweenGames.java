@@ -99,6 +99,7 @@ public class BetweenGames extends Behaviour {
     @Override
     public int onEnd() {
         // TODO - Reset all need variables
+        this.player.getCards().clear();
         this.logic.nextState();
         return super.onEnd();
     }
