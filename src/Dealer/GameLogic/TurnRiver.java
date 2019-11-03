@@ -24,12 +24,18 @@ public class TurnRiver extends Behaviour {
     private String moment;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * Turn and River constructor
      * @param dealer agent
      * @param moment type of moment
      */
-    TurnRiver(Dealer dealer, String moment) {
+    TurnRiver(Dealer dealer, Logic logic, String moment) {
         this.dealer = dealer;
+        this.logic = logic;
         this.moment = moment;
         this.dealer.getSession().getDeck().getCard();   // Removes card from deck [RULE]
     }
@@ -70,13 +76,14 @@ public class TurnRiver extends Behaviour {
         return status;
     }
 
-//    @Override
-//    public int onEnd() {
+    @Override
+    public int onEnd() {
 //        try {
 //            System.in.read();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//        return super.onEnd();
-//    }
+        this.logic.nextState();
+        return super.onEnd();
+    }
 }

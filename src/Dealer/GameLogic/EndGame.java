@@ -48,11 +48,17 @@ public class EndGame extends Behaviour {
     private HashMap<Integer, Integer> playerEarnings = new HashMap<>();
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * End turn constructor
      * @param dealer agent
      */
-    EndGame(Dealer dealer) {
+    EndGame(Dealer dealer, Logic logic) {
         this.dealer = dealer;
+        this.logic = logic;
         this.targetPlayer = 0;
 
         // First player who has not folded
@@ -249,6 +255,7 @@ public class EndGame extends Behaviour {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+        this.logic.nextState();
         return super.onEnd();
     }
 }

@@ -19,11 +19,17 @@ public class Flop extends Behaviour {
     private boolean status = false;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * Flop constructor
      * @param player agent
      */
-    Flop(Player player) {
+    Flop(Player player, Logic logic) {
         this.player = player;
+        this.logic = logic;
     }
 
     @Override
@@ -60,5 +66,11 @@ public class Flop extends Behaviour {
     @Override
     public boolean done() {
         return status;
+    }
+
+    @Override
+    public int onEnd() {
+        this.logic.nextState();
+        return super.onEnd();
     }
 }

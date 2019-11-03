@@ -41,11 +41,17 @@ public class PreFlop extends Behaviour {
     public State state = State.CARD_DELIVERY;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * Pre-flop constructor
      * @param dealer agent
      */
-    PreFlop(Dealer dealer) {
+    PreFlop(Dealer dealer, Logic logic) {
         this.dealer = dealer;
+        this.logic = logic;
     }
 
     @Override
@@ -79,7 +85,7 @@ public class PreFlop extends Behaviour {
 
                 if(msg != null) {
                     System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
-                            " has sent card reception confirmation");
+                            " has sent card reception confirmation :: " + msg.getContent());
                     this.state = State.CARD_DELIVERY;
                     if(targetPlayer >= this.dealer.getSession().getCurrPlayers().size()*2)
                         this.state = State.SMALL_BIG_BLIND;
@@ -137,13 +143,15 @@ public class PreFlop extends Behaviour {
         return status;
     }
 
-//    @Override
-//    public int onEnd() {
+    @Override
+    public int onEnd() {
 //        try {
 //            System.in.read();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//        return super.onEnd();
-//    }
+
+        this.logic.nextState();
+        return super.onEnd();
+    }
 }

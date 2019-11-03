@@ -54,11 +54,17 @@ public class Bet extends Behaviour {
     private int playerTurn;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * Bet constructor
      * @param dealer agent
      */
-    Bet(Dealer dealer, int playerTurn, int maxBet) {
+    Bet(Dealer dealer, Logic logic, int playerTurn, int maxBet) {
         this.dealer = dealer;
+        this.logic = logic;
         this.playerTurn = playerTurn;
         this.maxBet = maxBet;
 
@@ -173,6 +179,7 @@ public class Bet extends Behaviour {
             }
         }
         else {
+            System.out.println("->>> " + content[1]);
             value = Integer.parseInt(content[1]);
 
             if(!content[0].equals("Call"))
@@ -244,6 +251,7 @@ public class Bet extends Behaviour {
 //            e.printStackTrace();
 //        }
 
+        this.logic.nextState();
         return super.onEnd();
     }
 

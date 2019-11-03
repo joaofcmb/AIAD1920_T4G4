@@ -30,8 +30,14 @@ public class BetweenGames extends Behaviour {
      */
     private State state = State.LEAVING_SESSION;
 
-    BetweenGames(Player player) {
+    /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    BetweenGames(Player player, Logic logic) {
         this.player = player;
+        this.logic = logic;
     }
 
     @Override
@@ -93,6 +99,7 @@ public class BetweenGames extends Behaviour {
     @Override
     public int onEnd() {
         // TODO - Reset all need variables
+        this.logic.nextState();
         return super.onEnd();
     }
 }

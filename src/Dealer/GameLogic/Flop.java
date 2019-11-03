@@ -5,7 +5,6 @@ import Session.Card;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
-import java.io.IOException;
 import java.util.LinkedList;
 
 public class Flop extends Behaviour {
@@ -21,11 +20,17 @@ public class Flop extends Behaviour {
     private boolean status = false;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * Flop constructor
      * @param dealer agent
      */
-    Flop(Dealer dealer) {
+    Flop(Dealer dealer, Logic logic) {
         this.dealer = dealer;
+        this.logic = logic;
         this.dealer.getSession().getDeck().getCard();   // Removes card from deck [RULE]
     }
 
@@ -67,13 +72,14 @@ public class Flop extends Behaviour {
         return status;
     }
 
-//    @Override
-//    public int onEnd() {
+    @Override
+    public int onEnd() {
 //        try {
 //            System.in.read();
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-//        return super.onEnd();
-//    }
+        this.logic.nextState();
+        return super.onEnd();
+    }
 }

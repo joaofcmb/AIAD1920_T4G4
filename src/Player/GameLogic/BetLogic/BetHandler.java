@@ -44,7 +44,7 @@ public class BetHandler extends Behaviour {
             reply.setPerformative(ACLMessage.INFORM);
             reply.setContent(bettingOptions[0]);
 
-            System.out.println(this.player.getName() + " :: Send betting option :: " + reply.getContent());
+            System.out.println(this.player.getName() + " :: Send betting option :: " + reply.getContent() + " -- " + bettingOptions[0]);
             myAgent.send(reply);
         }
         else {

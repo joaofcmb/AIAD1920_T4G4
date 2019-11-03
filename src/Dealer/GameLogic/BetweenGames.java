@@ -33,11 +33,17 @@ public class BetweenGames extends Behaviour {
     int targetPlayer = 0;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      *
      * @param dealer
      */
-    BetweenGames(Dealer dealer) {
+    BetweenGames(Dealer dealer, Logic logic) {
         this.dealer = dealer;
+        this.logic = logic;
     }
 
     @Override
@@ -106,8 +112,9 @@ public class BetweenGames extends Behaviour {
 
                 if(msg.getContent().equals("No"))
                     myAgent.doDelete();
-                else
+                else {
                     this.terminate();
+                }
                 break;
         }
     }
@@ -130,6 +137,7 @@ public class BetweenGames extends Behaviour {
         for(Player player : this.dealer.getCurrPlayers())
             player.resetAll();
         System.out.println(this.dealer.getName() + " :: Prepared new session");
+        this.logic.nextState();
         return super.onEnd();
     }
 }

@@ -1,5 +1,6 @@
 package Player.GameLogic.BetLogic;
 
+import Player.GameLogic.Logic;
 import Player.Player;
 import jade.core.behaviours.ParallelBehaviour;
 
@@ -11,12 +12,18 @@ public class Bet extends ParallelBehaviour {
     private Player player;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * Bet constructor
      * @param player agent
      */
-    public Bet(Player player) {
+    public Bet(Player player, Logic logic) {
         super(WHEN_ANY);
         this.player = player;
+        this.logic = logic;
         this.addBehaviours();
     }
 
@@ -27,6 +34,12 @@ public class Bet extends ParallelBehaviour {
         addSubBehaviour(new BetHandler(this.player));
         addSubBehaviour(new BetStorageServer(this.player));
         addSubBehaviour(new BetEndServer(this.player));
+    }
+
+    @Override
+    public int onEnd() {
+        this.logic.nextState();
+        return super.onEnd();
     }
 
 }

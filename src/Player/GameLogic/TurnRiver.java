@@ -23,8 +23,14 @@ public class TurnRiver extends Behaviour {
      */
     private boolean status = false;
 
-    TurnRiver(Player player, String moment) {
+    /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    TurnRiver(Player player, Logic logic, String moment) {
         this.player = player;
+        this.logic = logic;
         this.moment = moment;
     }
 
@@ -60,5 +66,11 @@ public class TurnRiver extends Behaviour {
     @Override
     public boolean done() {
         return status;
+    }
+
+    @Override
+    public int onEnd() {
+        this.logic.nextState();
+        return super.onEnd();
     }
 }

@@ -31,11 +31,17 @@ public class EndGame extends Behaviour {
     private State state = State.SHOWING_HAND;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * End turn constructor
      * @param player agent
      */
-    EndGame(Player player) {
+    EndGame(Player player, Logic logic) {
         this.player = player;
+        this.logic = logic;
     }
 
     @Override
@@ -90,5 +96,11 @@ public class EndGame extends Behaviour {
     @Override
     public boolean done() {
         return status;
+    }
+
+    @Override
+    public int onEnd() {
+        this.logic.nextState();
+        return super.onEnd();
     }
 }
