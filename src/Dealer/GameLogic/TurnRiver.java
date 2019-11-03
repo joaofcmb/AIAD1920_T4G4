@@ -57,8 +57,8 @@ public class TurnRiver extends Behaviour {
         msg.setConversationId(this.moment + "-table-cards");
 
         // Send message
-        myAgent.send(msg);
         System.out.println(this.dealer.getName() + " :: Send new added card :: " + msg.getContent());
+        myAgent.send(msg);
 
         // Terminates behaviour
         this.terminate();

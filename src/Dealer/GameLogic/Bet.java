@@ -90,7 +90,6 @@ public class Bet extends Behaviour {
                 // Send message
                 System.out.println(this.dealer.getName() + " :: Send betting options to " + playerTurn.getName()
                         + " :: " + msg.getContent());
-
                 myAgent.send(msg);
 
                 // Prepare the template to get the reply

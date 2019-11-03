@@ -123,8 +123,8 @@ public class PreFlop extends Behaviour {
                 msg.setReplyWith("pre-flop-blinds" + System.currentTimeMillis());
 
                 // Send message
-                myAgent.send(msg);
                 System.out.println(this.dealer.getName() + " :: Sent information about blinds: " + msg.getContent());
+                myAgent.send(msg);
 
                 this.terminate();
                 break;
@@ -150,7 +150,6 @@ public class PreFlop extends Behaviour {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-
         this.logic.nextState();
         return super.onEnd();
     }

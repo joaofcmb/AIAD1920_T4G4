@@ -50,6 +50,7 @@ public class PreFlop extends Behaviour {
                 ACLMessage msg = myAgent.receive(msgTemplate);
 
                 if (msg != null) {
+                    System.out.println(this.player.getName() + " :: Received " + msg.getContent());
                     String[] content = msg.getContent().split("-");
 
                     this.player.getCards().add(new Card(content[0], content[1]));
@@ -61,8 +62,6 @@ public class PreFlop extends Behaviour {
                     reply.setContent("Card-reception-confirmation");
 
                     myAgent.send(reply);
-
-                    System.out.println(this.player.getName() + " :: Received " + msg.getContent());
 
                     if(this.player.getCards().size() == 2) {
                         this.state = State.SMALL_BIG_BLIND;
@@ -77,6 +76,8 @@ public class PreFlop extends Behaviour {
                 msg = myAgent.receive(msgTemplate);
 
                 if (msg != null) {
+                    System.out.println(this.player.getName() + " :: Current bet " + this.player.getCurrBet());
+
                     String[] content = msg.getContent().split(":");
                     String[] smallBlind = content[0].split("-");
                     String[] bigBlind = content[1].split("-");
@@ -90,7 +91,6 @@ public class PreFlop extends Behaviour {
                         this.player.addBet(bigBlind[0], bigBlind[1]);
                     }
 
-                    System.out.println(this.player.getName() + " :: Current bet " + this.player.getCurrBet());
                     this.terminate();
                 }
                 else {

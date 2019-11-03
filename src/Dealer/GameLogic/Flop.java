@@ -53,8 +53,8 @@ public class Flop extends Behaviour {
         msg.setConversationId("flop-table-cards");
 
         // Send message
-        myAgent.send(msg);
         System.out.println(this.dealer.getName() + " :: Send table initial configuration: " + msg.getContent());
+        myAgent.send(msg);
 
         // Terminates behaviour
         this.terminate();
@@ -79,6 +79,7 @@ public class Flop extends Behaviour {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+
         this.logic.nextState();
         return super.onEnd();
     }
