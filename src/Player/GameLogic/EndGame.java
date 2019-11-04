@@ -8,7 +8,7 @@ import jade.lang.acl.MessageTemplate;
 
 import java.util.ArrayList;
 
-public class EndTurn extends Behaviour {
+public class EndGame extends Behaviour {
 
     /**
      * PLayer agent
@@ -31,11 +31,17 @@ public class EndTurn extends Behaviour {
     private State state = State.SHOWING_HAND;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * End turn constructor
      * @param player agent
      */
-    EndTurn(Player player) {
+    EndGame(Player player, Logic logic) {
         this.player = player;
+        this.logic = logic;
     }
 
     @Override
@@ -90,5 +96,11 @@ public class EndTurn extends Behaviour {
     @Override
     public boolean done() {
         return status;
+    }
+
+    @Override
+    public int onEnd() {
+        this.logic.nextState();
+        return super.onEnd();
     }
 }

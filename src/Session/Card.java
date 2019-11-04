@@ -133,7 +133,7 @@ public class Card {
                 int inc = 1;
                 int diff = Card.cardValue.get(hand.get(j).getRank()) - Card.cardValue.get(hand.get(j + inc++).getRank());
 
-                while (diff == 0 && limit <= 6) {
+                while (diff == 0 && limit < 6) {
                     diff = Card.cardValue.get(hand.get(j).getRank()) - Card.cardValue.get(hand.get(j + inc++).getRank());
                     limit++;
                 }

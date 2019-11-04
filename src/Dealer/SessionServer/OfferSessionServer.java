@@ -38,6 +38,9 @@ public class OfferSessionServer extends CyclicBehaviour {
                     reply.setContent("Session-available");
                     System.out.println(this.dealer.getName() + " :: Session available in response to " +
                             msg.getSender().getName());
+
+                    this.dealer.getWindow().updateDealerAction("Session available in response to " +
+                            msg.getSender().getName());
                 }
                 else {
                     reply.setPerformative(ACLMessage.REFUSE);
@@ -45,6 +48,10 @@ public class OfferSessionServer extends CyclicBehaviour {
                             this.dealer.getTableSettings().get("lowerBuyIn") + " : " +
                             this.dealer.getTableSettings().get("upperBuyIn") + "]");
                     System.out.println(this.dealer.getName() + " :: Player buy in do not fit the session buy " +
+                            "in range [" + this.dealer.getTableSettings().get("lowerBuyIn") + " : " +
+                            this.dealer.getTableSettings().get("upperBuyIn") + "]");
+
+                    this.dealer.getWindow().updateDealerAction("Player buy in do not fit the session buy " +
                             "in range [" + this.dealer.getTableSettings().get("lowerBuyIn") + " : " +
                             this.dealer.getTableSettings().get("upperBuyIn") + "]");
                 }

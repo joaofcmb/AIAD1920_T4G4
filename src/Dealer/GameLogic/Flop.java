@@ -5,7 +5,6 @@ import Session.Card;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
-import java.io.IOException;
 import java.util.LinkedList;
 
 public class Flop extends Behaviour {
@@ -21,19 +20,30 @@ public class Flop extends Behaviour {
     private boolean status = false;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * Flop constructor
      * @param dealer agent
      */
-    Flop(Dealer dealer) {
+    Flop(Dealer dealer, Logic logic) {
         this.dealer = dealer;
+        this.logic = logic;
         this.dealer.getSession().getDeck().getCard();   // Removes card from deck [RULE]
     }
 
     @Override
     public void action() {
+        this.dealer.getWindow().updateDealerAction("Table initial configuration");
+
         // Adds three cards on table
-        for(int i = 0; i < 3; i++)
-            this.dealer.getSession().getTable().add(this.dealer.getSession().getDeck().getCard());
+        for(int i = 0; i < 3; i++) {
+            Card card = this.dealer.getSession().getDeck().getCard();
+            this.dealer.getSession().getTable().add(card);
+            this.dealer.getWindow().addCardsToTable(card.toString());
+        }
 
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
@@ -48,8 +58,8 @@ public class Flop extends Behaviour {
         msg.setConversationId("flop-table-cards");
 
         // Send message
-        myAgent.send(msg);
         System.out.println(this.dealer.getName() + " :: Send table initial configuration: " + msg.getContent());
+        myAgent.send(msg);
 
         // Terminates behaviour
         this.terminate();
@@ -69,11 +79,8 @@ public class Flop extends Behaviour {
 
     @Override
     public int onEnd() {
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.dealer.pauseGUI();
+        this.logic.nextState();
         return super.onEnd();
     }
 }

@@ -1,6 +1,7 @@
 package Dealer.GameLogic;
 
 import Dealer.Dealer;
+import Session.Card;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
@@ -24,12 +25,18 @@ public class TurnRiver extends Behaviour {
     private String moment;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * Turn and River constructor
      * @param dealer agent
      * @param moment type of moment
      */
-    TurnRiver(Dealer dealer, String moment) {
+    TurnRiver(Dealer dealer, Logic logic, String moment) {
         this.dealer = dealer;
+        this.logic = logic;
         this.moment = moment;
         this.dealer.getSession().getDeck().getCard();   // Removes card from deck [RULE]
     }
@@ -37,7 +44,10 @@ public class TurnRiver extends Behaviour {
     @Override
     public void action() {
         // Adds one more card to the table
-        this.dealer.getSession().getTable().add(this.dealer.getSession().getDeck().getCard());
+        Card newCard =  this.dealer.getSession().getDeck().getCard();
+        this.dealer.getSession().getTable().add(newCard);
+        this.dealer.getWindow().addCardsToTable(newCard.toString());
+        this.dealer.getWindow().updateDealerAction("Added new card.");
 
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
@@ -51,8 +61,8 @@ public class TurnRiver extends Behaviour {
         msg.setConversationId(this.moment + "-table-cards");
 
         // Send message
-        myAgent.send(msg);
         System.out.println(this.dealer.getName() + " :: Send new added card :: " + msg.getContent());
+        myAgent.send(msg);
 
         // Terminates behaviour
         this.terminate();
@@ -72,11 +82,8 @@ public class TurnRiver extends Behaviour {
 
     @Override
     public int onEnd() {
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.dealer.pauseGUI();
+        this.logic.nextState();
         return super.onEnd();
     }
 }

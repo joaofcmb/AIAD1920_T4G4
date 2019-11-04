@@ -54,11 +54,17 @@ public class Bet extends Behaviour {
     private int playerTurn;
 
     /**
+     * Logic behaviour
+     */
+    private Logic logic;
+
+    /**
      * Bet constructor
      * @param dealer agent
      */
-    Bet(Dealer dealer, int playerTurn, int maxBet) {
+    Bet(Dealer dealer, Logic logic, int playerTurn, int maxBet) {
         this.dealer = dealer;
+        this.logic = logic;
         this.playerTurn = playerTurn;
         this.maxBet = maxBet;
 
@@ -71,6 +77,8 @@ public class Bet extends Behaviour {
     public void action() {
         switch (this.state) {
             case PLAYER_BET_TURN:
+                this.dealer.getWindow().updateDealerAction("Player bet turn.");
+
                 AID playerTurn = this.dealer.getSession().getCurrPlayers().get(this.playerTurn).getPlayer();
 
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
@@ -84,7 +92,6 @@ public class Bet extends Behaviour {
                 // Send message
                 System.out.println(this.dealer.getName() + " :: Send betting options to " + playerTurn.getName()
                         + " :: " + msg.getContent());
-
                 myAgent.send(msg);
 
                 // Prepare the template to get the reply
@@ -94,6 +101,8 @@ public class Bet extends Behaviour {
                 this.state = State.RECEIVE_PLAYER_BET;
                 break;
             case RECEIVE_PLAYER_BET:
+                this.dealer.getWindow().updateDealerAction("Receive players bet");
+
                 // Receive replies
                 ACLMessage reply = myAgent.receive(msgTemplate);
 
@@ -116,8 +125,9 @@ public class Bet extends Behaviour {
                     // Send message
                     System.out.println(this.dealer.getName() + " :: Sharing " + reply.getSender().getName() +
                             " bet with other players :: " + msg.getContent());
-
                     myAgent.send(msg);
+
+                    this.dealer.getWindow().updatePlayerAction(reply.getSender().getName(), reply.getContent());
 
                     // Parse bet
                     this.parseBet(reply.getSender(), reply.getContent());
@@ -173,6 +183,7 @@ public class Bet extends Behaviour {
             }
         }
         else {
+            System.out.println("->>> " + content[1]);
             value = Integer.parseInt(content[1]);
 
             if(!content[0].equals("Call"))
@@ -183,6 +194,9 @@ public class Bet extends Behaviour {
         this.addBet(player.getName(), bet);
         this.dealer.getSession().getCurrPlayers().get(playerTurn).updatePot(value);
         this.dealer.getSession().getCurrPlayers().get(playerTurn).updateChips(-value);
+
+        this.dealer.getWindow().addChipsToPot(player.getName(), value);
+        this.dealer.getWindow().managePlayerChips(player.getName(), value, false);
     }
 
     /**
@@ -220,6 +234,8 @@ public class Bet extends Behaviour {
 
     @Override
     public int onEnd() {
+        this.dealer.getWindow().updateDealerAction("Terminating betting phase");
+
         // Inform other players that betting phase has ended
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
@@ -238,12 +254,8 @@ public class Bet extends Behaviour {
         for(Player player : this.dealer.getSession().getCurrPlayers())
             player.resetCurrBet();
 
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        this.dealer.pauseGUI();
+        this.logic.nextState();
         return super.onEnd();
     }
 
