@@ -7,8 +7,9 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class EndGame extends Behaviour {
 
@@ -75,6 +76,8 @@ public class EndGame extends Behaviour {
     public void action() {
         switch (state) {
             case INFORM_PLAYER_TO_SHOW_HAND:
+                this.dealer.getWindow().updateDealerAction("Inform players to show hand");
+
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
                 // Configure message
@@ -94,6 +97,8 @@ public class EndGame extends Behaviour {
                 this.state = State.RECEIVING_PLAYER_HAND;
                 break;
             case RECEIVING_PLAYER_HAND:
+                this.dealer.getWindow().updateDealerAction("Receiving players hand");
+
                 // Receive reply
                 ACLMessage reply = myAgent.receive(this.msgTemplate);
 
@@ -117,7 +122,8 @@ public class EndGame extends Behaviour {
 
                     this.dealer.getSession().getCurrPlayers().get(this.targetPlayer).setCurrHandFinalValue(handValue);
                     System.out.println(this.dealer.getName() + " :: " + reply.getSender().getName() +
-                            " has shown up his cards :: " + reply.getContent() + " :: Hand (" + hand + ") value = " + handValue);
+                            " has shown up his cards :: " + reply.getContent() + " :: Hand (" + hand + ") value = " +
+                            handValue);
 
                     if(this.targetPlayer == this.dealer.getSession().getCurrPlayers().size() - 1) {
                         this.targetPlayer = 0;
@@ -145,11 +151,8 @@ public class EndGame extends Behaviour {
                 }
                 break;
             case DISTRIBUTING_EARNINGS:
-//                try {
-//                    System.in.read();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+                this.dealer.getWindow().updateDealerAction("Distributing Earnings");
+                this.dealer.getWindow().resetAllPots();
 
                 msg = new ACLMessage(ACLMessage.INFORM);
 
@@ -162,9 +165,22 @@ public class EndGame extends Behaviour {
                 // Send message
                 System.out.println(this.dealer.getName() + " :: " +
                         this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName()
-                        + (this.playerEarnings.get(targetPlayer) > 0 ? " has won " + this.playerEarnings.get(targetPlayer) : " has lost"));
+                        + (this.playerEarnings.get(targetPlayer) > 0 ?
+                        " has won " + this.playerEarnings.get(targetPlayer) : " has lost"));
 
-                this.dealer.getSession().getCurrPlayers().get(targetPlayer).updateChips(this.playerEarnings.get(targetPlayer));
+                this.dealer.getWindow().updatePlayerAction(
+                        this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName(),
+                        (this.playerEarnings.get(targetPlayer) > 0 ?
+                                "Won " + this.playerEarnings.get(targetPlayer) : "Lost"));
+
+                // Update GUI chips
+                this.dealer.getWindow().managePlayerChips(
+                        this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName(),
+                        this.playerEarnings.get(targetPlayer),
+                        this.playerEarnings.get(targetPlayer) > 0);
+
+                this.dealer.getSession().getCurrPlayers().get(targetPlayer).updateChips(
+                        this.playerEarnings.get(targetPlayer));
                 myAgent.send(msg);
 
                 if(targetPlayer == this.playerEarnings.size() - 1)
@@ -250,11 +266,9 @@ public class EndGame extends Behaviour {
 
     @Override
     public int onEnd() {
-//        try {
-//            System.in.read();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        this.dealer.pauseGUI();
+        this.dealer.getWindow().removeAllCardsFromPlayers();
+        this.dealer.getWindow().removeCardsFromTable();
         this.logic.nextState();
         return super.onEnd();
     }

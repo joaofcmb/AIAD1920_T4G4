@@ -8,6 +8,8 @@ import jade.lang.acl.MessageTemplate;
 
 import java.io.IOException;
 
+import static java.lang.Thread.sleep;
+
 public class StartingSession extends Behaviour {
 
     /**
@@ -38,6 +40,7 @@ public class StartingSession extends Behaviour {
         // Create new message to inform about session start
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
+        this.dealer.getWindow().updateDealerAction("Informing players about session start");
         System.out.println(this.dealer.getName() + " :: Informing players about session start");
 
         // Add all players as receivers
@@ -56,13 +59,15 @@ public class StartingSession extends Behaviour {
         this.dealer.setDealerState(Dealer.State.IN_SESSION);
         this.dealer.createNewSession();
 
+        this.dealer.getWindow().addPlayerBlind(
+                this.dealer.getSession().getSmallBlind().getPlayer().getName(),"S");
+        this.dealer.getWindow().addPlayerBlind(
+                this.dealer.getSession().getBigBlind().getPlayer().getName(),"B");
+        this.dealer.getWindow().updateDealerAction("Session has started");
+
         System.out.println(this.dealer.getName() + " :: Session has started");
 
-//        try {
-//            System.in.read();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        this.dealer.pauseGUI();
 
         // Add game logic behaviour
         this.dealer.addBehaviour(new Logic(this.dealer));

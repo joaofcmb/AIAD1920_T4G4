@@ -1,1 +1,0 @@
-( ap-description  :name "JADE" :ap-services (set))

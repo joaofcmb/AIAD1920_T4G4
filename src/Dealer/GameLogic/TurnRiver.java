@@ -1,6 +1,7 @@
 package Dealer.GameLogic;
 
 import Dealer.Dealer;
+import Session.Card;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
@@ -43,7 +44,10 @@ public class TurnRiver extends Behaviour {
     @Override
     public void action() {
         // Adds one more card to the table
-        this.dealer.getSession().getTable().add(this.dealer.getSession().getDeck().getCard());
+        Card newCard =  this.dealer.getSession().getDeck().getCard();
+        this.dealer.getSession().getTable().add(newCard);
+        this.dealer.getWindow().addCardsToTable(newCard.toString());
+        this.dealer.getWindow().updateDealerAction("Added new card.");
 
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
@@ -78,11 +82,7 @@ public class TurnRiver extends Behaviour {
 
     @Override
     public int onEnd() {
-//        try {
-//            System.in.read();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        this.dealer.pauseGUI();
         this.logic.nextState();
         return super.onEnd();
     }

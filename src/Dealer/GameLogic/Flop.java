@@ -36,9 +36,14 @@ public class Flop extends Behaviour {
 
     @Override
     public void action() {
+        this.dealer.getWindow().updateDealerAction("Table initial configuration");
+
         // Adds three cards on table
-        for(int i = 0; i < 3; i++)
-            this.dealer.getSession().getTable().add(this.dealer.getSession().getDeck().getCard());
+        for(int i = 0; i < 3; i++) {
+            Card card = this.dealer.getSession().getDeck().getCard();
+            this.dealer.getSession().getTable().add(card);
+            this.dealer.getWindow().addCardsToTable(card.toString());
+        }
 
         ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
@@ -74,12 +79,7 @@ public class Flop extends Behaviour {
 
     @Override
     public int onEnd() {
-//        try {
-//            System.in.read();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
+        this.dealer.pauseGUI();
         this.logic.nextState();
         return super.onEnd();
     }

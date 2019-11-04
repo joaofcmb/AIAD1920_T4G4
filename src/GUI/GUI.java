@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.File;
+import java.util.Collection;
 import java.util.HashMap;
 
 import static java.lang.Thread.sleep;
@@ -147,6 +148,7 @@ public class GUI {
      * Action of the dealer
      */
     private JLabel dealerAction;
+    private JButton nextButton;
 
     /**
      * Number of player in the table
@@ -177,6 +179,8 @@ public class GUI {
      */
     private HashMap<String,String> cardMap;
 
+
+    private HashMap<String,Integer> playerMap = new HashMap<>();
     /**
      * Number of cards in the table
      */
@@ -186,6 +190,11 @@ public class GUI {
      * Number of existing pots
      */
     private int potCounter = 0;
+
+    /**
+     * Flag to waiting for user action
+     */
+    private boolean waitingAction = false;
 
     /**
      * Create and display a GUI for a poker game
@@ -226,28 +235,41 @@ public class GUI {
         mainFrame.pack();
         mainFrame.setSize(750,600);
         mainFrame.setVisible(true);
+
+        nextButton.addActionListener(e -> setWaitingAction(false));
+    }
+
+    /**
+     * Retrieve waiting for action flag value
+     */
+    public boolean isWaitingAction() { return waitingAction; }
+
+    public void setWaitingAction(boolean waitingAction) {
+        this.waitingAction = waitingAction;
+        nextButton.setEnabled(waitingAction);
     }
 
     /**
      * Add a player to the table
      * @param name name of the player
      * @param buyIn initial buy-in of the player
-     * @return true if the player is added or false if the table is full
      */
-    public boolean addPlayer(String name, float buyIn) {
-        if (playerCounter == 8) return false;
-
+    public void addPlayer(String name, float buyIn) {
+        playerMap.put(name, playerCounter);
         playersList[playerCounter][0].setText(name);
         playersList[playerCounter][1].setText(reduceNumber(buyIn) + " €");
+        potsList[playerCounter].setText(name + " : 0 €");
         playerCounter++;
-        return true;
     }
 
     /**
      * Remove a player from the table
-     * @param playerIndex index of the player to remove
+     * @param playerName name of the player to remove
      */
-    public void removePlayer(int playerIndex) {
+    public void removePlayer(String playerName) {
+        int playerIndex = playerMap.get(playerName);
+        playerMap.remove(playerName, playerIndex);
+
         playerCounter--;
         playersList[playerIndex][0].setText("Player" + (playerIndex + 1));
         playersList[playerIndex][0].setForeground(Color.white);
@@ -255,15 +277,17 @@ public class GUI {
         playersList[playerIndex][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
         playersList[playerIndex][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
         playersList[playerIndex][4].setText("");
+        potsList[playerIndex].setText("");
     }
 
     /**
      * Add a blind to player
-     * @param playerIndex index of the player in the table
+     * @param playerName name of the player in the table
      * @param blind blind to add
      */
-    public void addPlayerBlind(int playerIndex, String blind) {
-        playersList[playerIndex][0].setText(playersList[playerIndex][0].getText() + " (" + blind + ")");
+    public void addPlayerBlind(String playerName, String blind) {
+        int playerIndex = playerMap.get(playerName);
+        playersList[playerIndex][0].setText(playerName + " (" + blind + ")");
 
         if (blind == "B") {
             playersList[playerIndex][0].setForeground(Color.red);
@@ -272,33 +296,6 @@ public class GUI {
             playersList[playerIndex][0].setForeground(Color.blue);
             smallBlind = playerIndex;
         }
-    }
-
-    /**
-     * Allows know if is a blind in the table
-     * @param blind blind to know
-     * @return true if the blind is associated with some player, false otherwise
-     */
-    public boolean hasBlind(String blind) {
-        if (blind == "B") {
-            return bigBlind != -1;
-        } else if (blind == "S") {
-            return smallBlind != -1;
-        }
-        return false;
-    }
-
-    /**
-     * Move the blind to the next player in the table
-     */
-    public void rotatePlayerBlinds() {
-        int newBigBlind = bigBlind + 1;
-        int newSmallBlind = smallBlind + 1;
-
-        removePlayerBlind("B");
-        removePlayerBlind("S");
-        addPlayerBlind(newBigBlind % playerCounter, "B");
-        addPlayerBlind(newSmallBlind % playerCounter, "S");
     }
 
     /**
@@ -323,19 +320,12 @@ public class GUI {
     }
 
     /**
-     * Create a new pot to present
-     * @param chips money in the pot
-     */
-    public void addNewPot(float chips) {
-        potsList[potCounter++].setText("Pot " + potCounter + " : " + reduceNumber(chips) + " €");
-    }
-
-    /**
      * Add new bets to a pot
-     * @param potIndex pot to add the bets
+     * @param playerName name of the player to bet
      * @param chips quantity to add
      */
-    public void addChipsToPot(int potIndex, int chips) {
+    public void addChipsToPot(String playerName, int chips) {
+        int potIndex = playerMap.get(playerName);
         String[] potText = potsList[potIndex].getText().split(" : ");
         String chipsText = potText[1].substring(0, potText[1].length()-2);
 
@@ -345,68 +335,59 @@ public class GUI {
     }
 
     /**
-     * Remove the last pot of the list
+     * Reset all pots of the list
      */
-    public void removePot() {
-        if (potCounter > 0) {
-            potCounter--;
-            potsList[potCounter].setText("");
+    public void resetAllPots() {
+        Collection<Integer> playerIndexes = playerMap.values();
+
+        for (Integer index : playerIndexes) {
+            potsList[index].setText(potsList[index].getText().split(" : ")[0] + " : 0 €");
         }
     }
 
     /**
      * Add cards to the table
-     * @param cardsName list of names of cards to add
+     * @param cardName list of names of cards to add
      */
-    public void addCardsToTable(String[] cardsName) {
-        for (String card :
-                cardsName) {
-            cards[cardCounter].setIcon(new ImageIcon(cardMap.get(card)));
-            cardCounter++;
-        }
+    public void addCardsToTable(String cardName) {
+        cards[cardCounter].setIcon(new ImageIcon(cardMap.get(cardName)));
+        cardCounter++;
     }
 
     /**
      * Remove the cards from the table
      */
     public void removeCardsFromTable() {
-        for (JLabel card :
-                cards) {
+        cardCounter = 0;
+        for (JLabel card : cards) {
             card.setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
         }
     }
 
     /**
-     * Add card to the players
-     * @param cardsName list of names of cards to add
-     * @return true if the cards are added to the player, false if don't have sufficient card for all the players
+     * Add card to a player
+     * @param playerName name of the player to give the card
+     * @param cardName card to give
+     * @param isFirstCard indication if is the first given card to the player
      */
-    public boolean addCardsToPlayers(String[] cardsName) {
-        if (cardsName.length < playerCounter)
-            return false;
+    public void addCardToPlayer(String playerName, String cardName, boolean isFirstCard) {
+        int playerIndex = playerMap.get(playerName);
 
-        int cardNameIndex = 0;
-
-        for (int i = 0 ; i < playerCounter ; i++) {
-            playersList[i][2].setIcon(new ImageIcon(cardMap.get(cardsName[cardNameIndex++])));
-            playersList[i][3].setIcon(new ImageIcon(cardMap.get(cardsName[cardNameIndex++])));
-        }
-        return true;
+        if (isFirstCard)
+            playersList[playerIndex][2].setIcon(new ImageIcon(cardMap.get(cardName)));
+        else
+            playersList[playerIndex][3].setIcon(new ImageIcon(cardMap.get(cardName)));
     }
 
     /**
      * Collects a player's cards
-     * @param playerIndex index of the player
-     * @return true if the cards are collected, false if the index is invalid
+     * @param playerName name of the player
      */
-    public boolean  removeCardFromPlayer(int playerIndex) {
-        if (playerIndex >= playerCounter || playerIndex < 0)
-            return false;
+    public void  removeCardFromPlayer(String playerName) {
+        int playerIndex = playerMap.get(playerName);
 
         playersList[playerIndex][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
         playersList[playerIndex][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
-
-        return true;
     }
 
     /**
@@ -416,16 +397,18 @@ public class GUI {
         for (int i = 0 ; i < playerCounter ; i++) {
             playersList[i][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
             playersList[i][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+            playersList[i][4].setText("");
         }
     }
 
     /**
      * Decrease or increment the chips of a player
-     * @param playerIndex index of the player
+     * @param playerName name of the player
      * @param chips quantity of chips to add or remove
      * @param operation if true the chips are added to the player, otherwise the chips are remove from the player
      */
-    public void managePlayerChips(int playerIndex, int chips, boolean operation) {
+    public void managePlayerChips(String playerName, int chips, boolean operation) {
+        int playerIndex = playerMap.get(playerName);
         String actualChips = playersList[playerIndex][1].getText();
         actualChips = actualChips.substring(0, actualChips.length()-2);
 
@@ -441,11 +424,11 @@ public class GUI {
 
     /**
      * Display of the action of a player
-     * @param playerIndex index of the player
+     * @param playerName name of the player
      * @param action action to display
      */
-    public void updatePlayerAction(int playerIndex, String action) {
-        playersList[playerIndex][4].setText(action);
+    public void updatePlayerAction(String playerName, String action) {
+        playersList[playerMap.get(playerName)][4].setText(action);
     }
 
     /**
@@ -464,8 +447,8 @@ public class GUI {
     private String reduceNumber(float number) {
         String text = "";
 
-        if (number > 1000000) text += number/1000000.0 + "M";
-        else if (number > 1000) text += number/1000.0 + "K";
+        if (number >= 1000000) text += number/1000000.0 + "M";
+        else if (number >= 1000) text += number/1000.0 + "K";
         else text += number;
 
         return text;
@@ -495,63 +478,57 @@ public class GUI {
     public static void main(String[] args) throws InterruptedException {
         GUI g = new GUI("GUI");
 
-        g.addPlayer("Rio", 1563000);
-        g.addPlayer("Paul", 5000);
-        g.addPlayer("John", 150);
-        g.addPlayer("Mary", 341000);
-        g.addPlayer("Ellen", 17590);
+        g.addPlayer("1", 1563000);
+        g.addPlayer("2", 5000);
+        g.addPlayer("3", 150);
+        g.addPlayer("4", 341000);
+        g.addPlayer("5", 17590);
 
-        g.addPlayerBlind(0, "S");
-        g.addPlayerBlind(2, "B");
-
-        System.out.println(g.hasBlind("B"));
-        System.out.println(g.hasBlind("S"));
+        g.addPlayerBlind("1", "S");
+        g.addPlayerBlind("3", "B");
 
         sleep(1000);
-        g.rotatePlayerBlinds();
-
-        sleep(1000);
-        g.addNewPot(5000);
-
-        sleep(1000);
-        g.addChipsToPot(0, 4000);
-
-        sleep(1000);
-        g.addNewPot(900000);
-        g.addChipsToPot(1, 190000);
+        g.addChipsToPot("1", 4000);
+        g.addChipsToPot("2", 190000);
 
         sleep(1000);
         g.updateDealerAction("Dealing cards");
-        g.addCardsToTable(new String[]{"Ace-Hearts", "8-Hearts", "Ace-Clubs"});
+        g.addCardsToTable("Ace-Hearts");
+        g.addCardsToTable("8-Hearts");
+        g.addCardsToTable("Ace-Clubs");
         sleep(1000);
-        g.addCardsToTable(new String[]{"Ace-Spades"});
+        g.addCardsToTable("Ace-Spades");
         sleep(1000);
-        g.addCardsToTable(new String[]{"Ace-Diamonds"});
+        g.addCardsToTable("Ace-Diamonds");
         sleep(1000);
-        g.addCardsToPlayers(new String[]{"2-Hearts", "4-Hearts", "6-Clubs", "King-Hearts", "9-Hearts", "10-Clubs",
-                "8-Spades", "4-Spades", "3-Clubs", "7-Diamonds" });
-
+        g.addCardToPlayer("1","2-Hearts",true);
+        g.addCardToPlayer("2","4-Hearts",true);
+        g.addCardToPlayer("3","6-Clubs",true);
+        g.addCardToPlayer("4","King-Hearts",true);
+        g.addCardToPlayer("5","9-Hearts",true);
+        g.addCardToPlayer("1","10-Clubs",false);
+        g.addCardToPlayer("2","8-Spades",false);
+        g.addCardToPlayer("3","4-Spades",false);
+        g.addCardToPlayer("4","3-Clubs",false);
+        g.addCardToPlayer("5","7-Diamonds",false);
         sleep(1000);
         g.updateDealerAction("Receiving bets...");
-        g.updatePlayerAction(0,"raise");
-        g.updatePlayerAction(2,"fold");
-        g.managePlayerChips(1, 200, false);
-        g.updatePlayerAction(1,"call - 200");
-        g.managePlayerChips(3, 300, false);
-        g.updatePlayerAction(3,"call - 300");
-        g.updatePlayerAction(4,"fold");
+        g.updatePlayerAction("1","raise");
+        g.updatePlayerAction("3","fold");
+        g.managePlayerChips("2", 200, false);
+        g.updatePlayerAction("2","call - 200");
+        g.managePlayerChips("4", 300, false);
+        g.updatePlayerAction("4","call - 300");
+        g.updatePlayerAction("5","fold");
 
         sleep(1000);
-        g.removeCardFromPlayer(2);
+        g.removeCardFromPlayer("3");
         sleep(1000);
         g.removeAllCardsFromPlayers();
-
         g.updateDealerAction("Playing !!!");
-        g.removePot();
+        g.resetAllPots();
         sleep(1000);
-        g.removePlayer(4);
-
-        g.removePot();
+        g.removePlayer("4");
         sleep(1000);
         g.removeCardsFromTable();
     }

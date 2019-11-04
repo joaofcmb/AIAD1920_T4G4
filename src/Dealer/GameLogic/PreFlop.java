@@ -1,12 +1,11 @@
 package Dealer.GameLogic;
 
 import Dealer.Dealer;
+import Dealer.Player;
+import jade.core.AID;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import Dealer.Player;
-
-import java.io.IOException;
 
 public class PreFlop extends Behaviour {
 
@@ -58,11 +57,13 @@ public class PreFlop extends Behaviour {
     public void action() {
         switch (state){
             case CARD_DELIVERY:
+                this.dealer.getWindow().updateDealerAction("Card delivery.");
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
-                // Add all players as receivers
-                msg.addReceiver(this.dealer.getSession().getCurrPlayers().get(this.targetPlayer %
-                        this.dealer.getSession().getCurrPlayers().size()).getPlayer());
+                // Add a player as receiver
+                AID receiver = this.dealer.getSession().getCurrPlayers().get(this.targetPlayer %
+                        this.dealer.getSession().getCurrPlayers().size()).getPlayer();
+                msg.addReceiver(receiver);
 
                 // Configure message
                 msg.setContent(this.dealer.getSession().getDeck().getCard().toString());
@@ -71,6 +72,9 @@ public class PreFlop extends Behaviour {
 
                 // Send message
                 myAgent.send(msg);
+
+                this.dealer.getWindow().addCardToPlayer(receiver.getName(), msg.getContent(),
+                        targetPlayer < this.dealer.getSession().getCurrPlayers().size());
 
                 // Prepare the template to get the reply
                 this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("pre-flop"),
@@ -101,11 +105,21 @@ public class PreFlop extends Behaviour {
                 this.dealer.getSession().addBet(this.dealer.getSession().getSmallBlind().getPlayer().getName(),
                         "Bet-" + this.dealer.getTableSettings().get("smallBlind"));
 
+                this.dealer.getWindow().addChipsToPot(this.dealer.getSession().getSmallBlind().getPlayer().getName(),
+                        this.dealer.getTableSettings().get("smallBlind"));
+                this.dealer.getWindow().managePlayerChips(this.dealer.getSession().getSmallBlind().getPlayer().getName(),
+                        this.dealer.getTableSettings().get("smallBlind"),false);
+
                 // Big blind bet
                 this.dealer.getSession().getBigBlind().updatePot(this.dealer.getTableSettings().get("bigBlind"));
                 this.dealer.getSession().getBigBlind().updateChips(-this.dealer.getTableSettings().get("bigBlind"));
                 this.dealer.getSession().addBet(this.dealer.getSession().getBigBlind().getPlayer().getName(),
                         "Bet-" + this.dealer.getTableSettings().get("bigBlind"));
+
+                this.dealer.getWindow().addChipsToPot(this.dealer.getSession().getBigBlind().getPlayer().getName(),
+                        this.dealer.getTableSettings().get("bigBlind"));
+                this.dealer.getWindow().managePlayerChips(this.dealer.getSession().getBigBlind().getPlayer().getName(),
+                        this.dealer.getTableSettings().get("bigBlind"),false);
 
                 // Send small and big blind information
                 msg = new ACLMessage(ACLMessage.INFORM);
@@ -145,11 +159,7 @@ public class PreFlop extends Behaviour {
 
     @Override
     public int onEnd() {
-//        try {
-//            System.in.read();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        this.dealer.pauseGUI();
         this.logic.nextState();
         return super.onEnd();
     }

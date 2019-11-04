@@ -34,6 +34,9 @@ public class JoinSessionServer extends CyclicBehaviour {
                     reply.setPerformative(ACLMessage.INFORM);
                     System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
                             " successfully joined current session");
+
+                    // Add player to Game window
+                    this.dealer.getWindow().addPlayer(msg.getSender().getName(), Float.parseFloat(msg.getContent()));
                 } else {
                     reply.setPerformative(ACLMessage.FAILURE);
                     reply.setContent("join-not-possible");

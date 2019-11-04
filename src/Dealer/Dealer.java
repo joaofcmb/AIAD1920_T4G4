@@ -3,6 +3,7 @@ package Dealer;
 import Dealer.SessionServer.JoinSessionServer;
 import Dealer.SessionServer.OfferSessionServer;
 import Dealer.SessionServer.SessionPlayersServer;
+import GUI.GUI;
 import Session.Session;
 import jade.core.AID;
 import jade.core.Agent;
@@ -14,7 +15,14 @@ import jade.domain.FIPAException;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import static java.lang.Thread.sleep;
+
 public class Dealer extends Agent {
+
+    /**
+     * Game GUI
+     */
+    private GUI window;
 
     /**
      * Table settings
@@ -67,6 +75,13 @@ public class Dealer extends Agent {
             DFD.addServices(SD);
             try {
                 DFService.register(this, DFD);
+                window = new GUI(this.getName());
+                window.updateDealerAction("Has started a new poker session :: " +
+                        "SMALL_BLIND[" + this.tableSettings.get("smallBlind") + "] - " +
+                        "BIG_BLIND[" + this.tableSettings.get("bigBlind") + "] - " +
+                        "LOWER_BUY_IN[" + this.tableSettings.get("lowerBuyIn") + "] - " +
+                        "UPPER_BUY_IN[" + this.tableSettings.get("upperBuyIn") + "]");
+
                 System.out.println(this.getName() + " :: Has started a new poker session :: " +
                         "SMALL_BLIND[" + this.tableSettings.get("smallBlind") + "] - " +
                         "BIG_BLIND[" + this.tableSettings.get("bigBlind") + "] - " +
@@ -101,6 +116,7 @@ public class Dealer extends Agent {
      * Agent clean-up operations
      */
     protected void takeDown() {
+        window.updateDealerAction("Terminating");
         System.out.println(this.getName() + " :: Terminating");
     }
 
@@ -117,6 +133,22 @@ public class Dealer extends Agent {
         }
         return false;
     }
+
+    public void pauseGUI() {
+        window.setWaitingAction(true);
+        while (window.isWaitingAction()){
+            try {
+                sleep(10);
+            } catch (InterruptedException e) {
+                System.exit(0);
+            }
+        }
+    }
+
+    /**
+     * Retrieve game GUI
+     */
+    public GUI getWindow() { return window; }
 
     /**
      * Retrieve table settings

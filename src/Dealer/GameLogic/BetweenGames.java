@@ -30,7 +30,7 @@ public class BetweenGames extends Behaviour {
 
     private State state = State.LEAVING_PLAYERS;
 
-    int targetPlayer = 0;
+    private int targetPlayer = 0;
 
     /**
      * Logic behaviour
@@ -51,6 +51,8 @@ public class BetweenGames extends Behaviour {
         switch (state) {
             case LEAVING_PLAYERS:
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+
+                this.dealer.getWindow().updateDealerAction("Check if players want to leave.");
 
                 // Configure message
                 msg.addReceiver(this.dealer.getSession().getCurrPlayers().get(this.targetPlayer).getPlayer());
@@ -75,6 +77,7 @@ public class BetweenGames extends Behaviour {
                 if(reply != null) {
                     if(reply.getContent().equals("Yes")) {
                         System.out.println(this.dealer.getName() + " :: Removing " + reply.getSender().getName() + " from session");
+                        this.dealer.getWindow().removePlayer(reply.getSender().getName());
                         this.dealer.getSession().getCurrPlayers().remove(this.targetPlayer);
 
                         if(this.targetPlayer > this.dealer.getSession().getCurrPlayers().size() - 1)
@@ -136,7 +139,15 @@ public class BetweenGames extends Behaviour {
         this.dealer.createNewSession();
         for(Player player : this.dealer.getCurrPlayers())
             player.resetAll();
+
+        this.dealer.getWindow().addPlayerBlind(
+                this.dealer.getSession().getSmallBlind().getPlayer().getName(),"S");
+        this.dealer.getWindow().addPlayerBlind(
+                this.dealer.getSession().getBigBlind().getPlayer().getName(),"B");
+        this.dealer.getWindow().updateDealerAction("Session has started");
+
         System.out.println(this.dealer.getName() + " :: Prepared new session");
+        this.dealer.getWindow().updateDealerAction("Prepared new session.");
         this.logic.nextState();
         return super.onEnd();
     }
