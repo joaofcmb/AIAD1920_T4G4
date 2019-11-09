@@ -6,16 +6,10 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 public class BetHandler extends Behaviour {
-
     /**
      * Player agent
      */
     private Player player;
-
-    /**
-     * Message template
-     */
-    private MessageTemplate msgTemplate;
 
     /**
      * Bet handler constructor
@@ -27,9 +21,10 @@ public class BetHandler extends Behaviour {
 
     @Override
     public void action() {
-        this.msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("betting-phase"),
-                MessageTemplate.MatchPerformative(ACLMessage.INFORM));
-        ACLMessage msg = myAgent.receive(msgTemplate);
+        ACLMessage msg = myAgent.receive(
+                MessageTemplate.and(MessageTemplate.MatchConversationId("betting-phase"),
+                MessageTemplate.MatchPerformative(ACLMessage.INFORM))
+        );
 
         if (msg != null) {
             String[] bettingOptions = msg.getContent().split(":");
@@ -42,9 +37,9 @@ public class BetHandler extends Behaviour {
             ACLMessage reply = msg.createReply();
 
             reply.setPerformative(ACLMessage.INFORM);
-            reply.setContent(bettingOptions[0]);
+            reply.setContent(this.player.getPersonality().betAction(bettingOptions));
 
-            System.out.println(this.player.getName() + " :: Send betting option :: " + reply.getContent() + " -- " + bettingOptions[0]);
+            this.player.println("Send betting option :: " + reply.getContent() + " -- " + bettingOptions[0]);
             myAgent.send(reply);
         }
         else {

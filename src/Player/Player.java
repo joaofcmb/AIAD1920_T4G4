@@ -21,11 +21,12 @@ public class Player extends Agent {
      */
     private Personality personality;
 
+
+
     /**
      * Player state machine
      */
-    public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, IN_SESSION}
-
+    public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, IN_SESSION;}
     /**
      * Initial state
      */
@@ -64,7 +65,15 @@ public class Player extends Agent {
 
         if (playerSettings != null && playerSettings.length == 2) {
             this.buyIn = Integer.parseInt((String) playerSettings[0]);
-            //this.personality = (Personality) playerSettings[1];
+            this.personality = new Personality((String) playerSettings[1]);
+
+            // Updates player state and adds a TickerBehaviour that schedules a request for a session every X seconds
+            this.playerState = State.SEARCHING_SESSION;
+            addBehaviour(new SearchSessionServer(this, 1000));
+        }
+        else if (playerSettings != null && playerSettings.length == 3) {
+            this.buyIn = Integer.parseInt((String) playerSettings[0]);
+            this.personality = new Personality(Double.parseDouble((String) playerSettings[1]), Double.parseDouble((String) playerSettings[2]));
 
             // Updates player state and adds a TickerBehaviour that schedules a request for a session every X seconds
             this.playerState = State.SEARCHING_SESSION;
@@ -81,6 +90,13 @@ public class Player extends Agent {
      */
     protected void takeDown() {
         System.out.println(this.getName() + " :: Terminating");
+    }
+
+    /**
+     * Gets player personality
+     */
+    public Personality getPersonality() {
+        return this.personality;
     }
 
     /**
@@ -166,5 +182,9 @@ public class Player extends Agent {
             LinkedList<String> bets = new LinkedList<>(); bets.push(bet);
             this.bets.put(playerName, bets);
         }
+    }
+
+    public void println(String msg) {
+        System.out.println(this.getName() + ":: " + msg);
     }
 }
