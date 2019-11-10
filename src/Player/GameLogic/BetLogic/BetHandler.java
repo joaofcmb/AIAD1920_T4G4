@@ -27,7 +27,9 @@ public class BetHandler extends Behaviour {
         );
 
         if (msg != null) {
-            String[] bettingOptions = msg.getContent().split(":");
+            final String[] messageContent = msg.getContent().split("=");
+            final String[] bettingOptions = messageContent[0].split(":");
+            final int bigBlind = Integer.parseInt(messageContent[1]);
 
             // TODO - Personality to determine which action to perform. Default will be always be check/call
             // TODO - Update all needed variables after action got determined
@@ -37,7 +39,7 @@ public class BetHandler extends Behaviour {
             ACLMessage reply = msg.createReply();
 
             reply.setPerformative(ACLMessage.INFORM);
-            reply.setContent(this.player.getPersonality().betAction(bettingOptions));
+            reply.setContent(this.player.getPersonality().betAction(bettingOptions, this.player.getBuyIn(), bigBlind));
 
             this.player.println("Send betting option :: " + reply.getContent() + " -- " + bettingOptions[0]);
             myAgent.send(reply);
