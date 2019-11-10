@@ -157,8 +157,8 @@ public class Bet extends Behaviour {
      * Retrieves player betting options
      */
     private String getBettingOptions() {
-        return this.maxBet == 0 ? "Check:Bet:Fold:All in" :
-                "Call-" + (this.maxBet - this.dealer.getSession().getCurrPlayers().get(this.playerTurn).getCurrBet()) + ":Fold:Raise-" +
+        return this.maxBet == 0 ? "Check:Check:Bet:All in" :
+                "Fold:Call-" + (this.maxBet - this.dealer.getSession().getCurrPlayers().get(this.playerTurn).getCurrBet()) + ":Raise-" +
                         this.maxBet * 2 + ":All in";
     }
 
