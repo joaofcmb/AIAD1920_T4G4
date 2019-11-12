@@ -1,5 +1,9 @@
 package Player;
 
+import Session.Card;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.PrimitiveIterator;
 import java.util.Random;
@@ -19,30 +23,49 @@ public class Personality {
     private PrimitiveIterator.OfDouble varianceStream =
             new Random().doubles(-VARIANCE_DEVIATION, VARIANCE_DEVIATION).iterator();
 
+    private final Player player;
     private double handSelection, aggression;
 
-    Personality(String presetAlias) {
+    Personality(Player player, String presetAlias) {
         final String[] presetStats = presets.getOrDefault(presetAlias, "0.10:0.10").split(":");
 
+        this.player = player;
         this.handSelection = Double.parseDouble(presetStats[0]);
         this.aggression = Double.parseDouble(presetStats[1]);
     }
 
-    Personality(double handSelection, double aggression) {
+    Personality(Player player, double handSelection, double aggression) {
+        this.player = player;
         this.handSelection = handSelection;
         this.aggression = aggression;
     }
 
-    private double handStrength() {
-        // TODO
-        return 0.5;
+    // EHS = HS * (1 - NPOT) + (1 - HS) * PPOT
+    private double effectiveHandStrength() {
+        final ArrayList<Card> playerCards = this.player.getCards();
+
+        final LinkedList<Card> playerHand = new LinkedList<>(this.player.getTable());
+        playerHand.addAll(playerCards);
+
+        int wins = 0, loses = 0;
+        for (ArrayList<Card> oppCards : Card.cardsGenerator(2)) {
+            LinkedList<Card> oppHand = new LinkedList<>(this.player.getTable());
+            oppHand.addAll(oppCards);
+
+            final int playerRank = Card.rankHand(playerHand), oppRank = Card.rankHand(oppHand);
+
+            if      (playerRank > oppRank)  wins++;
+            else if (playerRank < oppRank)  loses++;
+        }
+
+        return (double) wins / (wins+loses);
     }
 
 
     // Hand Selection (handSelection = 0 to 1 <=> Loose to Tight) (Determines Min of Range for any type of play (Non-folds))
     // Aggression (aggression = 0 to 1 <=> Passive to Aggressive) (Determines Min of Range for Raise/Bet instead of Call/Check)
 
-    // Relative Hand Strength (handStrength = 0 to 1 <=> Weak to Strong)
+    // Effective Hand Strength (handStrength = 0 to 1 <=> Weak to Strong)
 
     // handValue = 2 * handStrength - 1 (Transform handStrength from [0, 1] range to [-1, 1] range)
     //   handSelection aggression
@@ -81,7 +104,9 @@ public class Personality {
     // ==> Bet/Raise Amount = min(minAmount, k*BB);
 
     public String betAction(String[] bettingOptions, int playerChips, int bigBlind) {
-        final double handValue = 2 * handStrength() - 1, oppositeAggression = 1 - this.aggression;
+        final double handValue = 2 * effectiveHandStrength() - 1, oppositeAggression = 1 - this.aggression;
+
+        this.player.println("Hand Value: " + handValue);
 
         if (handValue <= this.handSelection + varianceStream.next())
             return bettingOptions[0];
@@ -93,9 +118,9 @@ public class Personality {
 
         aggressionRatio = Double.min(0, aggressionRatio);
 
-        if (aggressionRatio <= oppositeAggression)
+        if (aggressionRatio <= oppositeAggression + varianceStream.next())
             return bettingOptions[2];
-        else if (aggressionRatio > oppositeAggression * (1 + this.aggression))
+        else if (aggressionRatio > oppositeAggression * (1 + this.aggression) + varianceStream.next())
             return bettingOptions[3];
         else {
             final String[] betPair = bettingOptions[2].split("-");

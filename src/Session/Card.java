@@ -17,17 +17,50 @@ public class Card {
     /**
      * Mapping cards to values
      */
-    public static HashMap<String, Integer> cardValue = new HashMap<>() {{
+    private static HashMap<String, Integer> cardValue = new HashMap<>() {{
         put("2", 1); put("3", 2); put("4", 3); put("5", 4); put("6", 5);
         put("7", 6); put("8", 7); put("9", 8); put("10", 9); put("Jack", 10);
         put("Queen", 11); put("King", 12); put("Ace", 13);
     }};
 
     /**
+     * Generates Lists of Cards
+     * @param n number of cards
+     *
+     * @return Lists of Cards
+     */
+    public static ArrayList<ArrayList<Card>> cardsGenerator(int n) {
+        return cardsGenerator(n, new Deck().getDeck());
+    }
+
+    private static ArrayList<ArrayList<Card>> cardsGenerator(int n, ArrayList<Card> cardCombinations) {
+        final ArrayList<ArrayList<Card>> listOfCards = new ArrayList<>();
+
+        if (n == 1) {
+            for (Card card : cardCombinations) {
+                final ArrayList<Card> cards = new ArrayList<>();
+                cards.add(card);
+                listOfCards.add(new ArrayList<>(cards));
+            }
+        }
+        else {
+            while (!cardCombinations.isEmpty()) {
+                Card card = cardCombinations.remove(0);
+
+                ArrayList<ArrayList<Card>> genCards = cardsGenerator(n - 1, new ArrayList<>(cardCombinations));
+                genCards.forEach((cards -> cards.add(0, card)));
+                listOfCards.addAll(genCards);
+            }
+        }
+
+        return listOfCards;
+    }
+
+    /**
      * Poker hand ratings
      */
-    public static enum State {ROYAL_FLUSH, STRAIGHT_FLUSH, FOUR_OF_A_KIND, FULL_HOUSE, FLUSH, STRAIGHT,
-                              THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD}
+    public enum State {ROYAL_FLUSH, STRAIGHT_FLUSH, FOUR_OF_A_KIND, FULL_HOUSE, FLUSH, STRAIGHT,
+        THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD}
 
     /**
      * Card constructor
@@ -163,7 +196,10 @@ public class Card {
      */
     public static int rankHand(LinkedList<Card> hand) {
         // Player cards
-        int playerCardMaxValue = Math.max(Card.cardValue.get(hand.get(5).rank), Card.cardValue.get(hand.get(6).rank));
+        int playerCardMaxValue = Math.max(
+                Card.cardValue.get(hand.get(hand.size() - 2).rank),
+                Card.cardValue.get(hand.get(hand.size() - 1).rank)
+        );
 
         // Sort hand
         Card.sort(hand);
