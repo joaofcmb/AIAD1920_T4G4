@@ -76,17 +76,17 @@ public class Personality {
     //               handValue
 
     // IF handValue <= handSelection + variance ==> Check/Fold (variance varies each turn between predefined values)
-    // denormalizedAggressionRatio = (handValue - aggression) (0-aggression to 1-aggression <=> Worse to Best Hand)
+    // denormalizedAggressionRatio = (handValue - 1 + aggression) ([aggression - 1, aggression] <=> Worse to Best Hand)
 
-    // aggressionRatio = denormalizedAggressionRatio / (1 - aggression) (Ratio goes to [-agg/(1-agg), 1] range)
+    // aggressionRatio = denormalizedAggressionRatio / aggression (Ratio goes to [1-(1/agg), 1] range)
     // IF aggressionRatio <= variance ==> Check/Call
 
     // aggressionRatio isn't negative moving on, so we can consider aggressionRatio range 0:1)
-    // Now we're in the [agg, 1] range (the aggressionRatio shows where the play stands within this range, normalized to [0, 1]),
+    // Now we're in the [1-agg, 1] range (the aggressionRatio shows where the play stands within this range, normalized to [0, 1]),
 
     // we'll have 2 thresholds within this range (=== Min raise/bet, --- bet k*BB, .... All-in)
     //  (=========|---|..)
-    // agg              1
+    // 1-agg              1
 
     //  0               1 (Considering our aggressionRatio is normalized, this is our effective range)
     // The first threshold is at 1-agg ([0, 1] range) (This means that the lower the aggression, the more likely you'll min-bet and vice-versa)
@@ -111,7 +111,7 @@ public class Personality {
         if (handValue <= this.handSelection + varianceStream.next())
             return bettingOptions[0];
 
-        double aggressionRatio = (handValue - this.aggression) / oppositeAggression;
+        double aggressionRatio = (handValue - oppositeAggression) / aggression;
 
         if (aggressionRatio <= varianceStream.next())
             return bettingOptions[1];
