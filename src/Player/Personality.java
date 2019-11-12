@@ -47,18 +47,29 @@ public class Personality {
         final LinkedList<Card> playerHand = new LinkedList<>(this.player.getTable());
         playerHand.addAll(playerCards);
 
-        int wins = 0, loses = 0;
+        final int aheadIndex = 0, tieIndex = 0, behindIndex = 2;
+        int wins = 0, loses = 0, ties = 0;
         for (ArrayList<Card> oppCards : Card.cardsGenerator(2)) {
             LinkedList<Card> oppHand = new LinkedList<>(this.player.getTable());
             oppHand.addAll(oppCards);
 
             final int playerRank = Card.rankHand(playerHand), oppRank = Card.rankHand(oppHand);
+            int statusIndex;
 
-            if      (playerRank > oppRank)  wins++;
-            else if (playerRank < oppRank)  loses++;
+            if      (playerRank > oppRank)  { wins++;   statusIndex = aheadIndex; }
+            else if (playerRank < oppRank)  { loses++;  statusIndex = tieIndex; }
+            else                            { ties++;   statusIndex = behindIndex; }
+
+            // TODO Calculate Hand Potentials
         }
 
-        return (double) wins / (wins+loses);
+        final double handStrength = (wins + ties / 2d) / (wins + ties + loses);
+        return handStrength;
+
+        /*final double positivePotential = () / (loses + ties);
+        final double negativePotential = () / (wins + ties);
+
+        return handStrength * (1 - negativePotential) + (1 - handStrength) * positivePotential;*/
     }
 
 
