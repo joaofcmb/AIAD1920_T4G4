@@ -1,6 +1,5 @@
 package Session;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Card {
@@ -245,10 +244,8 @@ public class Card {
      */
     public static int rankHand(LinkedList<Card> hand) {
         // Player cards
-        int playerCardMaxValue = Math.max(
-                Card.cardValue.get(hand.get(hand.size() - 2).rank),
-                Card.cardValue.get(hand.get(hand.size() - 1).rank)
-        );
+        int playerCardsValue = Card.cardValue.get(hand.get(hand.size() - 2).rank) +
+                Card.cardValue.get(hand.get(hand.size() - 1).rank);
 
         // Sort hand
         Card.sort(hand);
@@ -306,7 +303,7 @@ public class Card {
                                 cardCounter++;
                             }
                             if(cardCounter == 5)
-                                return handValue + playerCardMaxValue;
+                                return handValue + playerCardsValue;
                         }
                     }
                     else
@@ -314,7 +311,7 @@ public class Card {
                     break;
                 case STRAIGHT: // Points [400-499]
                     if(sequences.size() > 0)
-                        return Card.cardValue.get(sequences.get(0).get(0).split("-")[0]) + playerCardMaxValue + 400;
+                        return Card.cardValue.get(sequences.get(0).get(0).split("-")[0]) + playerCardsValue + 400;
                     else
                         state = State.THREE_OF_A_KIND;
                     break;
@@ -335,15 +332,34 @@ public class Card {
                 case ONE_PAIR:  // Points [100-199]
                     pair = Card.groupOfX(handInfo, 2);
                     if(pair.size() > 0)
-                        return Card.cardValue.get(pair.get(0)) + playerCardMaxValue + 100;
+                        return Card.cardValue.get(pair.get(0)) + playerCardsValue + 100;
                     else
                         state = State.HIGH_CARD;
                     break;
                 case HIGH_CARD: // Points [1-99]
-                    return playerCardMaxValue;
+                    return playerCardsValue;
             }
         }
     }
+
+    /**
+     * put("2", 0); put("3", 0); put("4", 0); put("5", 0); put("6", 0);
+     *                 put("7", 0); put("8", 0); put("9", 0); put("10", 0); put("Jack", 0);
+     *                 put("Queen", 0); put("King", 0); put("Ace", 0); put("Clubs", 0);
+     *                 put("Diamonds", 0); put("Hearts", 0); put("Spades", 0);
+     * @param args
+     */
+
+    public static void main(String[] args) {
+        LinkedList<Card> hand = new LinkedList<Card>(Arrays.asList(
+                new Card("2", "Diamonds"), new Card("2", "Clubs"),
+                new Card("2", "Hearts"), new Card("2", "Diamonds"),
+                new Card("2", "Spades"),
+                new Card("Ace", "Diamonds"), new Card("2", "Diamonds")
+                ));
+        
+    }
+
 
     @Override
     public String toString() {
