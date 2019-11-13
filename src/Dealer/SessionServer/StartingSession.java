@@ -65,8 +65,8 @@ public class StartingSession extends Behaviour {
                 this.dealer.getSession().getBigBlind().getPlayer().getName(),"B");
         this.dealer.getWindow().updateDealerAction("Session has started");
 
+        // Sessions starts
         System.out.println(this.dealer.getName() + " :: Session has started");
-
         this.dealer.pauseGUI();
 
         // Add game logic behaviour
