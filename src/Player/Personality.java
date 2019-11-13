@@ -19,7 +19,7 @@ public class Personality {
             "maniac",           "0.10:0.85"
     );
 
-    private static final double VARIANCE_DEVIATION = 0.1;
+    private static final double VARIANCE_DEVIATION = 0.05;
     private PrimitiveIterator.OfDouble varianceStream =
             new Random().doubles(-VARIANCE_DEVIATION, VARIANCE_DEVIATION).iterator();
 
@@ -86,7 +86,12 @@ public class Personality {
         }
 
         final double handStrength = (wins + ties / 2d) / (wins + ties + loses);
-        if (this.player.getTable().size() < 3)  return 2 * handStrength - 1;
+        if (this.player.getTable().size() < 3) {
+            if (playerCards.get(0).getRank().equals(playerCards.get(1).getRank()))
+                return Math.max(1d, 2 * handStrength - .5);
+            else
+                return 2 * handStrength - 1;
+        }
 
         final double positivePotential = (
                 handPotential[behindIndex][aheadIndex] +
