@@ -137,7 +137,7 @@ public class Player {
     }
 
     public void setAllInStatus() {
-        this.allInStatus = !this.allInStatus;
+        this.allInStatus = true;
     }
 
     public boolean isFoldStatus() {
@@ -145,7 +145,7 @@ public class Player {
     }
 
     public void setFoldStatus() {
-        this.foldStatus = !this.foldStatus;
+        this.foldStatus = true;
     }
 
     public void resetAll() {

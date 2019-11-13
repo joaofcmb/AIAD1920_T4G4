@@ -40,7 +40,7 @@ public class BetHandler extends Behaviour {
 
             this.player.updateChips(reply.getContent());
 
-            this.player.println("Send betting option :: " + reply.getContent() + " -- " + bettingOptions[0]);
+            this.player.println("Send betting option :: " + reply.getContent());
             myAgent.send(reply);
         }
         else {

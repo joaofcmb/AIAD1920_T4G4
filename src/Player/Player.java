@@ -206,6 +206,6 @@ public class Player extends Agent {
     }
 
     public void println(String msg) {
-        System.out.println(this.getName() + ":: " + msg);
+        System.out.println(this.getName() + " :: " + msg);
     }
 }

@@ -329,8 +329,6 @@ public class Card {
         String sameSuit = Card.getFlush(handInfo);
         ArrayList<String> bestSequence = Card.getBestSequence(hand, handInfo);
 
-        System.out.println(bestSequence);
-
         // State machine variables
         State state = sameSuit.equals("") ? State.FOUR_OF_A_KIND : State.ROYAL_FLUSH;
 
