@@ -153,17 +153,19 @@ public class Personality {
         final double handValue = effectiveHandStrength(), oppositeAggression = 1 - this.aggression;
         final int remainingEquity = (int) (handValue * (this.player.getCurrBet() + this.player.getBuyIn()))
                 - this.player.getCurrBet();
+        final int minBet = Integer.parseInt(bettingOptions[2].split("-")[1]);
 
         this.player.println("Hand Value: " + handValue);
         this.player.println("Remaining Equity: " + remainingEquity);
 
-        if (handValue <= this.handSelection + varianceStream.next() || remainingEquity < bigBlind)
+        if (handValue <= this.handSelection + varianceStream.next())
             return bettingOptions[0]; //Check/Fold
+        else if (remainingEquity < minBet / 2 && !bettingOptions[1].equals("Check"))
+            return bettingOptions[3]; //All-in
 
         double aggressionRatio = (handValue - oppositeAggression) / aggression;
 
-        if (aggressionRatio <= varianceStream.next() ||
-                remainingEquity < Integer.parseInt(bettingOptions[2].split("-")[1]))
+        if (aggressionRatio <= varianceStream.next() || remainingEquity < minBet)
             return bettingOptions[1]; // Check/Call
 
         aggressionRatio = Double.min(0, aggressionRatio);
