@@ -58,8 +58,7 @@ public class PreFlop extends Behaviour {
                     // Create reply
                     ACLMessage reply = msg.createReply();
 
-                    reply.setPerformative(ACLMessage.CONFIRM);
-                    reply.setContent("Card-reception-confirmation");
+                    reply.setPerformative(ACLMessage.INFORM);
 
                     myAgent.send(reply);
 
@@ -76,8 +75,6 @@ public class PreFlop extends Behaviour {
                 msg = myAgent.receive(msgTemplate);
 
                 if (msg != null) {
-                    System.out.println(this.player.getName() + " :: Current bet " + this.player.getCurrBet());
-
                     String[] content = msg.getContent().split(":");
                     String[] smallBlind = content[0].split("-");
                     String[] bigBlind = content[1].split("-");
@@ -92,6 +89,7 @@ public class PreFlop extends Behaviour {
                         this.player.setBigBlind(Integer.parseInt(bigBlind[1]));
                     }
 
+                    System.out.println(this.player.getName() + " :: Current bet " + this.player.getCurrBet());
                     this.terminate();
                 }
                 else {
