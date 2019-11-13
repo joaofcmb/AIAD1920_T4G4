@@ -30,21 +30,11 @@ public class Player extends Agent {
         return bigBlind;
     }
 
-    public void updateChips(String bettingContent) {
-        final String[] bettingOptions = bettingContent.split("-");
-
-        if (bettingOptions.length == 2) {
-            buyIn -= Integer.parseInt(bettingOptions[1]);
-        }
-        else if (bettingContent.equals("All in")){
-            buyIn = 0;
-        }
-    }
-
     /**
      * Player state machine
      */
     public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, IN_SESSION;}
+
     /**
      * Initial state
      */
@@ -54,7 +44,6 @@ public class Player extends Agent {
      * Dealer of the current session
      */
     private AID dealer = null;
-
     /**
      * Player current bet
      */
@@ -177,10 +166,36 @@ public class Player extends Agent {
     }
 
     /**
+     * Updates the current chips and current bet based on the player bet
+     *
+     * @param bettingContent String containg the player bet
+     */
+    public void updateChips(String bettingContent) {
+        final String[] bettingOptions = bettingContent.split("-");
+
+        if (bettingOptions.length == 2) {
+            int betAmount = Integer.parseInt(bettingOptions[1]);
+            updateCurrBet(betAmount);
+            this.buyIn -= betAmount;
+        }
+        else if (bettingContent.equals("All in")){
+            updateCurrBet(buyIn);
+            buyIn = 0;
+        }
+    }
+
+    /**
      * Updates current bet value
      */
     public void updateCurrBet(int value) {
         this.currBet += value;
+    }
+
+    /**
+     * Resets the current bet value to 0
+     */
+    public void resetCurrBet() {
+        this.currBet = 0;
     }
 
     /**
