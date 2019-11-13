@@ -151,23 +151,29 @@ public class Personality {
 
     public String betAction(String[] bettingOptions, int playerChips, int bigBlind) {
         final double handValue = effectiveHandStrength(), oppositeAggression = 1 - this.aggression;
+        final int remainingEquity = (int) (handValue * (this.player.getCurrBet() + this.player.getBuyIn()))
+                - this.player.getCurrBet();
+        final int minBet = Integer.parseInt(bettingOptions[2].split("-")[1]);
 
         this.player.println("Hand Value: " + handValue);
+        this.player.println("Remaining Equity: " + remainingEquity);
 
         if (handValue <= this.handSelection + varianceStream.next())
-            return bettingOptions[0];
+            return bettingOptions[0]; //Check/Fold
+        else if (remainingEquity < minBet / 2 && !bettingOptions[1].equals("Check"))
+            return bettingOptions[3]; //All-in
 
         double aggressionRatio = (handValue - oppositeAggression) / aggression;
 
-        if (aggressionRatio <= varianceStream.next())
-            return bettingOptions[1];
+        if (aggressionRatio <= varianceStream.next() || remainingEquity < minBet)
+            return bettingOptions[1]; // Check/Call
 
         aggressionRatio = Double.min(0, aggressionRatio);
 
         if (aggressionRatio <= oppositeAggression + varianceStream.next())
-            return bettingOptions[2];
+            return bettingOptions[2]; // Min Raise/Bet
         else if (aggressionRatio > oppositeAggression * (1 + this.aggression) + varianceStream.next())
-            return bettingOptions[3];
+            return bettingOptions[3]; // All-in
         else {
             final String[] betPair = bettingOptions[2].split("-");
             return betPair[0] + "-" + Integer.max(

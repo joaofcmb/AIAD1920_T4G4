@@ -79,9 +79,9 @@ public class PreFlop extends Behaviour {
                     String[] smallBlind = content[0].split("-");
                     String[] bigBlind = content[1].split("-");
 
-                    if(smallBlind[0].equals(this.player.getName()))
+                    if (smallBlind[0].equals(this.player.getName()))
                         this.player.updateCurrBet(Integer.parseInt(smallBlind[1]));
-                    else if(bigBlind[0].equals(this.player.getName()))
+                    else if (bigBlind[0].equals(this.player.getName()))
                         this.player.updateCurrBet(Integer.parseInt(bigBlind[1]));
                     else {
                         this.player.addBet(smallBlind[0], smallBlind[1]);
