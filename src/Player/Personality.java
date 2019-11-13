@@ -11,12 +11,12 @@ import java.util.Random;
 public class Personality {
     static private Map<String, String> presets = Map.of(
                 // Preset Name, handSelection:aggression
-            "calling-station",  "0.25:0.25",
-            "rock",             "0.75:0.25",
-            "LAG",              "0.25:0.75",
+            "calling-station",  "0.15:0.40",
+            "rock",             "0.75:0.40",
+            "LAG",              "0.15:0.75",
             "TAG",              "0.75:0.75",
-            "nit",              "0.85:0.15",
-            "maniac",           "0.15:0.85"
+            "nit",              "0.85:0.25",
+            "maniac",           "0.10:0.85"
     );
 
     private static final double VARIANCE_DEVIATION = 0.1;
@@ -43,13 +43,20 @@ public class Personality {
     // EHS = HS * (1 - NPOT) + (1 - HS) * PPOT
     private double effectiveHandStrength() {
         final ArrayList<Card> playerCards = this.player.getCards();
+        Card.sort(playerCards);
 
         final LinkedList<Card> playerHand = new LinkedList<>(this.player.getTable());
         playerHand.addAll(playerCards);
 
-        final int aheadIndex = 0, tieIndex = 0, behindIndex = 2;
         int wins = 0, loses = 0, ties = 0;
+
+        final int aheadIndex = 0, tieIndex = 0, behindIndex = 2;
+        int[][] handPotential = new int[3][3];
+        int[] hpTotal = new int[3];
         for (ArrayList<Card> oppCards : Card.cardsGenerator(2)) {
+            Card.sort(oppCards);
+            if (oppCards.equals(playerCards)) continue;
+
             LinkedList<Card> oppHand = new LinkedList<>(this.player.getTable());
             oppHand.addAll(oppCards);
 
@@ -60,16 +67,39 @@ public class Personality {
             else if (playerRank < oppRank)  { loses++;  statusIndex = tieIndex; }
             else                            { ties++;   statusIndex = behindIndex; }
 
-            // TODO Calculate Hand Potentials
+            for (ArrayList<Card> tableCards : Card.possibleTables(this.player.getTable(), playerCards, oppCards)) {
+                final LinkedList<Card> playerPotentialHand = new LinkedList<>(tableCards);
+                playerPotentialHand.addAll(playerCards);
+
+                final LinkedList<Card> oppPotentialHand = new LinkedList<>(tableCards);
+                oppPotentialHand.addAll(oppCards);
+
+                final int playerPotentialRank = Card.rankHand(playerPotentialHand);
+                final int oppPotentialRank = Card.rankHand(oppPotentialHand);
+
+                if      (playerPotentialRank > oppPotentialRank)    handPotential[statusIndex][aheadIndex]++;
+                else if (playerPotentialRank == oppPotentialRank)   handPotential[statusIndex][tieIndex]++;
+                else                                                handPotential[statusIndex][behindIndex]++;
+
+                hpTotal[statusIndex]++;
+            }
         }
 
         final double handStrength = (wins + ties / 2d) / (wins + ties + loses);
-        return handStrength;
+        if (this.player.getTable().size() < 3)  return 2 * handStrength - 1;
 
-        /*final double positivePotential = () / (loses + ties);
-        final double negativePotential = () / (wins + ties);
+        final double positivePotential = (
+                handPotential[behindIndex][aheadIndex] +
+                handPotential[behindIndex][tieIndex] / 2d +
+                handPotential[tieIndex][aheadIndex] / 2d
+        ) / (hpTotal[behindIndex] + hpTotal[tieIndex]);
+        final double negativePotential = (
+                handPotential[aheadIndex][behindIndex] +
+                handPotential[tieIndex][behindIndex] / 2d +
+                handPotential[aheadIndex][tieIndex] / 2d
+        ) / (hpTotal[aheadIndex] + hpTotal[tieIndex]);
 
-        return handStrength * (1 - negativePotential) + (1 - handStrength) * positivePotential;*/
+        return handStrength * (1 - negativePotential) + (1 - handStrength) * positivePotential;
     }
 
 
@@ -115,7 +145,7 @@ public class Personality {
     // ==> Bet/Raise Amount = max(minAmount, k*BB);
 
     public String betAction(String[] bettingOptions, int playerChips, int bigBlind) {
-        final double handValue = 2 * effectiveHandStrength() - 1, oppositeAggression = 1 - this.aggression;
+        final double handValue = effectiveHandStrength(), oppositeAggression = 1 - this.aggression;
 
         this.player.println("Hand Value: " + handValue);
 

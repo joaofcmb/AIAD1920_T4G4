@@ -1,5 +1,6 @@
 package Session;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Card {
@@ -56,12 +57,38 @@ public class Card {
         return listOfCards;
     }
 
+    public static ArrayList<ArrayList<Card>> possibleTables(ArrayList<Card> table,
+                                                            ArrayList<Card> playerCards,
+                                                            ArrayList<Card> oppCards) {
+        if (table.size() < 3) {
+            return new ArrayList<>();
+        } else if (table.size() == 5)  {
+            final ArrayList<ArrayList<Card>> ret = new ArrayList<>();
+            ret.add(table);
+            return ret;
+        }
+
+        final ArrayList<Card> outCards = new ArrayList<>(table);
+        outCards.addAll(playerCards);
+        outCards.addAll(oppCards);
+
+        final ArrayList<Card> cardCombinations = new Deck().getDeck();
+        cardCombinations.removeAll(outCards);
+
+        final ArrayList<ArrayList<Card>> genCards = cardsGenerator(5 - table.size(), cardCombinations);
+        genCards.forEach((cards) -> cards.addAll(table));
+
+        return genCards;
+    }
+
+
+
     /**
      * Poker hand ratings
      */
     public enum State {ROYAL_FLUSH, STRAIGHT_FLUSH, FOUR_OF_A_KIND, FULL_HOUSE, FLUSH, STRAIGHT,
-        THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD}
-
+        THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD;
+    }
     /**
      * Card constructor
      * @param suit Card suit
@@ -70,6 +97,24 @@ public class Card {
     public Card(String rank, String suit) {
         this.rank = rank;
         this.suit = suit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Card card = (Card) o;
+
+        if (!suit.equals(card.suit)) return false;
+        return rank.equals(card.rank);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = suit.hashCode();
+        result = 31 * result + rank.hashCode();
+        return result;
     }
 
     /**
@@ -84,6 +129,10 @@ public class Card {
      */
     public String getSuit() {
         return suit;
+    }
+
+    public static void sort(ArrayList<Card> hand) {
+        sort(new LinkedList<>(hand));
     }
 
     /**
