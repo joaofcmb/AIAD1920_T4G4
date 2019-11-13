@@ -10,12 +10,19 @@ public class Logic extends CyclicBehaviour {
      */
     private Dealer dealer;
 
+    /**
+     * Possible states
+     */
     public enum State {PRE_FLOP, FLOP, TURN, RIVER, SPECIAL_BET, BET, END_GAME, BETWEEN_GAMES, ON_HOLD}
 
-    private State firstLastState = State.PRE_FLOP;
+    /**
+     * Stores last to states to allow move current state to the next
+     */
+    private State[] lastStates = {State.PRE_FLOP, State.PRE_FLOP};
 
-    private State secondLastState = State.PRE_FLOP;
-
+    /**
+     * Current state
+     */
     private State state = State.PRE_FLOP;
 
     /**
@@ -24,7 +31,6 @@ public class Logic extends CyclicBehaviour {
      */
     public Logic(Dealer dealer) {
         this.dealer = dealer;
-        // this.addBehaviours();
     }
 
     @Override
@@ -66,47 +72,24 @@ public class Logic extends CyclicBehaviour {
 
     }
 
+    /**
+     * Updates logic current state
+     */
     void nextState() {
+        if(lastStates[0] == State.PRE_FLOP) state = State.SPECIAL_BET;
+        else if(lastStates[0] == State.SPECIAL_BET) state = State.FLOP ;
+        else if(lastStates[0] == State.FLOP) state = State.BET;
+        else if(lastStates[0] == State.BET && lastStates[1] == State.FLOP) state = State.TURN;
+        else if(lastStates[0] == State.TURN) state = State.BET;
+        else if(lastStates[0] == State.BET && lastStates[1] == State.TURN) state = State.RIVER;
+        else if(lastStates[0] == State.RIVER) state = State.BET ;
+        else if(lastStates[0] == State.BET && lastStates[1] == State.RIVER) state = State.END_GAME;
+        else if(lastStates[0] == State.END_GAME) state = State.BETWEEN_GAMES;
+        else if(lastStates[0] == State.BETWEEN_GAMES) state = State.PRE_FLOP;
 
-        if(firstLastState == State.PRE_FLOP) state = State.SPECIAL_BET;
-        else if(firstLastState == State.SPECIAL_BET) state = State.FLOP ;
-        else if(firstLastState == State.FLOP) state = State.BET;
-        else if(firstLastState == State.BET && secondLastState == State.FLOP) state = State.TURN;
-        else if(firstLastState == State.TURN) state = State.BET;
-        else if(firstLastState == State.BET && secondLastState == State.TURN) state = State.RIVER;
-        else if(firstLastState == State.RIVER) state = State.BET ;
-        else if(firstLastState == State.BET && secondLastState == State.RIVER) state = State.END_GAME;
-        else if(firstLastState == State.END_GAME) state = State.BETWEEN_GAMES;
-        else if(firstLastState == State.BETWEEN_GAMES) state = State.PRE_FLOP;
-
-        // Update last states
-        this.secondLastState = this.firstLastState;
-        this.firstLastState = state;
+        // Update last states structure
+        this.lastStates[1] = this.lastStates[0];
+        this.lastStates[0] = state;
     }
 
-    //    /**
-//     * Adds logic sequential behaviours
-//     */
-//    private void addBehaviours() {
-//        addSubBehaviour(new PreFlop(this.dealer, this));
-//        addSubBehaviour(new Bet(this.dealer, this.dealer.getSession().getCurrPlayers().size() == 2 ? 0 : 2, this.dealer.getTableSettings().get("bigBlind")));
-//        addSubBehaviour(new Flop(this.dealer));
-//        addSubBehaviour(new Bet(this.dealer, 0, 0));
-//        addSubBehaviour(new TurnRiver(this.dealer, "turn"));
-//        addSubBehaviour(new Bet(this.dealer, 0, 0));
-//        addSubBehaviour(new TurnRiver(this.dealer, "river"));
-//        addSubBehaviour(new Bet(this.dealer, 0, 0));
-//        addSubBehaviour(new EndGame(this.dealer));
-//        addSubBehaviour(new BetweenGames(this.dealer));
-//        addSubBehaviour(new PreFlop(this.dealer, this));
-//
-//    }
-
-//    @Override
-//    public int onEnd() {
-////         reset();
-////         this.dealer.addBehaviour(this);
-//
-//         return super.onEnd();
-//    }
 }

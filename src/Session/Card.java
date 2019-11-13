@@ -26,13 +26,18 @@ public class Card {
     /**
      * Generates Lists of Cards
      * @param n number of cards
-     *
      * @return Lists of Cards
      */
     public static ArrayList<ArrayList<Card>> cardsGenerator(int n) {
         return cardsGenerator(n, new Deck().getDeck());
     }
 
+    /**
+     * Generates Lists of Cards
+     * @param n number of cards
+     * @param cardCombinations deck of cards
+     * @return Lists of Cards
+     */
     private static ArrayList<ArrayList<Card>> cardsGenerator(int n, ArrayList<Card> cardCombinations) {
         final ArrayList<ArrayList<Card>> listOfCards = new ArrayList<>();
 
@@ -88,6 +93,7 @@ public class Card {
     public enum State {ROYAL_FLUSH, STRAIGHT_FLUSH, FOUR_OF_A_KIND, FULL_HOUSE, FLUSH, STRAIGHT,
         THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD;
     }
+
     /**
      * Card constructor
      * @param suit Card suit
@@ -196,45 +202,113 @@ public class Card {
     }
 
     /**
+     * Returns flush sequence if exists. This function is separated from the getBestSequence
+     * due to the fact that, that function computes the best sequence based on card ranks only
+     * and tries to match the suit so solve the royal flush case. This function only checks for
+     * flush sequences
+     * @param hand player hand
+     * @param handInfo player hand parsed information
+     * @param suit flush suit
+     * @return highest card value, or -1 in case no sequence is found
+     */
+    public static Integer getFlushSequence(LinkedList<Card> hand, HashMap<String, Integer> handInfo, String suit) {
+        // Variables
+        String initSeqCard = "";
+        int noSeqCards = 0;
+        String[] ranks = {"Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
+
+        // Determine sequence
+        for (String rank : ranks) {
+            if (handInfo.get(rank) == 0) {
+                initSeqCard = "";
+                noSeqCards = 0;
+            }
+            else {
+                for(Card card : hand)
+                    if(rank.equals(card.getRank()) && card.getSuit().equals(suit)) {
+                        initSeqCard = initSeqCard.equals("") ? rank : initSeqCard;
+                        noSeqCards++;
+                        break;
+                    }
+
+                if (noSeqCards == 5)
+                    break;
+            }
+        }
+
+        // Allow Ace being the lowest sequence card
+        if(initSeqCard.equals("5") && handInfo.get("Ace") > 0)
+            noSeqCards++;
+
+        // Enough cards to compose a sequence
+        if(noSeqCards < 5)
+            return -1;
+
+        return Card.cardValue.get(initSeqCard);
+    }
+
+    /**
      * Checks if there exists five cards in sequence
      * @param hand player hand
-     * @return Array with sequences, empty array otherwise
+     * @param handInfo player hand parsed information
+     * @return Array with the best sequence, otherwise empty
      */
-    public static ArrayList<ArrayList<String>> getSequences(LinkedList<Card> hand) {
-        ArrayList<ArrayList<String>> sequences = new ArrayList<>();
+    public static ArrayList<String> getBestSequence(LinkedList<Card> hand, HashMap<String, Integer> handInfo) {
+        // Variables
+        String seq = "";
+        int noSeqCards = 0;
+        String[] ranks = {"Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
 
-        // 0 1 2 3 4 5 6
-        for(int i = 0; i <= hand.size() - 5; i++) {
-            // Internal variables
-            int j = i;
-            int limit = j + 4;  // Maximum limit 6
-            ArrayList<String> sequence = new ArrayList<>();
-
-            while (j < limit) {
-                int inc = 1;
-                int diff = Card.cardValue.get(hand.get(j).getRank()) - Card.cardValue.get(hand.get(j + inc++).getRank());
-
-                while (diff == 0 && limit < 6) {
-                    diff = Card.cardValue.get(hand.get(j).getRank()) - Card.cardValue.get(hand.get(j + inc++).getRank());
-                    limit++;
-                }
-
-                if(limit > 6 || diff > 1)
-                    break;
-                else {  // Diff equal 1
-                    sequence.add(hand.get(j).getRank() + "-" + hand.get(j).getSuit());
-
-                    if(j == limit - 1)
-                        sequence.add(hand.get(j+1).getRank() + "-" + hand.get(j+1).getSuit());
-
-                    j += inc - 1;
-                }
+        // Determine sequence
+        for (String rank : ranks) {
+            if (handInfo.get(rank) == 0) {
+                seq = "";
+                noSeqCards = 0;
             }
+            else {
+                seq += rank + "-";
+                noSeqCards++;
 
-            if(j == limit && sequence.size() == 5)
-                sequences.add(sequence);
+                if (noSeqCards == 5)
+                    break;
+            }
         }
-        return sequences;
+
+        // Remove last character
+        seq = seq.equals("") ? "" : seq.substring(0, seq.length() - 1);
+
+        // Allow Ace being the lowest sequence card
+        if(seq.equals("5-4-3-2") && handInfo.get("Ace") > 0) {
+            seq += "-Ace";
+            noSeqCards++;
+        }
+
+        // Enough cards to compose a sequence
+        if(noSeqCards < 5)
+            return new ArrayList<>();
+
+        // Retrieve suit with most amount of cards. Royal/Straight flush exceptions
+        String biggestSuit = "";
+        String[] remainingSuits = {"Clubs", "Diamonds", "Hearts", "Spades"};
+
+        for(String suit : remainingSuits)
+            if(biggestSuit.equals("") || handInfo.get(biggestSuit) < handInfo.get(suit))
+                biggestSuit = suit;
+
+        // Compose best sequence
+        int cardIndex = 0;
+        ArrayList<String> bestSequence = new ArrayList<>(Arrays.asList(seq.split("-")));
+
+        while (cardIndex < noSeqCards) {
+            for(Card card : hand) {
+                if(bestSequence.get(cardIndex).contains(card.getRank()))
+                    if(bestSequence.get(cardIndex).equals(card.getRank()) || card.getSuit().equals(biggestSuit))
+                        bestSequence.set(cardIndex, card.getRank() + "-" + card.getSuit());
+            }
+            cardIndex++;
+        }
+
+        return bestSequence;
     }
 
     /**
@@ -253,28 +327,33 @@ public class Card {
         // Hand variables
         HashMap<String, Integer> handInfo = Card.parseHand(hand);
         String sameSuit = Card.getFlush(handInfo);
-        ArrayList<ArrayList<String>> sequences = Card.getSequences(hand);
+        ArrayList<String> bestSequence = Card.getBestSequence(hand, handInfo);
+
+        System.out.println(bestSequence);
 
         // State machine variables
-        State state = !sameSuit.equals("") && !sequences.isEmpty() ? State.ROYAL_FLUSH : State.FOUR_OF_A_KIND;
+        State state = sameSuit.equals("") ? State.FOUR_OF_A_KIND : State.ROYAL_FLUSH;
 
         while(true) {
             switch (state) {
                 case ROYAL_FLUSH: // Points [900]
-                    for(ArrayList<String> seq : sequences) {
-                        String[] card = seq.get(0).split("-");
-                        if(card[0].equals("Ace") && card[1].equals(sameSuit))
-                            return 900;
+                    if(bestSequence.isEmpty()) {
+                        state = State.STRAIGHT_FLUSH;
+                        break;
                     }
-                    state = State.STRAIGHT_FLUSH;
+
+                    String[] biggestCard = bestSequence.get(0).split("-");
+                    if(biggestCard[0].equals("Ace") && biggestCard[1].equals(sameSuit))
+                        return 900;
+                    else
+                        state = State.STRAIGHT_FLUSH;
                     break;
                 case STRAIGHT_FLUSH: // Points [800-899]
-                    for(ArrayList<String> seq : sequences) {
-                        String[] card = seq.get(0).split("-");
-                        if(card[1].equals(sameSuit))
-                            return Card.cardValue.get(card[0]) + 800;
-                    }
-                    state = State.FOUR_OF_A_KIND;
+                    int flushSequence = getFlushSequence(hand, handInfo, sameSuit);
+                    if(flushSequence != -1)
+                        return flushSequence + 800;
+                    else
+                        state = State.FOUR_OF_A_KIND;
                     break;
                 case FOUR_OF_A_KIND: // Points [700-799]
                     ArrayList<String> foak = Card.groupOfX(handInfo, 4);
@@ -310,8 +389,8 @@ public class Card {
                         state = State.STRAIGHT;
                     break;
                 case STRAIGHT: // Points [400-499]
-                    if(sequences.size() > 0)
-                        return Card.cardValue.get(sequences.get(0).get(0).split("-")[0]) + playerCardsValue + 400;
+                    if(bestSequence.size() > 0)
+                        return Card.cardValue.get(bestSequence.get(0).split("-")[0]) + playerCardsValue + 400;
                     else
                         state = State.THREE_OF_A_KIND;
                     break;
@@ -341,25 +420,6 @@ public class Card {
             }
         }
     }
-
-    /**
-     * put("2", 0); put("3", 0); put("4", 0); put("5", 0); put("6", 0);
-     *                 put("7", 0); put("8", 0); put("9", 0); put("10", 0); put("Jack", 0);
-     *                 put("Queen", 0); put("King", 0); put("Ace", 0); put("Clubs", 0);
-     *                 put("Diamonds", 0); put("Hearts", 0); put("Spades", 0);
-     * @param args
-     */
-
-    public static void main(String[] args) {
-        LinkedList<Card> hand = new LinkedList<Card>(Arrays.asList(
-                new Card("2", "Diamonds"), new Card("2", "Clubs"),
-                new Card("2", "Hearts"), new Card("2", "Diamonds"),
-                new Card("2", "Spades"),
-                new Card("Ace", "Diamonds"), new Card("2", "Diamonds")
-                ));
-        
-    }
-
 
     @Override
     public String toString() {
