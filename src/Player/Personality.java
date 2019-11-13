@@ -112,7 +112,7 @@ public class Personality {
 
     //                                 [1, 1+agg]  [0, agg]  [0, chips*agg]
     // k = floor( (aggressionRatio / (1 - aggression) - 1) * chips / BB)
-    // ==> Bet/Raise Amount = min(minAmount, k*BB);
+    // ==> Bet/Raise Amount = max(minAmount, k*BB);
 
     public String betAction(String[] bettingOptions, int playerChips, int bigBlind) {
         final double handValue = 2 * effectiveHandStrength() - 1, oppositeAggression = 1 - this.aggression;

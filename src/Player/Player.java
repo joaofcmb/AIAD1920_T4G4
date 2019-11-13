@@ -20,8 +20,26 @@ public class Player extends Agent {
      * Player personality
      */
     private Personality personality;
+    private int bigBlind;
 
+    public void setBigBlind(int bigBlind) {
+        this.bigBlind = bigBlind;
+    }
 
+    public int getBigBlind() {
+        return bigBlind;
+    }
+
+    public void updateChips(String bettingContent) {
+        final String[] bettingOptions = bettingContent.split("-");
+
+        if (bettingOptions.length == 2) {
+            buyIn -= Integer.parseInt(bettingOptions[1]);
+        }
+        else if (bettingContent.equals("All in")){
+            buyIn = 0;
+        }
+    }
 
     /**
      * Player state machine

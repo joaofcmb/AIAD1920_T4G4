@@ -89,6 +89,7 @@ public class PreFlop extends Behaviour {
                     else {
                         this.player.addBet(smallBlind[0], smallBlind[1]);
                         this.player.addBet(bigBlind[0], bigBlind[1]);
+                        this.player.setBigBlind(Integer.parseInt(bigBlind[1]));
                     }
 
                     this.terminate();
