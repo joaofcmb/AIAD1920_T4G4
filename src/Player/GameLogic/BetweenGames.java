@@ -53,10 +53,11 @@ public class BetweenGames extends Behaviour {
                     ACLMessage reply = msg.createReply();
 
                     reply.setPerformative(ACLMessage.INFORM);
-                    if(this.player.getAID().getName().equals("Player03@JADE"))
-                        reply.setContent("Yes"); // YES or NO
+
+                    if(this.player.getBuyIn() == 0)
+                        reply.setContent("Yes");
                     else
-                        reply.setContent("No"); // YES or NO
+                        reply.setContent("No");
 
                     System.out.println(this.player.getName() + " :: Intention to leave session :: " + reply.getContent());
                     myAgent.send(reply);

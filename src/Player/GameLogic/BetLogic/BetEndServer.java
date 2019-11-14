@@ -36,8 +36,7 @@ public class BetEndServer extends Behaviour {
         ACLMessage msg = myAgent.receive(msgTemplate);
 
         if(msg != null) {
-            if(msg.getContent().equals("Last player standing"))
-                this.betLogic.status = "Last player standing";
+            this.betLogic.status = msg.getContent();
 
             System.out.println(this.player.getName() + " :: Terminating betting phase :: " + msg.getContent());
             this.terminate();

@@ -7,8 +7,6 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Bet extends Behaviour {
@@ -34,11 +32,6 @@ public class Bet extends Behaviour {
     private int maxPot;
 
     /**
-     * Stores players current betting phase bets history
-     */
-    private HashMap<String, LinkedList<String>> bets = new HashMap<>();
-
-    /**
      * Possible betting states
      */
     enum State {PLAYER_BET_TURN, RECEIVE_PLAYER_BET}
@@ -55,21 +48,22 @@ public class Bet extends Behaviour {
 
     private LinkedList<Player> playersToBet = new LinkedList<>();
 
-    int noFoldPlayers = 0;
+    private int noFoldPlayers = 0;
+
+    private int noAllInPlayers = 0;
+
+    private int lastBet;
 
     /**
      * Bet constructor
      * @param dealer agent
      */
-    Bet(Dealer dealer, Logic logic, int playerTurn, int maxPot) {
+    Bet(Dealer dealer, Logic logic, int playerTurn, int lastBet) {
         this.dealer = dealer;
         this.logic = logic;
-        this.maxPot = maxPot;
+        this.lastBet = lastBet;
+        this.maxPot = lastBet;
         this.initializePlayersToBet(playerTurn);
-
-        // Special betting phase (small and big blind)
-        if(this.maxPot != 0)
-            this.bets = this.dealer.getSession().getBets();
     }
 
     private void initializePlayersToBet(int playerTurn) {
@@ -166,7 +160,7 @@ public class Bet extends Behaviour {
             return "Check:Bet-" + this.dealer.getTableSettings().get("bigBlind") + ":All in";
         else {
             int currChips = this.playersToBet.getFirst().getChips();
-            int raiseValue = this.maxPot * 2;
+            int raiseValue = this.lastBet * 2;
             int callValue = this.maxPot - this.playersToBet.getFirst().getPot();
 
             if(callValue == 0)
@@ -198,6 +192,7 @@ public class Bet extends Behaviour {
                 return;
             }
             else if(content[0].equals("All in")) {
+                this.noAllInPlayers++;
                 this.playersToBet.getFirst().setAllInStatus();
                 value = this.playersToBet.getFirst().getChips();
             }
@@ -206,7 +201,7 @@ public class Bet extends Behaviour {
             value = Integer.parseInt(content[1]);
 
         // Add bet and update pot
-        this.addBet(player.getName(), bet);
+        this.dealer.getSession().addBet(player.getName(), bet);
 
         // Update current player data
         Player currPlayer = this.playersToBet.removeFirst();
@@ -214,8 +209,9 @@ public class Bet extends Behaviour {
         currPlayer.updatePot(value);
         currPlayer.updateChips(-value);
 
-        // Updates max bet value
+        // Updates max pot and last bet values
         this.maxPot = Math.max(this.maxPot, currPlayer.getPot());
+        this.lastBet = value;
 
         if(content[0].equals("Raise") || content[0].equals("All in")) {
             for(Player nextPlayer : this.dealer.getCurrPlayers()) {
@@ -231,27 +227,11 @@ public class Bet extends Behaviour {
     }
 
     /**
-     * Adds a new bet to the betting phase
-     * @param playerName player name
-     * @param bet bet made
-     */
-    private void addBet(String playerName, String bet) {
-        // Updates session bets history
-        this.dealer.getSession().addBet(playerName, bet);
-
-        if(this.bets.containsKey(playerName))
-            this.bets.get(playerName).push(bet);
-        else {
-            LinkedList<String> bets = new LinkedList<>(); bets.push(bet);
-            this.bets.put(playerName, bets);
-        }
-    }
-
-    /**
      * Terminates behaviour if all players made their bets and its value is the same for each player
      */
     private void terminate() {
-        this.status = this.playersToBet.isEmpty() || (this.dealer.getCurrPlayers().size() - noFoldPlayers) <= 1;
+        this.status = this.playersToBet.isEmpty() || (this.dealer.getCurrPlayers().size() - noFoldPlayers) <= 1 ||
+                (this.dealer.getCurrPlayers().size() - noAllInPlayers) == 0;
         this.state = State.PLAYER_BET_TURN;
     }
 
@@ -274,8 +254,11 @@ public class Bet extends Behaviour {
 
         String status = "Next State";
         msg.setConversationId("end-betting-phase");
+
         if((this.dealer.getCurrPlayers().size() - noFoldPlayers) <= 1)
             status = "Last player standing";
+        else if((this.dealer.getCurrPlayers().size() - noAllInPlayers) == 0)
+            status = "Every player all in";
 
         msg.setContent(status);
         msg.setReplyWith("end-betting-phase" + System.currentTimeMillis());
@@ -290,7 +273,7 @@ public class Bet extends Behaviour {
 
         this.dealer.pauseGUI();
         this.logic.nextState(status);
-        
+
         return super.onEnd();
     }
 

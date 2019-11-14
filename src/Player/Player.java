@@ -185,6 +185,14 @@ public class Player extends Agent {
     }
 
     /**
+     *
+     * @param earnings
+     */
+    public void updateChips(int earnings) {
+        this.buyIn += earnings;
+    }
+
+    /**
      * Updates current bet value
      */
     public void updateCurrBet(int value) {

@@ -80,6 +80,7 @@ public class EndGame extends Behaviour {
 
                 if(msg != null) {
                     System.out.println(this.player.getName() + " :: Receiving earnings :: " + msg.getContent());
+                    this.player.updateChips(Integer.parseInt(msg.getContent()));
                     this.terminate();
                 }
                 else {

@@ -7,6 +7,7 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -202,10 +203,12 @@ public class EndGame extends Behaviour {
      */
     private void computeEarnings() {
         while (this.valueInPot()) {
+
             // Initial variables
             int maxHandValue = 0;
             ArrayList<Integer> winners = new ArrayList<>();
 
+            // Retrieves the max hand value
             for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++) {
                 if(this.dealer.getSession().getCurrPlayers().get(i).getCurrHandFinalValue() > maxHandValue &&
                    this.dealer.getSession().getCurrPlayers().get(i).getPot() > 0)
@@ -225,9 +228,9 @@ public class EndGame extends Behaviour {
             // Due to possible existence of side pots always select the smaller pot
             for(int i = 0; i < winners.size(); i++) {
                 if(winnerPot == 0)
-                    winnerPot = this.dealer.getSession().getCurrPlayers().get(i).getPot();
-                else if(winnerPot > this.dealer.getSession().getCurrPlayers().get(i).getPot())
-                    winnerPot = this.dealer.getSession().getCurrPlayers().get(i).getPot();
+                    winnerPot = this.dealer.getSession().getCurrPlayers().get(winners.get(i)).getPot();
+                else if(winnerPot > this.dealer.getSession().getCurrPlayers().get(winners.get(i)).getPot())
+                    winnerPot = this.dealer.getSession().getCurrPlayers().get(winners.get(i)).getPot();
             }
 
             // Calculate earnings
@@ -240,8 +243,16 @@ public class EndGame extends Behaviour {
             for(int i = 0; i < winners.size(); i++) {
                 this.playerEarnings.put(winners.get(i), this.playerEarnings.get(i) + earnings/winners.size());
             }
-        }
 
+            // Just to check if things are working [TO REMOVE]
+//            System.out.println(winners + " --- " + winnerPot + " _---- " + earnings);
+//
+//            for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++) {
+//                System.out.println(this.dealer.getSession().getCurrPlayers().get(i).getPlayer().getName()
+//                        + " --- " + this.dealer.getSession().getCurrPlayers().get(i).getPot() +
+//                        " --- " + this.playerEarnings.get(i));
+//            }
+        }
     }
 
     /**

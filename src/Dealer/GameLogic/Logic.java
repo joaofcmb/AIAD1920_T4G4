@@ -26,6 +26,11 @@ public class Logic extends CyclicBehaviour {
     private State state = State.PRE_FLOP;
 
     /**
+     * All in status. If true it means that every player made all in, false otherwise
+     */
+    private boolean allInStatus = false;
+
+    /**
      * Game logic constructor
      * @param dealer agent
      */
@@ -87,13 +92,25 @@ public class Logic extends CyclicBehaviour {
         if(action.equals("Last player standing"))
             state = State.END_GAME;
         else {
+            if(action.equals("Every player all in"))
+                this.allInStatus = true;
+
             if (lastStates[0] == State.PRE_FLOP) state = State.SPECIAL_BET;
             else if (lastStates[0] == State.SPECIAL_BET) state = State.FLOP;
-            else if (lastStates[0] == State.FLOP) state = State.BET;
+            else if (lastStates[0] == State.FLOP) {
+                if(this.allInStatus) state = State.TURN;
+                else state = State.BET;
+            }
             else if (lastStates[0] == State.BET && lastStates[1] == State.FLOP) state = State.TURN;
-            else if (lastStates[0] == State.TURN) state = State.BET;
+            else if (lastStates[0] == State.TURN) {
+                if(this.allInStatus) state = State.RIVER;
+                else state = State.BET;
+            }
             else if (lastStates[0] == State.BET && lastStates[1] == State.TURN) state = State.RIVER;
-            else if (lastStates[0] == State.RIVER) state = State.BET;
+            else if (lastStates[0] == State.RIVER) {
+                if(this.allInStatus) state = State.END_GAME;
+                else state = State.BET;
+            }
             else if (lastStates[0] == State.BET && lastStates[1] == State.RIVER) state = State.END_GAME;
             else if (lastStates[0] == State.END_GAME) state = State.BETWEEN_GAMES;
             else if (lastStates[0] == State.BETWEEN_GAMES) state = State.PRE_FLOP;
