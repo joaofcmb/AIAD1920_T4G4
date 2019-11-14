@@ -148,7 +148,7 @@ public class BetweenGames extends Behaviour {
 
         System.out.println(this.dealer.getName() + " :: Prepared new session");
         this.dealer.getWindow().updateDealerAction("Prepared new session.");
-        this.logic.nextState();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

@@ -100,7 +100,7 @@ public class BetweenGames extends Behaviour {
     public int onEnd() {
         this.player.resetCurrBet();
         this.player.getCards().clear();
-        this.logic.nextState();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

@@ -70,7 +70,7 @@ public class Flop extends Behaviour {
 
     @Override
     public int onEnd() {
-        this.logic.nextState();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

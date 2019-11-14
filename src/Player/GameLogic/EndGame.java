@@ -39,9 +39,12 @@ public class EndGame extends Behaviour {
      * End turn constructor
      * @param player agent
      */
-    EndGame(Player player, Logic logic) {
+    EndGame(Player player, Logic logic, boolean skipShowHand) {
         this.player = player;
         this.logic = logic;
+
+        if(skipShowHand)
+            this.state = State.EARNINGS_DISTRIBUTION;
     }
 
     @Override
@@ -100,7 +103,7 @@ public class EndGame extends Behaviour {
 
     @Override
     public int onEnd() {
-        this.logic.nextState();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

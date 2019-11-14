@@ -11,13 +11,19 @@ public class Logic extends CyclicBehaviour {
      */
     private Player player;
 
+    /**
+     * Possible states
+     */
     public enum State {PRE_FLOP, FLOP, TURN, RIVER, BET, END_GAME, BETWEEN_GAMES, ON_HOLD}
 
-    private State firstLastState = State.PRE_FLOP;
-
-    private State secondLastState = State.PRE_FLOP;
+    /**
+     * Stores last to states to allow move current state to the next
+     */
+    private State[] lastStates = {State.PRE_FLOP, State.PRE_FLOP};
 
     private State state = State.PRE_FLOP;
+
+    private Boolean status = false;
 
     /**
      * Game logic constructor
@@ -25,24 +31,7 @@ public class Logic extends CyclicBehaviour {
      */
     public Logic(Player player) {
         this.player = player;
-        //this.addBehaviours();
     }
-
-//    /**
-//     * Adds logic behaviours
-//     */
-//    private void addBehaviours() {
-//        addSubBehaviour(new PreFlop(this.player));
-//        addSubBehaviour(new Bet(this.player));
-//        addSubBehaviour(new Flop(this.player));
-//        addSubBehaviour(new Bet(this.player));
-//        addSubBehaviour(new TurnRiver(this.player, "turn"));
-//        addSubBehaviour(new Bet(this.player));
-//        addSubBehaviour(new TurnRiver(this.player, "river"));
-//        addSubBehaviour(new Bet(this.player));
-//        addSubBehaviour(new EndGame(this.player));
-//        addSubBehaviour(new BetweenGames(this.player));
-//    }
 
     @Override
     public void action() {
@@ -64,7 +53,7 @@ public class Logic extends CyclicBehaviour {
                 this.state = State.ON_HOLD;
                 break;
             case END_GAME:
-                this.player.addBehaviour(new EndGame(this.player, this));
+                this.player.addBehaviour(new EndGame(this.player, this, this.status));
                 this.state = State.ON_HOLD;
                 break;
             case BETWEEN_GAMES:
@@ -78,26 +67,27 @@ public class Logic extends CyclicBehaviour {
         }
     }
 
-    public void nextState() {
-        if(firstLastState ==  State.PRE_FLOP) state = State.BET;
-        else if(firstLastState == State.BET && secondLastState == State.PRE_FLOP) state = State.FLOP;
-        else if(firstLastState == State.FLOP) state = State.BET;
-        else if(firstLastState == State.BET && secondLastState == State.FLOP) state = State.TURN;
-        else if(firstLastState == State.TURN) state = State.BET;
-        else if(firstLastState == State.BET && secondLastState == State.TURN) state = State.RIVER;
-        else if(firstLastState == State.RIVER) state = State.BET ;
-        else if(firstLastState == State.BET && secondLastState == State.RIVER) state = State.END_GAME;
-        else if(firstLastState == State.END_GAME) state = State.BETWEEN_GAMES;
-        else if(firstLastState == State.BETWEEN_GAMES) state = State.PRE_FLOP;
+    public void nextState(String action) {
+        if(action.equals("Last player standing")) {
+            this.status = true;
+            state = State.END_GAME;
+        }
+        else {
+            if (lastStates[0] == State.PRE_FLOP) state = State.BET;
+            else if (lastStates[0] == State.BET && lastStates[1] == State.PRE_FLOP) state = State.FLOP;
+            else if (lastStates[0] == State.FLOP) state = State.BET;
+            else if (lastStates[0] == State.BET && lastStates[1] == State.FLOP) state = State.TURN;
+            else if (lastStates[0] == State.TURN) state = State.BET;
+            else if (lastStates[0] == State.BET && lastStates[1] == State.TURN) state = State.RIVER;
+            else if (lastStates[0] == State.RIVER) state = State.BET;
+            else if (lastStates[0] == State.BET && lastStates[1] == State.RIVER) state = State.END_GAME;
+            else if (lastStates[0] == State.END_GAME) state = State.BETWEEN_GAMES;
+            else if (lastStates[0] == State.BETWEEN_GAMES) state = State.PRE_FLOP;
+        }
 
         // Update last states
-        this.secondLastState = this.firstLastState;
-        this.firstLastState = state;
+        this.lastStates[1] = this.lastStates[0];
+        this.lastStates[0] = state;
     }
 
-//    @Override
-//    public int onEnd() {
-//        restart();
-//        return super.onEnd();
-//    }
 }

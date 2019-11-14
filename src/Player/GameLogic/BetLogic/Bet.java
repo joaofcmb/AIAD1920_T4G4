@@ -16,6 +16,8 @@ public class Bet extends ParallelBehaviour {
      */
     private Logic logic;
 
+    public String status = "Next State";
+
     /**
      * Bet constructor
      * @param player agent
@@ -33,12 +35,12 @@ public class Bet extends ParallelBehaviour {
     private void addBehaviours() {
         addSubBehaviour(new BetHandler(this.player));
         addSubBehaviour(new BetStorageServer(this.player));
-        addSubBehaviour(new BetEndServer(this.player));
+        addSubBehaviour(new BetEndServer(this, this.player));
     }
 
     @Override
     public int onEnd() {
-        this.logic.nextState();
+        this.logic.nextState(this.status);
         return super.onEnd();
     }
 

@@ -75,17 +75,21 @@ public class Logic extends CyclicBehaviour {
     /**
      * Updates logic current state
      */
-    void nextState() {
-        if(lastStates[0] == State.PRE_FLOP) state = State.SPECIAL_BET;
-        else if(lastStates[0] == State.SPECIAL_BET) state = State.FLOP ;
-        else if(lastStates[0] == State.FLOP) state = State.BET;
-        else if(lastStates[0] == State.BET && lastStates[1] == State.FLOP) state = State.TURN;
-        else if(lastStates[0] == State.TURN) state = State.BET;
-        else if(lastStates[0] == State.BET && lastStates[1] == State.TURN) state = State.RIVER;
-        else if(lastStates[0] == State.RIVER) state = State.BET ;
-        else if(lastStates[0] == State.BET && lastStates[1] == State.RIVER) state = State.END_GAME;
-        else if(lastStates[0] == State.END_GAME) state = State.BETWEEN_GAMES;
-        else if(lastStates[0] == State.BETWEEN_GAMES) state = State.PRE_FLOP;
+    void nextState(String action) {
+        if(action.equals("Last player standing"))
+            state = State.END_GAME;
+        else {
+            if (lastStates[0] == State.PRE_FLOP) state = State.SPECIAL_BET;
+            else if (lastStates[0] == State.SPECIAL_BET) state = State.FLOP;
+            else if (lastStates[0] == State.FLOP) state = State.BET;
+            else if (lastStates[0] == State.BET && lastStates[1] == State.FLOP) state = State.TURN;
+            else if (lastStates[0] == State.TURN) state = State.BET;
+            else if (lastStates[0] == State.BET && lastStates[1] == State.TURN) state = State.RIVER;
+            else if (lastStates[0] == State.RIVER) state = State.BET;
+            else if (lastStates[0] == State.BET && lastStates[1] == State.RIVER) state = State.END_GAME;
+            else if (lastStates[0] == State.END_GAME) state = State.BETWEEN_GAMES;
+            else if (lastStates[0] == State.BETWEEN_GAMES) state = State.PRE_FLOP;
+        }
 
         // Update last states structure
         this.lastStates[1] = this.lastStates[0];

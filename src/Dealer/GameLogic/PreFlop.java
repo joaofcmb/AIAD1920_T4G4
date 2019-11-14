@@ -163,7 +163,7 @@ public class PreFlop extends Behaviour {
     @Override
     public int onEnd() {
         this.dealer.pauseGUI();
-        this.logic.nextState();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

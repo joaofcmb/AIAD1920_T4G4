@@ -37,6 +37,8 @@ public class BetHandler extends Behaviour {
                     this.player.getBuyIn(),
                     this.player.getBigBlind())
             );
+//            reply.setContent(bettingOptions[0].equals("Fold") ? bettingOptions[1] : bettingOptions[0]);
+
 
             this.player.updateChips(reply.getContent());
 

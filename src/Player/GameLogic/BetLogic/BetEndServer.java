@@ -13,6 +13,8 @@ public class BetEndServer extends Behaviour {
      */
     private Player player;
 
+    private Bet betLogic;
+
     /**
      * Behaviour status. True if ended, false otherwise
      */
@@ -22,7 +24,8 @@ public class BetEndServer extends Behaviour {
      * Betting end server constructor
      * @param player agent
      */
-    BetEndServer(Player player) {
+    BetEndServer(Bet betLogic, Player player) {
+        this.betLogic = betLogic;
         this.player = player;
     }
 
@@ -33,7 +36,10 @@ public class BetEndServer extends Behaviour {
         ACLMessage msg = myAgent.receive(msgTemplate);
 
         if(msg != null) {
-            System.out.println(this.player.getName() + " :: Terminating betting phase");
+            if(msg.getContent().equals("Last player standing"))
+                this.betLogic.status = "Last player standing";
+
+            System.out.println(this.player.getName() + " :: Terminating betting phase :: " + msg.getContent());
             this.terminate();
         }
         else
