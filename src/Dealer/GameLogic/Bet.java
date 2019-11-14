@@ -162,11 +162,23 @@ public class Bet extends Behaviour {
      * Retrieves player betting options
      */
     private String getBettingOptions() {
-        return this.maxPot == 0 ?
-                "Check:Bet-" + this.dealer.getTableSettings().get("bigBlind") + ":All in" :
-                "Fold:" + ((this.maxPot - this.playersToBet.getFirst().getPot()) == 0 ? "Check" : "Call-" + (
-                        this.maxPot - this.playersToBet.getFirst().getPot()))
-                        + ":Raise-" + this.maxPot * 2 + ":All in";
+        if(this.maxPot == 0)
+            return "Check:Bet-" + this.dealer.getTableSettings().get("bigBlind") + ":All in";
+        else {
+            int currChips = this.playersToBet.getFirst().getChips();
+            int raiseValue = this.maxPot * 2;
+            int callValue = this.maxPot - this.playersToBet.getFirst().getPot();
+
+            if(callValue == 0)
+                return "Fold:Check" + (raiseValue >= currChips ? ":" : ":Raise-" + raiseValue + ":") + "All in";
+            else {
+                if(callValue >= currChips)
+                    return "Fold:All in";
+                else
+                    return "Fold:Call-" + callValue + (raiseValue >= currChips ? ":" : ":Raise-" + raiseValue + ":")
+                            + "All in";
+            }
+        }
     }
 
     /**
@@ -278,7 +290,7 @@ public class Bet extends Behaviour {
 
         this.dealer.pauseGUI();
         this.logic.nextState(status);
-        System.out.println("--------------------------------------");
+        
         return super.onEnd();
     }
 
