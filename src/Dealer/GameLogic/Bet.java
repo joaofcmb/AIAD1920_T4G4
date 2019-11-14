@@ -157,7 +157,7 @@ public class Bet extends Behaviour {
      */
     private String getBettingOptions() {
         if(this.maxPot == 0)
-            return "Check:Bet-" + this.dealer.getTableSettings().get("bigBlind") + ":All in";
+            return "Fold:Check:Bet-" + this.dealer.getTableSettings().get("bigBlind") + ":All in";
         else {
             int currChips = this.playersToBet.getFirst().getChips();
             int raiseValue = this.lastBet * 2;
@@ -169,7 +169,7 @@ public class Bet extends Behaviour {
                 if(callValue >= currChips)
                     return "Fold:All in";
                 else
-                    return "Fold:Call-" + callValue + (raiseValue >= currChips ? ":" : ":Raise-" + raiseValue + ":")
+                    return "F0old:Call-" + callValue + (raiseValue >= currChips ? ":" : ":Raise-" + raiseValue + ":")
                             + "All in";
             }
         }

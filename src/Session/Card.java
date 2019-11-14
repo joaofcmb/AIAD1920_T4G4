@@ -85,6 +85,12 @@ public class Card {
         return genCards;
     }
 
+    public static double rankCards(ArrayList<Card> playerCards) {
+        int rankValue = Card.cardValue.get(playerCards.get(0).getRank()) +
+                Card.cardValue.get(playerCards.get(1).getRank());
+
+        return rankValue / 26d + (playerCards.get(0).getSuit().equals(playerCards.get(1).getSuit()) ? .5 : 0);
+    }
 
 
     /**
