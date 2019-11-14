@@ -205,7 +205,7 @@ public class Bet extends Behaviour {
         // Updates max bet value
         this.maxPot = Math.max(this.maxPot, currPlayer.getPot());
 
-        if(content[0].equals("Raise")) {
+        if(content[0].equals("Raise") || content[0].equals("All in")) {
             for(Player nextPlayer : this.dealer.getCurrPlayers()) {
                 if(!this.playersToBet.contains(nextPlayer) && !nextPlayer.isFoldStatus() && !nextPlayer.isAllInStatus()
                         && !nextPlayer.getPlayer().getName().equals(currPlayer.getPlayer().getName()))
@@ -278,6 +278,7 @@ public class Bet extends Behaviour {
 
         this.dealer.pauseGUI();
         this.logic.nextState(status);
+        System.out.println("--------------------------------------");
         return super.onEnd();
     }
 

@@ -37,34 +37,42 @@ public class Logic extends CyclicBehaviour {
     public void action() {
         switch (state) {
             case PRE_FLOP:
+                System.out.println(this.dealer.getName() + " :: PRE-FLOP PHASE");
                 this.dealer.addBehaviour(new PreFlop(this.dealer, this));
                 this.state = State.ON_HOLD;
                 break;
             case FLOP:
+                System.out.println(this.dealer.getName() + " :: FLOP PHASE");
                 this.dealer.addBehaviour(new Flop(this.dealer, this));
                 this.state = State.ON_HOLD;
                 break;
             case TURN:
+                System.out.println(this.dealer.getName() + " :: TURN PHASE");
                 this.dealer.addBehaviour(new TurnRiver(this.dealer, this, "turn"));
                 this.state = State.ON_HOLD;
                 break;
             case RIVER:
+                System.out.println(this.dealer.getName() + " :: RIVER PHASE");
                 this.dealer.addBehaviour(new TurnRiver(this.dealer, this, "river"));
                 this.state = State.ON_HOLD;
                 break;
             case END_GAME:
+                System.out.println(this.dealer.getName() + " :: END GAME PHASE");
                 this.dealer.addBehaviour(new EndGame(this.dealer, this));
                 this.state = State.ON_HOLD;
                 break;
             case BETWEEN_GAMES:
+                System.out.println(this.dealer.getName() + " :: BETWEEN GAMES PHASE");
                 this.dealer.addBehaviour(new BetweenGames(this.dealer, this));
                 this.state = State.ON_HOLD;
                 break;
             case SPECIAL_BET:
+                System.out.println(this.dealer.getName() + " :: BET PHASE");
                 this.dealer.addBehaviour(new Bet(this.dealer, this, this.dealer.getSession().getCurrPlayers().size() == 2 ? 0 : 2, this.dealer.getTableSettings().get("bigBlind")));
                 this.state = State.ON_HOLD;
                 break;
             case BET:
+                System.out.println(this.dealer.getName() + " :: BET PHASE");
                 this.dealer.addBehaviour(new Bet(this.dealer, this, 0, 0));
                 this.state = State.ON_HOLD;
                 break;
