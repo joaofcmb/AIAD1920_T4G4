@@ -136,6 +136,8 @@ public class BetweenGames extends Behaviour {
 
     @Override
     public int onEnd(){
+        this.dealer.getWindow().removePlayerBlind("S");
+
         this.dealer.getCurrPlayers().addLast(this.dealer.getCurrPlayers().removeFirst());
         this.dealer.createNewSession();
         for(Player player : this.dealer.getCurrPlayers())
