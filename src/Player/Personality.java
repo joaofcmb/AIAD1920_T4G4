@@ -41,6 +41,7 @@ public class Personality {
     }
 
     // EHS = HS * (1 - NPOT) + (1 - HS) * PPOT
+    // TODO Change pre-flop analysis
     private double effectiveHandStrength() {
         final ArrayList<Card> playerCards = this.player.getCards();
         Card.sort(playerCards);
@@ -87,8 +88,9 @@ public class Personality {
 
         final double handStrength = (wins + ties / 2d) / (wins + ties + loses);
         if (this.player.getTable().size() < 3) {
+            // TODO Use 0-1 ranking ye retard
             if (playerCards.get(0).getRank().equals(playerCards.get(1).getRank()))
-                return Math.max(1d, 2 * handStrength - .5);
+                return Math.max(1d, 2 * (0.7 + handStrength) - 1);
             else
                 return 2 * handStrength - 1;
         }
@@ -149,6 +151,7 @@ public class Personality {
     // k = floor( (aggressionRatio / (1 - aggression) - 1) * chips / BB)
     // ==> Bet/Raise Amount = max(minAmount, k*BB);
 
+    // TODO Reworking this shite. Use equity to measure how worth it is then change response depending on personality
     public String betAction(String[] bettingOptions, int playerChips, int bigBlind) {
         final double handValue = effectiveHandStrength(), oppositeAggression = 1 - this.aggression;
         final int remainingEquity = (int) (handValue * (this.player.getCurrBet() + this.player.getBuyIn()))
@@ -160,12 +163,12 @@ public class Personality {
 
         if (handValue <= this.handSelection + varianceStream.next())
             return bettingOptions[0]; //Check/Fold
-        else if (remainingEquity < minBet / 2 && !bettingOptions[1].equals("Check"))
+        else if (this.player.getBuyIn() < minBet / 2 && !bettingOptions[1].equals("Check"))
             return bettingOptions[3]; //All-in
 
         double aggressionRatio = (handValue - oppositeAggression) / aggression;
 
-        if (aggressionRatio <= varianceStream.next() || remainingEquity < minBet)
+        if (aggressionRatio <= varianceStream.next() || this.player.getBuyIn() < minBet)
             return bettingOptions[1]; // Check/Call
 
         aggressionRatio = Double.min(0, aggressionRatio);

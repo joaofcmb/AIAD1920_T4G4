@@ -163,7 +163,7 @@ public class Bet extends Behaviour {
      */
     private String getBettingOptions() {
         return this.maxPot == 0 ?
-                "Check:Bet-" + this.dealer.getTableSettings().get("bigBlind") + ":All in" :
+                "Check:Check:Bet-" + this.dealer.getTableSettings().get("bigBlind") + ":All in" :
                 "Fold:" + ((this.maxPot - this.playersToBet.getFirst().getPot()) == 0 ? "Check" : "Call-" + (
                         this.maxPot - this.playersToBet.getFirst().getPot()))
                         + ":Raise-" + this.maxPot * 2 + ":All in";
