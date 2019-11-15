@@ -45,6 +45,8 @@ public class EndGame extends Behaviour {
 
         if(skipShowHand)
             this.state = State.EARNINGS_DISTRIBUTION;
+
+        System.out.println(this.player.getName() + skipShowHand);
     }
 
     @Override

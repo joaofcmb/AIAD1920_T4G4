@@ -24,14 +24,9 @@ public class Logic extends CyclicBehaviour {
     private State state = State.PRE_FLOP;
 
     /**
-     * Folding status. It is true if there is only one player in game, false otherwise
+     * Skip betting phases status. If true it means that no more bets will be made, false otherwise
      */
-    private Boolean foldingStatus = false;
-
-    /**
-     * All in status. If true it means that every player made all in, false otherwise
-     */
-    private boolean allInStatus = false;
+    private boolean skipBettingPhases = false;
 
     /**
      * Game logic constructor
@@ -61,7 +56,7 @@ public class Logic extends CyclicBehaviour {
                 this.state = State.ON_HOLD;
                 break;
             case END_GAME:
-                this.player.addBehaviour(new EndGame(this.player, this, this.foldingStatus));
+                this.player.addBehaviour(new EndGame(this.player, this, this.player.getFoldStatus()));
                 this.state = State.ON_HOLD;
                 break;
             case BETWEEN_GAMES:
@@ -76,34 +71,28 @@ public class Logic extends CyclicBehaviour {
     }
 
     public void nextState(String action) {
-        if(action.equals("Last player standing")) {
-            this.foldingStatus = true;
-            state = State.END_GAME;
-        }
-        else {
-            if(action.equals("Every player all in"))
-                this.allInStatus = true;
+        if(action.equals("No more betting"))
+            this.skipBettingPhases = true;
 
-            if (lastStates[0] == State.PRE_FLOP) state = State.BET;
-            else if (lastStates[0] == State.BET && lastStates[1] == State.PRE_FLOP) state = State.FLOP;
-            else if (lastStates[0] == State.FLOP) {
-                if(this.allInStatus) state = State.TURN;
-                else state = State.BET;
-            }
-            else if (lastStates[0] == State.BET && lastStates[1] == State.FLOP) state = State.TURN;
-            else if (lastStates[0] == State.TURN) {
-                if(this.allInStatus) state = State.RIVER;
-                else state = State.BET;
-            }
-            else if (lastStates[0] == State.BET && lastStates[1] == State.TURN) state = State.RIVER;
-            else if (lastStates[0] == State.RIVER) {
-                if(this.allInStatus) state = State.END_GAME;
-                else state = State.BET;
-            }
-            else if (lastStates[0] == State.BET && lastStates[1] == State.RIVER) state = State.END_GAME;
-            else if (lastStates[0] == State.END_GAME) state = State.BETWEEN_GAMES;
-            else if (lastStates[0] == State.BETWEEN_GAMES) state = State.PRE_FLOP;
+        if (lastStates[0] == State.PRE_FLOP) state = State.BET;
+        else if (lastStates[0] == State.BET && lastStates[1] == State.PRE_FLOP) state = State.FLOP;
+        else if (lastStates[0] == State.FLOP) {
+            if(this.skipBettingPhases) state = State.TURN;
+            else state = State.BET;
         }
+        else if (lastStates[0] == State.BET && lastStates[1] == State.FLOP) state = State.TURN;
+        else if (lastStates[0] == State.TURN) {
+            if(this.skipBettingPhases) state = State.RIVER;
+            else state = State.BET;
+        }
+        else if (lastStates[0] == State.BET && lastStates[1] == State.TURN) state = State.RIVER;
+        else if (lastStates[0] == State.RIVER) {
+            if(this.skipBettingPhases) state = State.END_GAME;
+            else state = State.BET;
+        }
+        else if (lastStates[0] == State.BET && lastStates[1] == State.RIVER) state = State.END_GAME;
+        else if (lastStates[0] == State.END_GAME) state = State.BETWEEN_GAMES;
+        else if (lastStates[0] == State.BETWEEN_GAMES) state = State.PRE_FLOP;
 
         // Update last states
         this.lastStates[1] = this.lastStates[0];

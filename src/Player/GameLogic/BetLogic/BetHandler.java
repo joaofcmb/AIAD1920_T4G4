@@ -40,6 +40,9 @@ public class BetHandler extends Behaviour {
 
             this.player.updateChips(reply.getContent());
 
+            if(reply.getContent().equals("Fold"))
+                this.player.setFoldStatus();
+
             this.player.println("Send betting option :: " + reply.getContent());
             myAgent.send(reply);
         }

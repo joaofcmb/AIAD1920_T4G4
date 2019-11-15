@@ -54,7 +54,8 @@ public class BetweenGames extends Behaviour {
 
                     reply.setPerformative(ACLMessage.INFORM);
 
-                    if(this.player.getBuyIn() == 0)
+                    System.out.println(this.player.getName() + " :: " + this.player.getBuyIn() + " -- " + this.player.getBigBlind());
+                    if(this.player.getBuyIn() < this.player.getBigBlind())
                         reply.setContent("Yes");
                     else
                         reply.setContent("No");
@@ -99,8 +100,7 @@ public class BetweenGames extends Behaviour {
 
     @Override
     public int onEnd() {
-        this.player.resetCurrBet();
-        this.player.getCards().clear();
+        this.player.resetAll();
         this.logic.nextState("Next State");
         return super.onEnd();
     }
