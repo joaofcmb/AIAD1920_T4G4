@@ -7,18 +7,19 @@ import java.util.Random;
 public class NonReactivePersonality extends Personality {
     static private Map<String, String> presets = Map.of(
             // Preset Name, handSelection:aggression
-            "calling-station",  "0.40:0.20",
+            "calling-station",  "0.30:0.20",
             "rock",             "0.90:0.20",
-            "LAG",              "0.40:0.50",
+            "LAG",              "0.30:0.50",
             "TAG",              "0.75:0.50",
             "nit",              "0.90:0.10",
-            "maniac",           "0.40:0.75"
+            "maniac",           "0.25:0.70"
     );
 
-    private static final double VARIANCE_DEVIATION = 0.05;
+    static private final double VARIANCE_DEVIATION = 0.05;
     private PrimitiveIterator.OfDouble varianceStream =
             new Random().doubles(-VARIANCE_DEVIATION, VARIANCE_DEVIATION).iterator();
-    private double handSelection, aggression;
+
+    private final double handSelection, aggression;
 
     NonReactivePersonality(Player player, String presetAlias) {
         super(player);
