@@ -24,12 +24,18 @@ public class BetweenGames extends Behaviour {
     private MessageTemplate msgTemplate;
 
     /**
-     *
+     * Possible states
      */
     private enum State {LEAVING_PLAYERS, RECEIVING_PLAYER_ANSWER, NEW_GAME}
 
+    /**
+     * Current state
+     */
     private State state = State.LEAVING_PLAYERS;
 
+    /**
+     * Current player index
+     */
     private int targetPlayer = 0;
 
     /**
@@ -38,8 +44,9 @@ public class BetweenGames extends Behaviour {
     private Logic logic;
 
     /**
-     *
-     * @param dealer
+     * Class constructor
+     * @param dealer agent
+     * @param logic class
      */
     BetweenGames(Dealer dealer, Logic logic) {
         this.dealer = dealer;
@@ -136,13 +143,16 @@ public class BetweenGames extends Behaviour {
 
     @Override
     public int onEnd(){
+        // Updates GUI
         this.dealer.getWindow().removePlayerBlind("S");
 
+        // Updates all variables to next session
         this.dealer.getCurrPlayers().addLast(this.dealer.getCurrPlayers().removeFirst());
         this.dealer.createNewSession();
         for(Player player : this.dealer.getCurrPlayers())
             player.resetAll();
 
+        // Updates GUI
         this.dealer.getWindow().addPlayerBlind(
                 this.dealer.getSession().getSmallBlind().getPlayer().getName(),"S");
         this.dealer.getWindow().addPlayerBlind(
@@ -151,6 +161,7 @@ public class BetweenGames extends Behaviour {
 
         System.out.println(this.dealer.getName() + " :: Prepared new session");
         this.dealer.getWindow().updateDealerAction("Prepared new session.");
+
         this.logic.nextState("Next State");
         return super.onEnd();
     }
