@@ -63,18 +63,23 @@ public class Bet extends Behaviour {
         this.logic = logic;
         this.lastBet = lastBet;
         this.maxPot = lastBet;
-        this.initializePlayersToBet(playerTurn);
-    }
 
-    private void initializePlayersToBet(int playerTurn) {
         Player firstPlayer = this.dealer.getSession().getCurrPlayers().get(playerTurn);
-
         if(!firstPlayer.isFoldStatus() && !firstPlayer.isAllInStatus())
             this.playersToBet.add(firstPlayer);
 
-        for(Player player : this.dealer.getCurrPlayers()) {
+        this.addPlayersToBet(playerTurn);
+    }
+
+    private void addPlayersToBet(int playerTurn) {
+        int playerIndex = playerTurn + 1 == this.dealer.getSession().getCurrPlayers().size() ? 0 : playerTurn + 1;
+
+        while (playerIndex != playerTurn) {
+            Player player = this.dealer.getCurrPlayers().get(playerIndex);
             if(!this.playersToBet.contains(player) && !player.isFoldStatus() && !player.isAllInStatus())
                 this.playersToBet.add(player);
+
+            playerIndex = playerIndex + 1 == this.dealer.getSession().getCurrPlayers().size() ? 0 : playerIndex + 1;
         }
     }
 
@@ -211,14 +216,14 @@ public class Bet extends Behaviour {
 
         // Updates max pot and last bet values
         this.maxPot = Math.max(this.maxPot, currPlayer.getPot());
-        this.lastBet = value;
+        this.lastBet = Math.max(this.lastBet, value);
 
         if(content[0].equals("Raise") || content[0].equals("All in")) {
-            for(Player nextPlayer : this.dealer.getCurrPlayers()) {
-                if(!this.playersToBet.contains(nextPlayer) && !nextPlayer.isFoldStatus() && !nextPlayer.isAllInStatus()
-                        && !nextPlayer.getPlayer().getName().equals(currPlayer.getPlayer().getName()))
-                    this.playersToBet.add(nextPlayer);
-            }
+            for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++)
+                if(this.dealer.getSession().getCurrPlayers().get(i).getPlayer().getName().equals(currPlayer.getPlayer().getName())) {
+                    this.addPlayersToBet(i);
+                    break;
+                }
         }
 
         // Updates GUI
@@ -231,7 +236,8 @@ public class Bet extends Behaviour {
      */
     private void terminate() {
         this.status = this.playersToBet.isEmpty() || (this.dealer.getCurrPlayers().size() - noFoldPlayers) <= 1 ||
-                (this.dealer.getCurrPlayers().size() - noAllInPlayers) == 0;
+                (this.dealer.getCurrPlayers().size() - noAllInPlayers) == 0 ||
+                ((this.dealer.getCurrPlayers().size() - noAllInPlayers - noFoldPlayers) <= 1 && this.playersToBet.isEmpty());
         this.state = State.PLAYER_BET_TURN;
     }
 
@@ -255,10 +261,8 @@ public class Bet extends Behaviour {
         String status = "Next State";
         msg.setConversationId("end-betting-phase");
 
-        if((this.dealer.getCurrPlayers().size() - noFoldPlayers) <= 1)
-            status = "Last player standing";
-        else if((this.dealer.getCurrPlayers().size() - noAllInPlayers) == 0)
-            status = "Every player all in";
+        if((this.dealer.getCurrPlayers().size() - noAllInPlayers - noFoldPlayers) <= 1)
+            status = "No more betting";
 
         msg.setContent(status);
         msg.setReplyWith("end-betting-phase" + System.currentTimeMillis());

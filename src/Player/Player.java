@@ -20,15 +20,6 @@ public class Player extends Agent {
      * Player personality
      */
     private Personality personality;
-    private int bigBlind;
-
-    public void setBigBlind(int bigBlind) {
-        this.bigBlind = bigBlind;
-    }
-
-    public int getBigBlind() {
-        return bigBlind;
-    }
 
     /**
      * Player state machine
@@ -48,6 +39,13 @@ public class Player extends Agent {
      * Player current bet
      */
     private int currBet = 0;
+
+    private int bigBlind;
+
+    /**
+     * Fold status. True if folded false otherwise
+     */
+    private boolean foldStatus = false;
 
     /**
      * Table cards
@@ -144,6 +142,31 @@ public class Player extends Agent {
         this.dealer = dealer;
     }
 
+    public void setBigBlind(int bigBlind) {
+        this.bigBlind = bigBlind;
+    }
+
+    /**
+     * Sets fold status to true
+     */
+    public void setFoldStatus() {
+        this.foldStatus = true;
+    }
+
+    /**
+     * Returns big blind value
+     */
+    public int getBigBlind() {
+        return bigBlind;
+    }
+
+    /**
+     * Returns fold status
+     */
+    public boolean getFoldStatus() {
+        return foldStatus;
+    }
+
     /**
      * Returns player cards
      */
@@ -204,6 +227,22 @@ public class Player extends Agent {
      */
     public void resetCurrBet() {
         this.currBet = 0;
+    }
+
+    /**
+     * Resets fold status to its default value
+     */
+    public void resetFoldStatus() {
+        this.foldStatus = false;
+    }
+
+    /**
+     * Resets all variables needed to new poker session
+     */
+    public void resetAll() {
+        this.resetFoldStatus();
+        this.resetCurrBet();
+        this.getCards().clear();
     }
 
     /**
