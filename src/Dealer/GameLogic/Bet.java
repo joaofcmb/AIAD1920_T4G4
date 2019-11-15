@@ -305,7 +305,6 @@ public class Bet extends Behaviour {
         for(Player player : this.dealer.getSession().getCurrPlayers())
             player.resetBetPot();
 
-        this.dealer.getWindow().cleanPlayerAction();
         this.dealer.pauseGUI();
         this.logic.nextState(status);
 

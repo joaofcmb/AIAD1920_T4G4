@@ -37,6 +37,8 @@ public class TurnRiver extends Behaviour {
         this.logic = logic;
         this.moment = moment;
         this.dealer.getSession().getDeck().getCard();   // Removes card from deck [RULE]
+
+        this.dealer.getWindow().cleanPlayerAction();
     }
 
     @Override
