@@ -242,7 +242,7 @@ public class Bet extends Behaviour {
         // Update current player data
         Player currPlayer = this.playersToBet.removeFirst();
 
-        currPlayer.updatePot(value);
+        currPlayer.updatePot(value); currPlayer.updateBetPot(value);
         currPlayer.updateChips(-value);
 
         // Updates max pot and last bet values
@@ -266,7 +266,7 @@ public class Bet extends Behaviour {
      * Terminates behaviour if all players made their bets and its value is the same for each player
      */
     private void terminate() {
-        this.status = this.playersToBet.isEmpty() ||
+        this.status = this.playersToBet.isEmpty() || ((this.dealer.getCurrPlayers().size() - noFoldPlayers) <= 1) ||
                 ((this.dealer.getCurrPlayers().size() - noAllInPlayers - noFoldPlayers) <= 1 && this.playersToBet.isEmpty());
         this.state = State.PLAYER_BET_TURN;
     }

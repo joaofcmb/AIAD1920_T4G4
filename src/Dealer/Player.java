@@ -71,6 +71,12 @@ public class Player {
      */
     public void updatePot(int value) {
         this.pot += value;
+    }
+
+    /**
+     * Updates player bet pot
+     */
+    public void updateBetPot(int value) {
         this.betPot += value;
     }
 
