@@ -407,14 +407,14 @@ public class Card {
                 case THREE_OF_A_KIND: // Points [300-399]
                     toak = Card.groupOfX(handInfo, 3);
                     if(toak.size() > 0)
-                        return Card.cardValue.get(toak.get(0)) + 300;
+                        return Card.cardValue.get(toak.get(0)) + playerCardsValue + 300;
                     else
                         state = State.TWO_PAIR;
                     break;
                 case TWO_PAIR: // Points [200-299]
                     ArrayList<String> twoPair = Card.groupOfX(handInfo, 2);
                     if(twoPair.size() > 1)
-                        return Card.cardValue.get(twoPair.get(0)) + Card.cardValue.get(twoPair.get(1)) + 200;
+                        return Card.cardValue.get(twoPair.get(0)) + Card.cardValue.get(twoPair.get(1))  + playerCardsValue + 200;
                     else
                         state = State.ONE_PAIR;
                     break;
