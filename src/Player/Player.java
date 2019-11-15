@@ -243,6 +243,7 @@ public class Player extends Agent {
         this.resetFoldStatus();
         this.resetCurrBet();
         this.getCards().clear();
+        this.getTable().clear();
     }
 
     /**
