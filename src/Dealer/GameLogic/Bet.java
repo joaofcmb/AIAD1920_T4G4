@@ -169,7 +169,7 @@ public class Bet extends Behaviour {
                 if(callValue >= currChips)
                     return "Fold:All in";
                 else
-                    return "F0old:Call-" + callValue + (raiseValue >= currChips ? ":" : ":Raise-" + raiseValue + ":")
+                    return "Fold:Call-" + callValue + (raiseValue >= currChips ? ":" : ":Raise-" + raiseValue + ":")
                             + "All in";
             }
         }

@@ -109,12 +109,10 @@ public class Personality {
     // Fold:Check:Raise-K:All in
     // Fold:All in
     // Fold:Call-K:Raise-K:All in
-
+    // Fold:Call-K:All in
     // Fold:Check:All in
     public String betAction(String[] bettingOptions) {
         final double handValue = effectiveHandStrength();
-        final int availableEquity = (int) (handValue * this.player.getBuyIn() + this.player.getCurrBet()) -
-                this.player.getCurrBet();
         final double requiredAllInValue =  (double) this.player.getBuyIn() /
                 (this.player.getBuyIn() + this.player.getCurrBet());
 
@@ -123,7 +121,6 @@ public class Personality {
         final boolean willingToAllIn = handValue > requiredAllInValue;
 
         this.player.println("EHS: " + handValue);
-        this.player.println("Available Equity: " + availableEquity);
         this.player.println("All-in Value: " + requiredAllInValue);
 
         if (bettingOptions.length == 2) {
@@ -134,14 +131,14 @@ public class Personality {
             final int minPush = Integer.parseInt(bettingOptions[2].split("-")[1]);
 
             if (bettingOptions[1].equals("Check")) {
-                if (!willingToPlay && !willingToPush && availableEquity < minPush)   return "Check";
+                if (!willingToPlay && !willingToPush)   return "Check";
 
                 // TODO Cenas
             } else {
                 final int callAmount = Integer.parseInt(bettingOptions[1].split("-")[1]);
 
-                if (!willingToPlay && availableEquity < callAmount) return "Fold";
-                else if (!willingToPush && availableEquity < minPush) return bettingOptions[1]; // Call
+                if (!willingToPlay) return "Fold";
+                else if (!willingToPush) return bettingOptions[1]; // Call
 
                 // TODO Mesmas cenas
             }
