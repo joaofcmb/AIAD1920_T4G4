@@ -102,6 +102,7 @@ public class PreFlop extends Behaviour {
             case SMALL_BIG_BLIND:
                 // Small blind bet
                 this.dealer.getSession().getSmallBlind().updatePot(this.dealer.getTableSettings().get("smallBlind"));
+                this.dealer.getSession().getSmallBlind().updateBetPot(this.dealer.getTableSettings().get("smallBlind"));
                 this.dealer.getSession().getSmallBlind().updateChips(-this.dealer.getTableSettings().get("smallBlind"));
                 this.dealer.getSession().addBet(this.dealer.getSession().getSmallBlind().getPlayer().getName(),
                         "Bet-" + this.dealer.getTableSettings().get("smallBlind"));
@@ -114,6 +115,7 @@ public class PreFlop extends Behaviour {
 
                 // Big blind bet
                 this.dealer.getSession().getBigBlind().updatePot(this.dealer.getTableSettings().get("bigBlind"));
+                this.dealer.getSession().getBigBlind().updateBetPot(this.dealer.getTableSettings().get("bigBlind"));
                 this.dealer.getSession().getBigBlind().updateChips(-this.dealer.getTableSettings().get("bigBlind"));
                 this.dealer.getSession().addBet(this.dealer.getSession().getBigBlind().getPlayer().getName(),
                         "Bet-" + this.dealer.getTableSettings().get("bigBlind"));

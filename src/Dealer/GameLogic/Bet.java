@@ -29,7 +29,7 @@ public class Bet extends Behaviour {
     /**
      * Current game maximum bet
      */
-    private int maxPot;
+    private int maxBetPot;
 
     /**
      * Possible betting states
@@ -46,40 +46,68 @@ public class Bet extends Behaviour {
      */
     private Logic logic;
 
+    /**
+     * Players that need to bet before ending betting phase
+     */
     private LinkedList<Player> playersToBet = new LinkedList<>();
 
-    private int noFoldPlayers = 0;
+    /**
+     * Number of players who have folded
+     */
+    private int noFoldPlayers;
 
-    private int noAllInPlayers = 0;
+    /**
+     * Number of players who have made all in
+     */
+    private int noAllInPlayers;
 
+    /**
+     * Last bet made. Always considering the biggest value
+     */
     private int lastBet;
 
     /**
      * Bet constructor
      * @param dealer agent
      */
-    Bet(Dealer dealer, Logic logic, int playerTurn, int lastBet) {
+    Bet(Dealer dealer, Logic logic, int playerTurn, int initValue) {
         this.dealer = dealer;
         this.logic = logic;
-        this.lastBet = lastBet;
-        this.maxPot = lastBet;
+        this.lastBet = initValue;
+        this.maxBetPot = initValue;
 
-        Player firstPlayer = this.dealer.getSession().getCurrPlayers().get(playerTurn);
-        if(!firstPlayer.getFoldStatus() && !firstPlayer.getAllInStatus())
-            this.playersToBet.add(firstPlayer);
+        // Adds the first player to bet if possible
+        Player firstBetPlayer = this.dealer.getSession().getCurrPlayers().get(playerTurn);
+        if(!firstBetPlayer.getFoldStatus() && !firstBetPlayer.getAllInStatus())
+            this.playersToBet.add(firstBetPlayer);
 
         this.addPlayersToBet(playerTurn);
+
+        // Initializes correct number of folded and all in players
+        this.noFoldPlayers = 0;
+        this.noAllInPlayers = 0;
+
+        for(Player player : this.dealer.getSession().getCurrPlayers()) {
+            if(player.getAllInStatus())
+                this.noAllInPlayers++;
+            else if(player.getFoldStatus())
+                this.noFoldPlayers++;
+        }
     }
 
-    private void addPlayersToBet(int playerTurn) {
-        int playerIndex = playerTurn + 1 == this.dealer.getSession().getCurrPlayers().size() ? 0 : playerTurn + 1;
+    /**
+     * Adds in order the remaining players that must bet before ending betting phase
+     * @param currBetPlayer Current player that made the bet
+     */
+    private void addPlayersToBet(int currBetPlayer) {
+        int playerIndex = this.dealer.getSession().getCurrPlayers().size() == currBetPlayer + 1 ? 0 : currBetPlayer + 1;
 
-        while (playerIndex != playerTurn) {
+        while (playerIndex != currBetPlayer) {
             Player player = this.dealer.getCurrPlayers().get(playerIndex);
             if(!this.playersToBet.contains(player) && !player.getFoldStatus() && !player.getAllInStatus())
                 this.playersToBet.add(player);
 
-            playerIndex = playerIndex + 1 == this.dealer.getSession().getCurrPlayers().size() ? 0 : playerIndex + 1;
+            playerIndex = this.dealer.getSession().getCurrPlayers().size() == playerIndex + 1 ? 0 : playerIndex + 1;
         }
     }
 
@@ -90,18 +118,20 @@ public class Bet extends Behaviour {
                 // Updates GUI
                 this.dealer.getWindow().updateDealerAction("Player bet turn.");
 
-                AID playerTurn = this.playersToBet.getFirst().getPlayer();
-
-                ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+                // Gets first player to retrieve its betting option
+                AID currBetPlayer = this.playersToBet.getFirst().getPlayer();
 
                 // Configure message
-                msg.addReceiver(playerTurn);
+                ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+
+                msg.addReceiver(currBetPlayer);
                 msg.setContent(this.getBettingOptions());
                 msg.setConversationId("betting-phase");
                 msg.setReplyWith("betting-phase" + System.currentTimeMillis());
 
                 // Send message
-                System.out.println(this.dealer.getName() + " :: Sending betting options :: " + playerTurn.getName() + " :: " + msg.getContent());
+                this.dealer.printInfo("Sending betting options :: "
+                        + currBetPlayer.getName() + " :: " + msg.getContent());
                 myAgent.send(msg);
 
                 // Prepare the template to get the reply
@@ -118,8 +148,9 @@ public class Bet extends Behaviour {
                 ACLMessage reply = myAgent.receive(msgTemplate);
 
                 if(reply != null) {
-                    System.out.println(this.dealer.getName() + " :: Received betting option :: " +
-                            reply.getSender().getName() + " :: " + reply.getContent());
+                    // Print player betting option
+                    this.dealer.printInfo("Received betting option :: "
+                            + reply.getSender().getName() + " :: " + reply.getContent());
 
                     // Inform other players about player bet
                     msg = new ACLMessage(ACLMessage.INFORM);
@@ -134,7 +165,7 @@ public class Bet extends Behaviour {
                     msg.setReplyWith("betting-storage" + System.currentTimeMillis());
 
                     // Send message
-                    System.out.println(this.dealer.getName() + " :: Sharing " + reply.getSender().getName() +
+                    this.dealer.printInfo("Sharing " + reply.getSender().getName() +
                             " bet with other players :: " + msg.getContent());
                     myAgent.send(msg);
 
@@ -161,12 +192,12 @@ public class Bet extends Behaviour {
      * Retrieves player betting options
      */
     private String getBettingOptions() {
-        if(this.maxPot == 0)
+        if(this.maxBetPot == 0)
             return "Fold:Check:Bet-" + this.dealer.getTableSettings().get("bigBlind") + ":All in";
         else {
             int currChips = this.playersToBet.getFirst().getChips();
             int raiseValue = this.lastBet * 2;
-            int callValue = this.maxPot - this.playersToBet.getFirst().getPot();
+            int callValue = this.maxBetPot - this.playersToBet.getFirst().getBetPot();
 
             if(callValue == 0)
                 return "Fold:Check" + (raiseValue >= currChips || raiseValue < this.dealer.getTableSettings().get("bigBlind") ? ":" : ":Raise-" + raiseValue + ":") + "All in";
@@ -211,11 +242,11 @@ public class Bet extends Behaviour {
         // Update current player data
         Player currPlayer = this.playersToBet.removeFirst();
 
-        currPlayer.updatePot(value);
+        currPlayer.updatePot(value); currPlayer.updateBetPot(value);
         currPlayer.updateChips(-value);
 
         // Updates max pot and last bet values
-        this.maxPot = Math.max(this.maxPot, currPlayer.getPot());
+        this.maxBetPot = Math.max(this.maxBetPot, currPlayer.getBetPot());
         this.lastBet = Math.max(this.lastBet, value);
 
         if(!content[0].equals("Call") && !content[0].equals("Check")) {
@@ -235,7 +266,7 @@ public class Bet extends Behaviour {
      * Terminates behaviour if all players made their bets and its value is the same for each player
      */
     private void terminate() {
-        this.status = this.playersToBet.isEmpty() ||
+        this.status = this.playersToBet.isEmpty() || ((this.dealer.getCurrPlayers().size() - noFoldPlayers) <= 1) ||
                 ((this.dealer.getCurrPlayers().size() - noAllInPlayers - noFoldPlayers) <= 1 && this.playersToBet.isEmpty());
         this.state = State.PLAYER_BET_TURN;
     }
@@ -269,6 +300,10 @@ public class Bet extends Behaviour {
         // Send message
         System.out.println(this.dealer.getName() + " :: Terminating betting phase ");
         myAgent.send(msg);
+
+        // Reset players bet pots
+        for(Player player : this.dealer.getSession().getCurrPlayers())
+            player.resetBetPot();
 
         this.dealer.pauseGUI();
         this.logic.nextState(status);

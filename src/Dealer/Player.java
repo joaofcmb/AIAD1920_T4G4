@@ -5,9 +5,14 @@ import jade.core.AID;
 public class Player {
 
     /**
-     * Player pot
+     * Player total pot
      */
     private int pot;
+
+    /**
+     * Player specific bet pot
+     */
+    private int betPot;
 
     /**
      * Player current chips
@@ -41,6 +46,7 @@ public class Player {
      */
     Player(int chips, AID player) {
         this.pot = 0;
+        this.betPot = 0;
         this.currHandFinalValue = 0;
         this.chips = chips;
         this.player = player;
@@ -54,10 +60,24 @@ public class Player {
     }
 
     /**
+     * Returns player bet pot
+     */
+    public int getBetPot() {
+        return betPot;
+    }
+
+    /**
      * Updates player pot
      */
     public void updatePot(int value) {
         this.pot += value;
+    }
+
+    /**
+     * Updates player bet pot
+     */
+    public void updateBetPot(int value) {
+        this.betPot += value;
     }
 
     /**
@@ -124,6 +144,13 @@ public class Player {
      */
     public void setFoldStatus() {
         this.foldStatus = true;
+    }
+
+    /**
+     * Reset bet pot
+     */
+    public void resetBetPot() {
+        this.betPot = 0;
     }
 
     /**
