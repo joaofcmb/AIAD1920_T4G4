@@ -41,7 +41,7 @@ public class BetHandler extends Behaviour {
             if(reply.getContent().equals("Fold"))
                 this.player.setFoldStatus();
 
-            this.player.println("Send betting option :: " + reply.getContent());
+            this.player.printInfo("Send betting option :: " + reply.getContent());
             myAgent.send(reply);
         }
         else {
