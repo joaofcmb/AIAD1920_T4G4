@@ -11,12 +11,12 @@ import java.util.Random;
 public class Personality {
     static private Map<String, String> presets = Map.of(
                 // Preset Name, handSelection:aggression
-            "calling-station",  "0.15:0.20",
-            "rock",             "0.75:0.20",
-            "LAG",              "0.15:0.75",
+            "calling-station",  "0.40:0.20",
+            "rock",             "0.90:0.20",
+            "LAG",              "0.40:0.75",
             "TAG",              "0.75:0.75",
-            "nit",              "0.85:0.10",
-            "maniac",           "0.10:0.85"
+            "nit",              "0.90:0.10",
+            "maniac",           "0.40:0.85"
     );
 
     private static final double VARIANCE_DEVIATION = 0.05;
@@ -47,7 +47,7 @@ public class Personality {
 
         // Pre-flop Analysis
         if (this.player.getTable().size() < 3) {
-            return Card.rankCards(playerCards);
+            return Math.min(1d, Card.rankCards(playerCards));
         }
 
         final LinkedList<Card> playerHand = new LinkedList<>(this.player.getTable());
@@ -112,38 +112,73 @@ public class Personality {
     // Fold:Call-K:All in
     // Fold:Check:All in
     public String betAction(String[] bettingOptions) {
-        final double handValue = effectiveHandStrength();
-        final double requiredAllInValue =  (double) this.player.getBuyIn() /
+        final double handEquity = effectiveHandStrength();
+        final double requiredAllInEquity = (double) this.player.getBuyIn() /
                 (this.player.getBuyIn() + this.player.getCurrBet());
 
-        final boolean willingToPlay = handValue > this.handSelection + varianceStream.next();
-        final boolean willingToPush = handValue > this.aggression + varianceStream.next();
-        final boolean willingToAllIn = handValue > requiredAllInValue;
+        this.player.println("EHS: " + handEquity);
+        this.player.println("All-in Equity: " + requiredAllInEquity);
 
-        this.player.println("EHS: " + handValue);
-        this.player.println("All-in Value: " + requiredAllInValue);
+        final boolean willingToPlay = handEquity > this.handSelection + varianceStream.next();
 
         if (bettingOptions.length == 2) {
-            return willingToPlay && willingToAllIn ? "All in" : "Fold";
-        } else if (bettingOptions.length == 3) {
-            return willingToPlay && willingToAllIn ? "All in" : "Check";
-        } else {
-            final int minPush = Integer.parseInt(bettingOptions[2].split("-")[1]);
+            return willingToPlay && handEquity > requiredAllInEquity ? "All in" : "Fold";
+        }
+        else {
+            final boolean canCheck = bettingOptions[1].equals("Check");
+            final boolean canRaise = bettingOptions.length == 4;
 
-            if (bettingOptions[1].equals("Check")) {
-                if (!willingToPlay && !willingToPush)   return "Check";
+            final int callValue = canCheck ? 0 : Integer.parseInt(bettingOptions[1].split("-")[1]);
+            final int minPushValue = !canRaise ? 0 : Integer.parseInt(bettingOptions[2].split("-")[1]);
 
-                // TODO Cenas
-            } else {
-                final int callAmount = Integer.parseInt(bettingOptions[1].split("-")[1]);
+            final double requiredCallEquity = (double) callValue / (callValue + this.player.getCurrBet());
+            final double minPushEquity = (double) minPushValue /
+                    (minPushValue + this.player.getCurrBet());
 
-                if (!willingToPlay) return "Fold";
-                else if (!willingToPush) return bettingOptions[1]; // Call
+            this.player.println("Call Equity: " + requiredCallEquity);
+            this.player.println("Min Push Equity: " + minPushEquity);
 
-                // TODO Mesmas cenas
+            if (!willingToPlay)             return canCheck ? "Check" : "Fold";
+            else if (this.player.getCurrBet() == 0) {
+                if (this.aggression * handEquity > this.aggression + varianceStream.next()) {
+                    return "All in";
+                }
+                else if (canRaise && this.aggression * handEquity > this.handSelection + varianceStream.next()) {
+                    final int maxPush = (int) (.5 * this.aggression * this.player.getBuyIn());
+                    final int raiseAmount = Integer.max(
+                            minPushValue,
+                            (int) Math.pow(maxPush, this.aggression) /
+                                    this.player.getBigBlind() * this.player.getBigBlind()
+                    );
+
+                    return bettingOptions[2].split("-")[0] + "-" + raiseAmount;
+                }
+                else if (handEquity > this.handSelection) {
+                    return canCheck ? "Check" : bettingOptions[1];
+                }
+                else {
+                    return canCheck ? "Check" : "Fold";
+                }
             }
-
-            return bettingOptions[2];
+            else {
+                if (handEquity >= requiredAllInEquity) {
+                    return "All in";
+                }
+                else if (canRaise && handEquity > minPushEquity) {
+                    final int maxPush = (int) (handEquity * this.player.getCurrBet() / (1 - handEquity));
+                    final int raiseAmount = Integer.max(
+                            minPushValue,
+                            maxPush / this.player.getBigBlind() * this.player.getBigBlind()
+                    );
+                    return bettingOptions[2].split("-")[0] + "-" + raiseAmount;
+                }
+                else if (handEquity > requiredCallEquity) {
+                    return canCheck ? "Check" : bettingOptions[1];
+                }
+                else {
+                    return canCheck ? "Check" : "Fold";
+                }
+            }
         }
     }
 }
