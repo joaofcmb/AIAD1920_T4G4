@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 
 public class Player extends Agent {
-
     /**
      * Player buy in
      */
@@ -59,11 +58,6 @@ public class Player extends Agent {
      * Player cards
      */
     private ArrayList<Card> cards = new ArrayList<>();
-
-    /**
-     * Stores players bets history
-     */
-    private HashMap<String, LinkedList<String>> bets = new HashMap<>();
 
     /**
      * Agent initializations
@@ -238,30 +232,15 @@ public class Player extends Agent {
     /**
      * Resets the current bet value to 0
      */
-    public void resetCurrBet() {
+    private void resetCurrBet() {
         this.currBet = 0;
     }
 
     /**
      * Resets fold status to its default value
      */
-    public void resetFoldStatus() {
+    private void resetFoldStatus() {
         this.foldStatus = false;
-    }
-
-    /**
-     * Adds a new bet
-     * @param playerName player name
-     * @param bet player bet
-     */
-    public void addBet(String playerName, String bet) {
-        if(this.bets.containsKey(playerName)) {
-            this.bets.get(playerName).push(bet);
-        }
-        else {
-            LinkedList<String> bets = new LinkedList<>(); bets.push(bet);
-            this.bets.put(playerName, bets);
-        }
     }
 
     /**
@@ -278,6 +257,7 @@ public class Player extends Agent {
     public void resetAll() {
         this.resetFoldStatus();
         this.resetCurrBet();
+        this.getPersonality().reset();
         this.getCards().clear();
         this.getTable().clear();
     }

@@ -78,4 +78,8 @@ abstract public class Personality {
 
         return handStrength * (1 - negativePotential) + (1 - handStrength) * positivePotential;
     }
+
+    public void updateInfo(String playerAlias, String action) {}
+
+    void reset() {}
 }

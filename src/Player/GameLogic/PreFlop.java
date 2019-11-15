@@ -84,8 +84,8 @@ public class PreFlop extends Behaviour {
                     else if (bigBlind[0].equals(this.player.getName()))
                         this.player.updateCurrBet(Integer.parseInt(bigBlind[1]));
                     else {
-                        this.player.addBet(smallBlind[0], smallBlind[1]);
-                        this.player.addBet(bigBlind[0], bigBlind[1]);
+                        this.player.getPersonality().updateInfo(smallBlind[0], smallBlind[1]);
+                        this.player.getPersonality().updateInfo(bigBlind[0], bigBlind[1]);
                     }
 
                     // Stores big blind value
