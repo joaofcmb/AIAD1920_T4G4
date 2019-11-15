@@ -7,7 +7,6 @@ import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,12 +44,20 @@ public class EndGame extends Behaviour {
      */
     private int targetPlayer;
 
+    /**
+     * Players in game. Does not include those who have folded
+     */
     private LinkedList<Player> inGamePlayers = new LinkedList<>();
 
     /**
      * Each player earnings
      */
     private HashMap<Integer, Integer> playerEarnings = new HashMap<>();
+
+    /**
+     * Index of player which is recovering money from an excessive bet
+     */
+    private int recoverPlayer = -1;
 
     /**
      * Logic behaviour
@@ -155,16 +162,21 @@ public class EndGame extends Behaviour {
                 msg.setConversationId("earnings");
                 msg.setReplyWith("earnings" + System.currentTimeMillis());
 
+                String finalStatus;
+
+                if(this.playerEarnings.get(targetPlayer) > 0)
+                    finalStatus = targetPlayer == recoverPlayer ? " Recover " : " Won ";
+                else
+                    finalStatus = "Lost";
+
                 // Send message
                 System.out.println(this.dealer.getName() + " :: " +
-                        this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName()
-                        + (this.playerEarnings.get(targetPlayer) > 0 ?
-                        " has won " + this.playerEarnings.get(targetPlayer) : " has lost"));
+                        this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName() +
+                        (finalStatus.equals("Lost") ? " Lost" : finalStatus + this.playerEarnings.get(targetPlayer)));
 
                 this.dealer.getWindow().updatePlayerAction(
                         this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName(),
-                        (this.playerEarnings.get(targetPlayer) > 0 ?
-                                "Won " + this.playerEarnings.get(targetPlayer) : "Lost"));
+                        (finalStatus.equals("Lost") ? " Lost" : finalStatus + this.playerEarnings.get(targetPlayer)));
 
                 // Update GUI chips
                 this.dealer.getWindow().managePlayerChips(
@@ -191,10 +203,16 @@ public class EndGame extends Behaviour {
      */
     private void computeEarnings() {
         while (this.valueInPot()) {
-
             // Initial variables
             int maxHandValue = 0;
             ArrayList<Integer> winners = new ArrayList<>();
+
+            // Determine if there is only one player remaining
+            int potsAbove0 = 0;
+
+            for(Player player : this.dealer.getSession().getCurrPlayers())
+                if(player.getPot() > 0)
+                    potsAbove0++;
 
             // Retrieves the max hand value
             for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++) {
@@ -214,11 +232,11 @@ public class EndGame extends Behaviour {
             int earnings = 0;
 
             // Due to possible existence of side pots always select the smaller pot
-            for(int i = 0; i < winners.size(); i++) {
-                if(winnerPot == 0)
-                    winnerPot = this.dealer.getSession().getCurrPlayers().get(winners.get(i)).getPot();
-                else if(winnerPot > this.dealer.getSession().getCurrPlayers().get(winners.get(i)).getPot())
-                    winnerPot = this.dealer.getSession().getCurrPlayers().get(winners.get(i)).getPot();
+            for (Integer winner : winners) {
+                if (winnerPot == 0)
+                    winnerPot = this.dealer.getSession().getCurrPlayers().get(winner).getPot();
+                else if (winnerPot > this.dealer.getSession().getCurrPlayers().get(winner).getPot())
+                    winnerPot = this.dealer.getSession().getCurrPlayers().get(winner).getPot();
             }
 
             // Calculate earnings
@@ -230,16 +248,10 @@ public class EndGame extends Behaviour {
             // Update earnings
             for(int i = 0; i < winners.size(); i++) {
                 this.playerEarnings.put(winners.get(i), this.playerEarnings.get(i) + earnings/winners.size());
-            }
 
-            // Just to check if things are working [TO REMOVE]
-//            System.out.println(winners + " --- " + winnerPot + " _---- " + earnings);
-//
-//            for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++) {
-//                System.out.println(this.dealer.getSession().getCurrPlayers().get(i).getPlayer().getName()
-//                        + " --- " + this.dealer.getSession().getCurrPlayers().get(i).getPot() +
-//                        " --- " + this.playerEarnings.get(i));
-//            }
+                if(potsAbove0 == 1)
+                    recoverPlayer = winners.get(i);
+            }
         }
     }
 
@@ -269,9 +281,11 @@ public class EndGame extends Behaviour {
 
     @Override
     public int onEnd() {
+        // Updates GUI
         this.dealer.pauseGUI();
         this.dealer.getWindow().removeAllCardsFromPlayers();
         this.dealer.getWindow().removeCardsFromTable();
+
         this.logic.nextState("Next State");
         return super.onEnd();
     }
