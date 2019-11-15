@@ -54,12 +54,12 @@ public class Bet extends Behaviour {
     /**
      * Number of players who have folded
      */
-    private int noFoldPlayers = 0;
+    private int noFoldPlayers;
 
     /**
      * Number of players who have made all in
      */
-    private int noAllInPlayers = 0;
+    private int noAllInPlayers;
 
     /**
      * Last bet made. Always considering the biggest value
@@ -82,6 +82,17 @@ public class Bet extends Behaviour {
             this.playersToBet.add(firstBetPlayer);
 
         this.addPlayersToBet(playerTurn);
+
+        // Initializes correct number of folded and all in players
+        this.noFoldPlayers = 0;
+        this.noAllInPlayers = 0;
+
+        for(Player player : this.dealer.getSession().getCurrPlayers()) {
+            if(player.getAllInStatus())
+                this.noAllInPlayers++;
+            else if(player.getFoldStatus())
+                this.noFoldPlayers++;
+        }
     }
 
     /**
