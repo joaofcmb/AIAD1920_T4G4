@@ -73,7 +73,13 @@ public class Player extends Agent {
 
         if (playerSettings != null && playerSettings.length == 2) {
             this.buyIn = Integer.parseInt((String) playerSettings[0]);
-            this.personality = new NonReactivePersonality(this, (String) playerSettings[1]);
+
+
+            String personalityAlias = (String) playerSettings[1];
+            if (personalityAlias.equals("pro"))
+                this.personality = new ReactivePersonality(this);
+            else
+                this.personality = new NonReactivePersonality(this, personalityAlias);
 
             // Updates player state and adds a TickerBehaviour that schedules a request for a session every X seconds
             this.playerState = State.SEARCHING_SESSION;
