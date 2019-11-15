@@ -7,8 +7,6 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 
-import static java.lang.Thread.sleep;
-
 public class GUI {
 
     /**
@@ -37,7 +35,7 @@ public class GUI {
     public JPanel pots;
 
     /**
-     * Side pots
+     * Pots
      */
     private JLabel pot1;
     private JLabel pot2;
@@ -148,6 +146,10 @@ public class GUI {
      * Action of the dealer
      */
     private JLabel dealerAction;
+
+    /**
+     * Button to skip to next play
+     */
     private JButton nextButton;
 
     /**
@@ -179,8 +181,11 @@ public class GUI {
      */
     private HashMap<String,String> cardMap;
 
-
+    /**
+     * Map associating players name to index on the playersList
+     */
     private HashMap<String,Integer> playerMap = new HashMap<>();
+
     /**
      * Number of cards in the table
      */
@@ -401,17 +406,6 @@ public class GUI {
     }
 
     /**
-     * Collects a player's cards
-     * @param playerName name of the player
-     */
-    public void  removeCardFromPlayer(String playerName) {
-        int playerIndex = playerMap.get(playerName);
-
-        playersList[playerIndex][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
-        playersList[playerIndex][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
-    }
-
-    /**
      * Collect cards from all players
      */
     public void removeAllCardsFromPlayers() {
@@ -453,7 +447,7 @@ public class GUI {
     }
 
     /**
-     *
+     * Remove bets from de screen
      */
     public void cleanPlayerAction() {
         playerMap.forEach((k, v) -> {
@@ -504,63 +498,5 @@ public class GUI {
         }
 
         return number;
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        GUI g = new GUI("GUI");
-
-        g.addPlayer("1", 1563000);
-        g.addPlayer("2", 5000);
-        g.addPlayer("3", 150);
-        g.addPlayer("4", 341000);
-        g.addPlayer("5", 17590);
-
-        g.addPlayerBlind("1", "S");
-        g.addPlayerBlind("3", "B");
-
-        sleep(1000);
-        g.addChipsToPot("1", 4000);
-        g.addChipsToPot("2", 190000);
-
-        sleep(1000);
-        g.updateDealerAction("Dealing cards");
-        g.addCardsToTable("Ace-Hearts");
-        g.addCardsToTable("8-Hearts");
-        g.addCardsToTable("Ace-Clubs");
-        sleep(1000);
-        g.addCardsToTable("Ace-Spades");
-        sleep(1000);
-        g.addCardsToTable("Ace-Diamonds");
-        sleep(1000);
-        g.addCardToPlayer("1","2-Hearts",true);
-        g.addCardToPlayer("2","4-Hearts",true);
-        g.addCardToPlayer("3","6-Clubs",true);
-        g.addCardToPlayer("4","King-Hearts",true);
-        g.addCardToPlayer("5","9-Hearts",true);
-        g.addCardToPlayer("1","10-Clubs",false);
-        g.addCardToPlayer("2","8-Spades",false);
-        g.addCardToPlayer("3","4-Spades",false);
-        g.addCardToPlayer("4","3-Clubs",false);
-        g.addCardToPlayer("5","7-Diamonds",false);
-        sleep(1000);
-        g.updateDealerAction("Receiving bets...");
-        g.updatePlayerAction("1","raise");
-        g.updatePlayerAction("3","fold");
-        g.managePlayerChips("2", 200, false);
-        g.updatePlayerAction("2","call - 200");
-        g.managePlayerChips("4", 300, false);
-        g.updatePlayerAction("4","call - 300");
-        g.updatePlayerAction("5","fold");
-
-        sleep(1000);
-        g.removeCardFromPlayer("3");
-        sleep(1000);
-        g.removeAllCardsFromPlayers();
-        g.updateDealerAction("Playing !!!");
-        g.resetAllPots();
-        sleep(1000);
-        g.removePlayer("4");
-        sleep(1000);
-        g.removeCardsFromTable();
     }
 }
