@@ -275,6 +275,7 @@ public class GUI {
             playersList[index][2].setIcon(playersList[index+1][2].getIcon());
             playersList[index][3].setIcon(playersList[index+1][3].getIcon());
             playersList[index][4].setText(playersList[index+1][4].getText());
+            potsList[index].setText(potsList[index+1].getText());
         }
 
         // Update playerMap indexes
@@ -289,7 +290,7 @@ public class GUI {
         playersList[index][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
         playersList[index][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
         playersList[index][4].setText("");
-        potsList[removedPlayerIndex].setText("");
+        potsList[index].setText("");
     }
 
     /**
