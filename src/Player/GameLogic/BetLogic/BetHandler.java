@@ -35,8 +35,6 @@ public class BetHandler extends Behaviour {
             reply.setPerformative(ACLMessage.INFORM);
             reply.setContent(this.player.getPersonality().betAction(bettingOptions)
             );
-//            reply.setContent(bettingOptions[0].equals("Fold") ? bettingOptions[1] : bettingOptions[0]);
-//            reply.setContent(bettingOptions[bettingOptions.length - 1]);
 
             this.player.updateChips(reply.getContent());
 
