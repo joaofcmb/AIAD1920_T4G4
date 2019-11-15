@@ -70,7 +70,7 @@ public class Player extends Agent {
 
         if (playerSettings != null && playerSettings.length == 2) {
             this.buyIn = Integer.parseInt((String) playerSettings[0]);
-            this.personality = new Personality(this, (String) playerSettings[1]);
+            this.personality = new NonReactivePersonality(this, (String) playerSettings[1]);
 
             // Updates player state and adds a TickerBehaviour that schedules a request for a session every X seconds
             this.playerState = State.SEARCHING_SESSION;
@@ -78,7 +78,7 @@ public class Player extends Agent {
         }
         else if (playerSettings != null && playerSettings.length == 3) {
             this.buyIn = Integer.parseInt((String) playerSettings[0]);
-            this.personality = new Personality(this,
+            this.personality = new NonReactivePersonality(this,
                     Double.parseDouble((String) playerSettings[1]),
                     Double.parseDouble((String) playerSettings[2])
             );
