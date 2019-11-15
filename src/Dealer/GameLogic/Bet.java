@@ -218,7 +218,7 @@ public class Bet extends Behaviour {
         this.maxPot = Math.max(this.maxPot, currPlayer.getPot());
         this.lastBet = Math.max(this.lastBet, value);
 
-        if(content[0].equals("Raise") || content[0].equals("All in")) {
+        if(!content[0].equals("Call") && !content[0].equals("Check")) {
             for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++)
                 if(this.dealer.getSession().getCurrPlayers().get(i).getPlayer().getName().equals(currPlayer.getPlayer().getName())) {
                     this.addPlayersToBet(i);
@@ -235,8 +235,7 @@ public class Bet extends Behaviour {
      * Terminates behaviour if all players made their bets and its value is the same for each player
      */
     private void terminate() {
-        this.status = this.playersToBet.isEmpty() || (this.dealer.getCurrPlayers().size() - noFoldPlayers) <= 1 ||
-                (this.dealer.getCurrPlayers().size() - noAllInPlayers) == 0 ||
+        this.status = this.playersToBet.isEmpty() ||
                 ((this.dealer.getCurrPlayers().size() - noAllInPlayers - noFoldPlayers) <= 1 && this.playersToBet.isEmpty());
         this.state = State.PLAYER_BET_TURN;
     }
