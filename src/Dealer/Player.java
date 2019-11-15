@@ -20,11 +20,6 @@ public class Player {
     private AID player;
 
     /**
-     * Player current bet in a specific betting phase
-     */
-    private int currBet;
-
-    /**
      * Player current hand final value
      */
     private int currHandFinalValue;
@@ -39,7 +34,6 @@ public class Player {
      */
     private boolean foldStatus = false;
 
-
     /**
      * Player constructor
      * @param chips player buy in
@@ -47,7 +41,6 @@ public class Player {
      */
     Player(int chips, AID player) {
         this.pot = 0;
-        this.currBet = 0;
         this.currHandFinalValue = 0;
         this.chips = chips;
         this.player = player;
@@ -61,18 +54,10 @@ public class Player {
     }
 
     /**
-     * Resets player pot
-     */
-    public void resetPot() {
-        this.pot = 0;
-    }
-
-    /**
      * Updates player pot
      */
     public void updatePot(int value) {
         this.pot += value;
-        this.currBet += value;
     }
 
     /**
@@ -97,27 +82,6 @@ public class Player {
     }
 
     /**
-     * Returns current bet
-     */
-    public int getCurrBet() {
-        return currBet;
-    }
-
-    /**
-     * Updates current bet value
-     */
-    public void updateCurrBet(int value) {
-        this.currBet += value;
-    }
-
-    /**
-     * Resets current bet value to 0
-     */
-    public void resetCurrBet() {
-        this.currBet = 0;
-    }
-
-    /**
      * Returns current hand final value
      */
     public int getCurrHandFinalValue() {
@@ -132,25 +96,41 @@ public class Player {
         this.currHandFinalValue = currHandFinalValue;
     }
 
-    public boolean isAllInStatus() {
+    /**
+     * Returns all in status
+     * @return True if made all in, false otherwise
+     */
+    public boolean getAllInStatus() {
         return allInStatus;
     }
 
+    /**
+     * Sets all in status to true
+     */
     public void setAllInStatus() {
         this.allInStatus = true;
     }
 
-    public boolean isFoldStatus() {
+    /**
+     * Returns fold status
+     * @return True if made fold, false otherwise
+     */
+    public boolean getFoldStatus() {
         return foldStatus;
     }
 
+    /**
+     * Sets fold status to true
+     */
     public void setFoldStatus() {
         this.foldStatus = true;
     }
 
+    /**
+     * Resets all needed variables to start new session
+     */
     public void resetAll() {
         this.pot = 0;
-        this.currBet = 0;
         this.currHandFinalValue = 0;
         this.allInStatus = false;
         this.foldStatus = false;

@@ -91,8 +91,11 @@ public class Card {
 
         System.out.println("Grande rank crl: " + rankValue);
 
-        if (playerCards.get(0).getSuit().equals(playerCards.get(1).getSuit()))  return rankValue / 13d + .5;
-        else                                                                    return rankValue / 26d;
+        if (playerCards.get(0).getSuit().equals(playerCards.get(1).getSuit()) ||
+                playerCards.get(0).getRank().equals(playerCards.get(1).getRank()))
+            return rankValue / 52d + .5;
+        else
+            return rankValue / 26d;
     }
 
 

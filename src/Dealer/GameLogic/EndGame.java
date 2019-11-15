@@ -74,7 +74,7 @@ public class EndGame extends Behaviour {
 
     private void initializeInGamePlayers() {
         for(Player player : this.dealer.getCurrPlayers()) {
-            if(!this.inGamePlayers.contains(player) && !player.isFoldStatus())
+            if(!this.inGamePlayers.contains(player) && !player.getFoldStatus())
                 this.inGamePlayers.add(player);
         }
     }
