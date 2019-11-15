@@ -73,6 +73,8 @@ public class Logic extends CyclicBehaviour {
     public void nextState(String action) {
         if(action.equals("No more betting"))
             this.skipBettingPhases = true;
+        else if(action.equals("Next State") && lastStates[0] == State.BETWEEN_GAMES)
+            this.skipBettingPhases = false;
 
         if (lastStates[0] == State.PRE_FLOP) state = State.BET;
         else if (lastStates[0] == State.BET && lastStates[1] == State.PRE_FLOP) state = State.FLOP;
