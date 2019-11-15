@@ -68,20 +68,8 @@ public class EndGame extends Behaviour {
         this.initializeInGamePlayers();
 
         // Initialize player earnings
-        for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++) {
-            if(this.inGamePlayers.size() == 1 &&
-                    this.inGamePlayers.getFirst().getPlayer().getName().equals(this.dealer.getSession().getCurrPlayers().get(i).getPlayer().getName())) {
-                int earnings = 0;
-
-                for(Player player : this.dealer.getSession().getCurrPlayers())
-                    earnings += player.getPot();
-
-                this.playerEarnings.put(i,earnings);
-                this.state = State.DISTRIBUTING_EARNINGS;
-            }
-            else
-                this.playerEarnings.put(i, 0);
-        }
+        for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++)
+            this.playerEarnings.put(i, 0);
     }
 
     private void initializeInGamePlayers() {

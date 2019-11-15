@@ -47,7 +47,7 @@ public class BetweenGames extends Behaviour {
                 MessageTemplate msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("between-games"),
                     MessageTemplate.MatchPerformative(ACLMessage.INFORM));
                 ACLMessage msg = myAgent.receive(msgTemplate);
-
+                System.out.println(this.player.getName() + "   ----------------------------------------------------------------------");
                 if(msg != null) {
                     // Create reply
                     ACLMessage reply = msg.createReply();
