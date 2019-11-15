@@ -187,11 +187,6 @@ public class GUI {
     private int cardCounter = 0;
 
     /**
-     * Number of existing pots
-     */
-    private int potCounter = 0;
-
-    /**
      * Flag to waiting for user action
      */
     private boolean waitingAction = false;
@@ -267,17 +262,34 @@ public class GUI {
      * @param playerName name of the player to remove
      */
     public void removePlayer(String playerName) {
-        int playerIndex = playerMap.get(playerName);
-        playerMap.remove(playerName, playerIndex);
-
+        int removedPlayerIndex = playerMap.get(playerName);
+        playerMap.remove(playerName, removedPlayerIndex);
         playerCounter--;
-        playersList[playerIndex][0].setText("Player" + (playerIndex + 1));
-        playersList[playerIndex][0].setForeground(Color.white);
-        playersList[playerIndex][1].setText("");
-        playersList[playerIndex][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
-        playersList[playerIndex][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
-        playersList[playerIndex][4].setText("");
-        potsList[playerIndex].setText("");
+
+        int index = removedPlayerIndex;
+
+        for (; index < playerCounter; index++) {
+            playersList[index][0].setText(playersList[index+1][0].getText());
+            playersList[index][0].setForeground(playersList[index+1][0].getForeground());
+            playersList[index][1].setText(playersList[index+1][1].getText());
+            playersList[index][2].setIcon(playersList[index+1][2].getIcon());
+            playersList[index][3].setIcon(playersList[index+1][3].getIcon());
+            playersList[index][4].setText(playersList[index+1][4].getText());
+        }
+
+        // Update playerMap indexes
+        playerMap.forEach((k,v) -> {
+            if (v > removedPlayerIndex) v -= 1;
+            playerMap.replace(k,v);
+        });
+
+        playersList[index][0].setText("Player" + (index + 1));
+        playersList[index][0].setForeground(Color.white);
+        playersList[index][1].setText("");
+        playersList[index][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        playersList[index][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        playersList[index][4].setText("");
+        potsList[removedPlayerIndex].setText("");
     }
 
     /**
@@ -289,10 +301,10 @@ public class GUI {
         int playerIndex = playerMap.get(playerName);
         playersList[playerIndex][0].setText(playerName + " (" + blind + ")");
 
-        if (blind == "B") {
+        if (blind.equals("B")) {
             playersList[playerIndex][0].setForeground(Color.red);
             bigBlind = playerIndex;
-        } else if (blind == "S") {
+        } else if (blind.equals("S")) {
             playersList[playerIndex][0].setForeground(Color.blue);
             smallBlind = playerIndex;
         }
@@ -304,13 +316,13 @@ public class GUI {
      */
     public void removePlayerBlind(String blind) {
         String playerName;
-        if (blind == "B") {
+        if (blind.equals("B")) {
             playerName = playersList[bigBlind][0].getText();
             playerName = playerName.substring(0, playerName.length()-4);
             playersList[bigBlind][0].setText(playerName);
             playersList[bigBlind][0].setForeground(Color.white);
             bigBlind = -1;
-        } else if (blind == "S") {
+        } else if (blind.equals("S")) {
             playerName = playersList[smallBlind][0].getText();
             playerName = playerName.substring(0, playerName.length()-4);
             playersList[smallBlind][0].setText(playerName);
