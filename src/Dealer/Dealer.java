@@ -208,4 +208,12 @@ public class Dealer extends Agent {
     public Session getSession() {
         return session;
     }
+
+    /**
+     * Prints dealer information
+     * @param msg msg to be printed
+     */
+    public void printInfo(String msg) {
+        System.out.println(this.getName() + " :: " + msg);
+    }
 }
