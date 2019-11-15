@@ -89,8 +89,7 @@ public class Logic extends CyclicBehaviour {
      * Updates logic current state
      */
     void nextState(String action) {
-        if(action.equals("No more betting"))
-            this.skipBettingPhases = true;
+        this.skipBettingPhases = action.equals("No more betting");
 
         if (lastStates[0] == State.PRE_FLOP) state = State.SPECIAL_BET;
         else if (lastStates[0] == State.SPECIAL_BET) state = State.FLOP;
