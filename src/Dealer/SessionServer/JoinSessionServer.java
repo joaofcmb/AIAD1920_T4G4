@@ -34,7 +34,7 @@ public class JoinSessionServer extends CyclicBehaviour {
                     reply.setPerformative(ACLMessage.INFORM);
 
                     // Add player to Game window
-                    this.dealer.getWindow().addPlayer(msg.getSender().getName(), Float.parseFloat(msg.getContent()));
+                    this.dealer.getWindow().addPlayer(msg.getSender().getName(), Integer.parseInt(msg.getContent()));
                 } else {
                     reply.setPerformative(ACLMessage.FAILURE);
                     reply.setContent("join-not-possible");

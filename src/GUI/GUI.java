@@ -254,7 +254,7 @@ public class GUI {
      * @param name name of the player
      * @param buyIn initial buy-in of the player
      */
-    public void addPlayer(String name, float buyIn) {
+    public void addPlayer(String name, int buyIn) {
         playerMap.put(name, playerCounter);
         playersList[playerCounter][0].setText(name);
         playersList[playerCounter][1].setText(reduceNumber(buyIn) + " €");
@@ -329,7 +329,7 @@ public class GUI {
         String[] potText = potsList[potIndex].getText().split(" : ");
         String chipsText = potText[1].substring(0, potText[1].length()-2);
 
-        float actualChips = expandNumber(chipsText) + chips;
+        int actualChips = expandNumber(chipsText) + chips;
 
         potsList[potIndex].setText(potText[0] + " : " + reduceNumber(actualChips) + " €");
     }
@@ -412,7 +412,7 @@ public class GUI {
         String actualChips = playersList[playerIndex][1].getText();
         actualChips = actualChips.substring(0, actualChips.length()-2);
 
-        float totalChips = expandNumber(actualChips);
+        int totalChips = expandNumber(actualChips);
 
         if (operation)
             totalChips += chips;
@@ -444,7 +444,7 @@ public class GUI {
      * @param number number to format
      * @return return a string with the number representation
      */
-    private String reduceNumber(float number) {
+    private String reduceNumber(int number) {
         String text = "";
 
         if (number >= 1000000) text += number/1000000.0 + "M";
@@ -455,21 +455,21 @@ public class GUI {
     }
 
     /**
-     * Decode a string with a number in format "x.x(M/K)" in a float number
+     * Decode a string with a number in format "x.x(M/K)" in a integer number
      * @param text text to decode
-     * @return float number with the value of text
+     * @return integer number with the value of text
      */
-    private float expandNumber(String text) {
-        float number;
+    private int expandNumber(String text) {
+        int number;
 
         if(text.contains("M")){
             text = text.substring(0, text.length()-1);
-            number = Float.parseFloat(text) * 1000000;
+            number = (int) (Float.parseFloat(text) * 1000000);
         } else if (text.contains("K")) {
             text = text.substring(0, text.length()-1);
-            number = Float.parseFloat(text) * 1000;
+            number = (int) (Float.parseFloat(text) * 1000);
         } else {
-            number = Float.parseFloat(text);
+            number = (int) Float.parseFloat(text);
         }
 
         return number;
