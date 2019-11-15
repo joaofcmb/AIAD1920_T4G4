@@ -31,7 +31,7 @@ public class Flop extends Behaviour {
     Flop(Dealer dealer, Logic logic) {
         this.dealer = dealer;
         this.logic = logic;
-        this.dealer.getSession().getDeck().getCard();   // Removes card from deck [RULE]
+        this.dealer.getSession().getDeck().getCard();
     }
 
     @Override
