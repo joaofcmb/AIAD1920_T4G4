@@ -310,9 +310,11 @@ public class GUI {
 
         if (blind.equals("B")) {
             playersList[playerIndex][0].setForeground(Color.red);
+            playersList[playerIndex][4].setText("Big Blind");
             bigBlind = playerIndex;
         } else if (blind.equals("S")) {
             playersList[playerIndex][0].setForeground(Color.blue);
+            playersList[playerIndex][4].setText("Small Blind");
             smallBlind = playerIndex;
         }
     }
@@ -448,6 +450,16 @@ public class GUI {
      */
     public void updatePlayerAction(String playerName, String action) {
         playersList[playerMap.get(playerName)][4].setText(action);
+    }
+
+    /**
+     *
+     */
+    public void cleanPlayerAction() {
+        playerMap.forEach((k, v) -> {
+            if (!playersList[v][4].getText().equals("Fold") && !playersList[v][4].getText().equals("All in"))
+                playersList[v][4].setText("");
+        });
     }
 
     /**
