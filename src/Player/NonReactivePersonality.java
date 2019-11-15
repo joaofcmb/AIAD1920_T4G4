@@ -41,8 +41,8 @@ public class NonReactivePersonality extends Personality {
         final double requiredAllInEquity = (double) this.player.getBuyIn() /
                 (this.player.getBuyIn() + this.player.getCurrBet());
 
-        this.player.println("EHS: " + handEquity);
-        this.player.println("All-in Equity: " + requiredAllInEquity);
+        this.player.printInfo("EHS: " + handEquity);
+        this.player.printInfo("All-in Equity: " + requiredAllInEquity);
 
         final boolean willingToPlay = handEquity > this.handSelection + varianceStream.next();
 
@@ -60,8 +60,8 @@ public class NonReactivePersonality extends Personality {
             final double minPushEquity = (double) minPushValue /
                     (minPushValue + this.player.getCurrBet());
 
-            this.player.println("Call Equity: " + requiredCallEquity);
-            this.player.println("Min Push Equity: " + minPushEquity);
+            this.player.printInfo("Call Equity: " + requiredCallEquity);
+            this.player.printInfo("Min Push Equity: " + minPushEquity);
 
             if (!willingToPlay)             return canCheck ? "Check" : "Fold";
             else if (this.player.getCurrBet() == 0) {

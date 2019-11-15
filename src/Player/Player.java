@@ -24,7 +24,7 @@ public class Player extends Agent {
     /**
      * Player state machine
      */
-    public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, IN_SESSION;}
+    public enum State {INIT, SEARCHING_SESSION, JOINING_SESSION, IN_SESSION}
 
     /**
      * Initial state
@@ -40,6 +40,9 @@ public class Player extends Agent {
      */
     private int currBet = 0;
 
+    /**
+     * Session big blind value
+     */
     private int bigBlind;
 
     /**
@@ -148,6 +151,10 @@ public class Player extends Agent {
         this.dealer = dealer;
     }
 
+    /**
+     * Sets big blind value
+     * @param bigBlind value
+     */
     public void setBigBlind(int bigBlind) {
         this.bigBlind = bigBlind;
     }
@@ -214,8 +221,8 @@ public class Player extends Agent {
     }
 
     /**
-     *
-     * @param earnings
+     * Updates player chips
+     * @param earnings total amount earned
      */
     public void updateChips(int earnings) {
         this.buyIn += earnings;
@@ -243,23 +250,6 @@ public class Player extends Agent {
     }
 
     /**
-     * Resets all variables needed to new poker session
-     */
-    public void resetAll() {
-        this.resetFoldStatus();
-        this.resetCurrBet();
-        this.getCards().clear();
-        this.getTable().clear();
-    }
-
-    /**
-     * Retrieves other players bets
-     */
-    public HashMap<String, LinkedList<String>> getBets() {
-        return bets;
-    }
-
-    /**
      * Adds a new bet
      * @param playerName player name
      * @param bet player bet
@@ -274,7 +264,21 @@ public class Player extends Agent {
         }
     }
 
-    public void println(String msg) {
+    /**
+     * Prints player information
+     * @param msg msg to be printed
+     */
+    public void printInfo(String msg) {
         System.out.println(this.getName() + " :: " + msg);
+    }
+
+    /**
+     * Resets all variables needed to new poker session
+     */
+    public void resetAll() {
+        this.resetFoldStatus();
+        this.resetCurrBet();
+        this.getCards().clear();
+        this.getTable().clear();
     }
 }

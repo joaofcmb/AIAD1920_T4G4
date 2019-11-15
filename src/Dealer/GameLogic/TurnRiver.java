@@ -5,8 +5,6 @@ import Session.Card;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
-import java.io.IOException;
-
 public class TurnRiver extends Behaviour {
 
     /**

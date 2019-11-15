@@ -21,6 +21,9 @@ public class Logic extends CyclicBehaviour {
      */
     private State[] lastStates = {State.PRE_FLOP, State.PRE_FLOP};
 
+    /**
+     * Current state
+     */
     private State state = State.PRE_FLOP;
 
     /**

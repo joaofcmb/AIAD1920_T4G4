@@ -134,6 +134,9 @@ public class Dealer extends Agent {
         return false;
     }
 
+    /**
+     * Pauses GUI for visual purposes
+     */
     public void pauseGUI() {
         window.setWaitingAction(true);
         while (window.isWaitingAction()){

@@ -65,7 +65,7 @@ public class Bet extends Behaviour {
         this.maxPot = lastBet;
 
         Player firstPlayer = this.dealer.getSession().getCurrPlayers().get(playerTurn);
-        if(!firstPlayer.isFoldStatus() && !firstPlayer.isAllInStatus())
+        if(!firstPlayer.getFoldStatus() && !firstPlayer.getAllInStatus())
             this.playersToBet.add(firstPlayer);
 
         this.addPlayersToBet(playerTurn);
@@ -76,7 +76,7 @@ public class Bet extends Behaviour {
 
         while (playerIndex != playerTurn) {
             Player player = this.dealer.getCurrPlayers().get(playerIndex);
-            if(!this.playersToBet.contains(player) && !player.isFoldStatus() && !player.isAllInStatus())
+            if(!this.playersToBet.contains(player) && !player.getFoldStatus() && !player.getAllInStatus())
                 this.playersToBet.add(player);
 
             playerIndex = playerIndex + 1 == this.dealer.getSession().getCurrPlayers().size() ? 0 : playerIndex + 1;
@@ -269,10 +269,6 @@ public class Bet extends Behaviour {
         // Send message
         System.out.println(this.dealer.getName() + " :: Terminating betting phase ");
         myAgent.send(msg);
-
-        // Reset betting variables
-        for(Player player : this.dealer.getSession().getCurrPlayers())
-            player.resetCurrBet();
 
         this.dealer.pauseGUI();
         this.logic.nextState(status);
