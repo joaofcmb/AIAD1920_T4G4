@@ -169,12 +169,12 @@ public class Bet extends Behaviour {
             int callValue = this.maxPot - this.playersToBet.getFirst().getPot();
 
             if(callValue == 0)
-                return "Fold:Check" + (raiseValue >= currChips ? ":" : ":Raise-" + raiseValue + ":") + "All in";
+                return "Fold:Check" + (raiseValue >= currChips || raiseValue < this.dealer.getTableSettings().get("bigBlind") ? ":" : ":Raise-" + raiseValue + ":") + "All in";
             else {
                 if(callValue >= currChips)
                     return "Fold:All in";
                 else
-                    return "Fold:Call-" + callValue + (raiseValue >= currChips ? ":" : ":Raise-" + raiseValue + ":")
+                    return "Fold:Call-" + callValue + (raiseValue >= currChips || raiseValue < this.dealer.getTableSettings().get("bigBlind") ? ":" : ":Raise-" + raiseValue + ":")
                             + "All in";
             }
         }
