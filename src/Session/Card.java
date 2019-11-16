@@ -89,8 +89,6 @@ public class Card {
         int rankValue = Card.cardValue.get(playerCards.get(0).getRank()) +
                 Card.cardValue.get(playerCards.get(1).getRank());
 
-        System.out.println("Grande rank crl: " + rankValue);
-
         if (playerCards.get(0).getSuit().equals(playerCards.get(1).getSuit()) ||
                 playerCards.get(0).getRank().equals(playerCards.get(1).getRank()))
             return rankValue / 52d + .5;
@@ -103,7 +101,7 @@ public class Card {
      * Poker hand ratings
      */
     public enum State {ROYAL_FLUSH, STRAIGHT_FLUSH, FOUR_OF_A_KIND, FULL_HOUSE, FLUSH, STRAIGHT,
-        THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD;
+        THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD
     }
 
     /**
@@ -407,14 +405,14 @@ public class Card {
                 case THREE_OF_A_KIND: // Points [300-399]
                     toak = Card.groupOfX(handInfo, 3);
                     if(toak.size() > 0)
-                        return Card.cardValue.get(toak.get(0)) + 300;
+                        return Card.cardValue.get(toak.get(0)) + playerCardsValue + 300;
                     else
                         state = State.TWO_PAIR;
                     break;
                 case TWO_PAIR: // Points [200-299]
                     ArrayList<String> twoPair = Card.groupOfX(handInfo, 2);
                     if(twoPair.size() > 1)
-                        return Card.cardValue.get(twoPair.get(0)) + Card.cardValue.get(twoPair.get(1)) + 200;
+                        return Card.cardValue.get(twoPair.get(0)) + Card.cardValue.get(twoPair.get(1))  + playerCardsValue + 200;
                     else
                         state = State.ONE_PAIR;
                     break;

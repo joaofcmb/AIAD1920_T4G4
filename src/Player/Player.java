@@ -6,8 +6,6 @@ import jade.core.AID;
 import jade.core.Agent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 public class Player extends Agent {
     /**

@@ -73,6 +73,10 @@ public class Logic extends CyclicBehaviour {
         }
     }
 
+    /**
+     * Determines next state
+     * @param action action to take into consideration
+     */
     public void nextState(String action) {
         if(action.equals("No more betting"))
             this.skipBettingPhases = true;

@@ -1,12 +1,9 @@
 package Player.GameLogic;
 
 import Player.Player;
-import Session.Card;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-
-import java.util.ArrayList;
 
 public class BetweenGames extends Behaviour {
 
@@ -35,6 +32,11 @@ public class BetweenGames extends Behaviour {
      */
     private Logic logic;
 
+    /**
+     * Class constructor
+     * @param player agent
+     * @param logic logic
+     */
     BetweenGames(Player player, Logic logic) {
         this.player = player;
         this.logic = logic;
@@ -47,7 +49,7 @@ public class BetweenGames extends Behaviour {
                 MessageTemplate msgTemplate = MessageTemplate.and(MessageTemplate.MatchConversationId("between-games"),
                     MessageTemplate.MatchPerformative(ACLMessage.INFORM));
                 ACLMessage msg = myAgent.receive(msgTemplate);
-                System.out.println(this.player.getName() + "   ----------------------------------------------------------------------");
+
                 if(msg != null) {
                     // Create reply
                     ACLMessage reply = msg.createReply();
@@ -63,7 +65,11 @@ public class BetweenGames extends Behaviour {
                     System.out.println(this.player.getName() + " :: Intention to leave session :: " + reply.getContent());
                     myAgent.send(reply);
 
-                    this.state = State.NEW_GAME;
+                    // Terminates agent if necessary or moves it to next state
+                    if(this.player.getBuyIn() < this.player.getBigBlind())
+                        this.player.doDelete();
+                    else
+                        this.state = State.NEW_GAME;
                 }
                 else
                     block();
