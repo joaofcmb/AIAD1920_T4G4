@@ -11,12 +11,12 @@ public class NonReactivePersonality extends Personality {
      */
     static private Map<String, String> presets = Map.of(
             // Preset Name, handSelection:aggression
-            "calling-station",  "0.30:0.20",
+            "calling-station",  "0.40:0.20",
             "rock",             "0.90:0.20",
-            "LAG",              "0.30:0.50",
+            "LAG",              "0.40:0.50",
             "TAG",              "0.75:0.50",
             "nit",              "0.90:0.10",
-            "maniac",           "0.25:0.70"
+            "maniac",           "0.30:0.70"
     );
 
     /**
@@ -67,14 +67,15 @@ public class NonReactivePersonality extends Personality {
      * @return best betting option for this personality
      */
     public String betAction(String[] bettingOptions) {
-        final double handEquity = effectiveHandStrength();
+        final double handEquity = effectiveHandStrength(this.player.getTable().isEmpty() ? 1d : .5d);
         final double requiredAllInEquity = (double) this.player.getBuyIn() /
                 (this.player.getBuyIn() + this.player.getCurrBet());
 
         this.player.printInfo("EHS: " + handEquity);
         this.player.printInfo("All-in Equity: " + requiredAllInEquity);
 
-        final boolean willingToPlay = handEquity > this.handSelection + varianceStream.next();
+        final boolean willingToPlay = (this.player.getTable().isEmpty() ? 1 : 2) *
+                handEquity > this.handSelection + varianceStream.next();
 
         if (bettingOptions.length == 2) {
             return willingToPlay && handEquity > requiredAllInEquity ? "All in" : "Fold";

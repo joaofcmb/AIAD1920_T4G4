@@ -1,5 +1,6 @@
 package Session;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Card {
@@ -24,11 +25,22 @@ public class Card {
     }};
 
     /**
+     * Generates all possible player cards (Combinations of 2 cards), ordered by their rank in ascending order (Card::rankCard)
+     *
+     * @return List of Cards
+     */
+    public static ArrayList<ArrayList<Card>> playerCombinations() {
+        ArrayList<ArrayList<Card>> ret = cardsGenerator(2);
+        ret.sort(Comparator.comparingDouble(Card::rankCards).reversed());
+        return ret;
+    }
+
+    /**
      * Generates Lists of Cards
      * @param n number of cards
-     * @return Lists of Cards
+     * @return List of Cards
      */
-    public static ArrayList<ArrayList<Card>> cardsGenerator(int n) {
+    private static ArrayList<ArrayList<Card>> cardsGenerator(int n) {
         return cardsGenerator(n, new Deck().getDeck());
     }
 

@@ -15,7 +15,7 @@ abstract public class Personality {
     abstract public String betAction(String[] bettingOptions);
 
     // EHS = HS * (1 - NPOT) + (1 - HS) * PPOT
-    double effectiveHandStrength() {
+    double effectiveHandStrength(double rangePercentage) {
         final ArrayList<Card> playerCards = this.player.getCards();
         Card.sort(playerCards);
 
@@ -32,7 +32,9 @@ abstract public class Personality {
         final int aheadIndex = 0, tieIndex = 0, behindIndex = 2;
         int[][] handPotential = new int[3][3];
         int[] hpTotal = new int[3];
-        for (ArrayList<Card> oppCards : Card.cardsGenerator(2)) {
+
+        final ArrayList<ArrayList<Card>> oppCombinations = Card.playerCombinations();
+        for (ArrayList<Card> oppCards : oppCombinations.subList(0, (int) (oppCombinations.size() * rangePercentage))) {
             Card.sort(oppCards);
             if (oppCards.equals(playerCards)) continue;
 

@@ -21,11 +21,10 @@ public class ReactivePersonality extends Personality {
 
     @Override
     public String betAction(String[] bettingOptions) {
-        final double handEquity = effectiveHandStrength();
-
-        this.player.printInfo("EHS: " + handEquity);
-
         if (this.player.getTable().isEmpty()) {
+            final double handEquity = effectiveHandStrength(1d);
+            this.player.printInfo("EHS: " + handEquity);
+
             return preFlopAction(bettingOptions[1], handEquity);
         }
         else {
@@ -43,9 +42,12 @@ public class ReactivePersonality extends Personality {
     private String preFlopAction(String passiveOption, double handEquity) {
         final int raiseAmount = this.player.getBigBlind() * 4;
 
-        if (passiveOption.equals("Check") ||
-                Integer.parseInt(passiveOption.split("-")[1]) == this.player.getBigBlind()
+        if (!passiveOption.equals("Check") &&
+                Integer.parseInt(passiveOption.split("-")[1]) > this.player.getBigBlind()
         ) {
+            return handEquity > 0.75 ? passiveOption : "Fold";
+        }
+        else {
             if (handEquity > 0.75) {
                 return this.player.getBuyIn() > raiseAmount ? "Raise-" + raiseAmount : "All in";
             }
@@ -55,9 +57,6 @@ public class ReactivePersonality extends Personality {
             else {
                 return "Fold";
             }
-        }
-        else {
-            return handEquity > 0.75 ? passiveOption : "Fold";
         }
     }
 
