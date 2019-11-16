@@ -16,6 +16,9 @@ public class Bet extends ParallelBehaviour {
      */
     private Logic logic;
 
+    /**
+     *
+     */
     public String status = "Next State";
 
     /**

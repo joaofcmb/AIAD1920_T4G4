@@ -89,8 +89,6 @@ public class Card {
         int rankValue = Card.cardValue.get(playerCards.get(0).getRank()) +
                 Card.cardValue.get(playerCards.get(1).getRank());
 
-        System.out.println("Grande rank crl: " + rankValue);
-
         if (playerCards.get(0).getSuit().equals(playerCards.get(1).getSuit()) ||
                 playerCards.get(0).getRank().equals(playerCards.get(1).getRank()))
             return rankValue / 52d + .5;
@@ -103,7 +101,7 @@ public class Card {
      * Poker hand ratings
      */
     public enum State {ROYAL_FLUSH, STRAIGHT_FLUSH, FOUR_OF_A_KIND, FULL_HOUSE, FLUSH, STRAIGHT,
-        THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD;
+        THREE_OF_A_KIND, TWO_PAIR, ONE_PAIR, HIGH_CARD
     }
 
     /**

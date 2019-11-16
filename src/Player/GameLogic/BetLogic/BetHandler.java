@@ -23,7 +23,7 @@ public class BetHandler extends Behaviour {
     public void action() {
         ACLMessage msg = myAgent.receive(
                 MessageTemplate.and(MessageTemplate.MatchConversationId("betting-phase"),
-                MessageTemplate.MatchPerformative(ACLMessage.INFORM))
+                MessageTemplate.MatchPerformative(ACLMessage.REQUEST))
         );
 
         if (msg != null) {

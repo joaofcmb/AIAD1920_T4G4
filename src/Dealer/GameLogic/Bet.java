@@ -122,7 +122,7 @@ public class Bet extends Behaviour {
                 AID currBetPlayer = this.playersToBet.getFirst().getPlayer();
 
                 // Configure message
-                ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+                ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
 
                 msg.addReceiver(currBetPlayer);
                 msg.setContent(this.getBettingOptions());

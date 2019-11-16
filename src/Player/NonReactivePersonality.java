@@ -5,6 +5,10 @@ import java.util.PrimitiveIterator;
 import java.util.Random;
 
 public class NonReactivePersonality extends Personality {
+
+    /**
+     * Different personalities and respective hand selection and aggression ratio
+     */
     static private Map<String, String> presets = Map.of(
             // Preset Name, handSelection:aggression
             "calling-station",  "0.30:0.20",
@@ -15,12 +19,27 @@ public class NonReactivePersonality extends Personality {
             "maniac",           "0.25:0.70"
     );
 
+    /**
+     * Variance deviation
+     */
     static private final double VARIANCE_DEVIATION = 0.05;
+
+    /**
+     * Variance stream
+     */
     private PrimitiveIterator.OfDouble varianceStream =
             new Random().doubles(-VARIANCE_DEVIATION, VARIANCE_DEVIATION).iterator();
 
+    /**
+     * Hand selection and aggression ratios
+     */
     private final double handSelection, aggression;
 
+    /**
+     * Class constructor
+     * @param player agent
+     * @param presetAlias alias
+     */
     NonReactivePersonality(Player player, String presetAlias) {
         super(player);
         final String[] presetStats = presets.getOrDefault(presetAlias, "0.10:0.10").split(":");
@@ -29,6 +48,12 @@ public class NonReactivePersonality extends Personality {
         this.aggression = Double.parseDouble(presetStats[1]);
     }
 
+    /**
+     * Class constructor
+     * @param player agent
+     * @param handSelection hand selection value
+     * @param aggression aggression value
+     */
     NonReactivePersonality(Player player, double handSelection, double aggression) {
         super(player);
 
@@ -36,6 +61,11 @@ public class NonReactivePersonality extends Personality {
         this.aggression = aggression;
     }
 
+    /**
+     * Determines best betting option
+     * @param bettingOptions Betting options available
+     * @return best betting option for this personality
+     */
     public String betAction(String[] bettingOptions) {
         final double handEquity = effectiveHandStrength();
         final double requiredAllInEquity = (double) this.player.getBuyIn() /

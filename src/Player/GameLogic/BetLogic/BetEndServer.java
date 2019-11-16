@@ -1,6 +1,5 @@
 package Player.GameLogic.BetLogic;
 
-import Player.GameLogic.Logic;
 import Player.Player;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -13,6 +12,9 @@ public class BetEndServer extends Behaviour {
      */
     private Player player;
 
+    /**
+     * Bet logic class
+     */
     private Bet betLogic;
 
     /**
