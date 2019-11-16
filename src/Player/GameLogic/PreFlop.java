@@ -58,8 +58,7 @@ public class PreFlop extends Behaviour {
                     // Create reply
                     ACLMessage reply = msg.createReply();
 
-                    reply.setPerformative(ACLMessage.CONFIRM);
-                    reply.setContent("Card-reception-confirmation");
+                    reply.setPerformative(ACLMessage.INFORM);
 
                     myAgent.send(reply);
 
@@ -76,21 +75,23 @@ public class PreFlop extends Behaviour {
                 msg = myAgent.receive(msgTemplate);
 
                 if (msg != null) {
-                    System.out.println(this.player.getName() + " :: Current bet " + this.player.getCurrBet());
-
                     String[] content = msg.getContent().split(":");
                     String[] smallBlind = content[0].split("-");
                     String[] bigBlind = content[1].split("-");
 
-                    if(smallBlind[0].equals(this.player.getName()))
+                    if (smallBlind[0].equals(this.player.getName()))
                         this.player.updateCurrBet(Integer.parseInt(smallBlind[1]));
-                    else if(bigBlind[0].equals(this.player.getName()))
+                    else if (bigBlind[0].equals(this.player.getName()))
                         this.player.updateCurrBet(Integer.parseInt(bigBlind[1]));
                     else {
-                        this.player.addBet(smallBlind[0], smallBlind[1]);
-                        this.player.addBet(bigBlind[0], bigBlind[1]);
+                        this.player.getPersonality().updateInfo(smallBlind[0], smallBlind[1]);
+                        this.player.getPersonality().updateInfo(bigBlind[0], bigBlind[1]);
                     }
 
+                    // Stores big blind value
+                    this.player.setBigBlind(Integer.parseInt(bigBlind[1]));
+
+                    System.out.println(this.player.getName() + " :: Current bet " + this.player.getCurrBet());
                     this.terminate();
                 }
                 else {
@@ -114,7 +115,7 @@ public class PreFlop extends Behaviour {
 
     @Override
     public int onEnd() {
-        this.logic.nextState();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

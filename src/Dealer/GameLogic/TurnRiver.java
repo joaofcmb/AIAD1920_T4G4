@@ -5,8 +5,6 @@ import Session.Card;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 
-import java.io.IOException;
-
 public class TurnRiver extends Behaviour {
 
     /**
@@ -39,6 +37,8 @@ public class TurnRiver extends Behaviour {
         this.logic = logic;
         this.moment = moment;
         this.dealer.getSession().getDeck().getCard();   // Removes card from deck [RULE]
+
+        this.dealer.getWindow().cleanPlayerAction();
     }
 
     @Override
@@ -83,7 +83,7 @@ public class TurnRiver extends Behaviour {
     @Override
     public int onEnd() {
         this.dealer.pauseGUI();
-        this.logic.nextState();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

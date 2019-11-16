@@ -28,6 +28,12 @@ public class TurnRiver extends Behaviour {
      */
     private Logic logic;
 
+    /**
+     * Class constructor
+     * @param player agent
+     * @param logic logic class
+     * @param moment moment (turn or river)
+     */
     TurnRiver(Player player, Logic logic, String moment) {
         this.player = player;
         this.logic = logic;
@@ -70,7 +76,7 @@ public class TurnRiver extends Behaviour {
 
     @Override
     public int onEnd() {
-        this.logic.nextState();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

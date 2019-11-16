@@ -1,12 +1,9 @@
 package Player.GameLogic;
 
 import Player.Player;
-import Session.Card;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-
-import java.util.ArrayList;
 
 public class BetweenGames extends Behaviour {
 
@@ -35,6 +32,11 @@ public class BetweenGames extends Behaviour {
      */
     private Logic logic;
 
+    /**
+     * Class constructor
+     * @param player agent
+     * @param logic logic
+     */
     BetweenGames(Player player, Logic logic) {
         this.player = player;
         this.logic = logic;
@@ -53,15 +55,21 @@ public class BetweenGames extends Behaviour {
                     ACLMessage reply = msg.createReply();
 
                     reply.setPerformative(ACLMessage.INFORM);
-                    if(this.player.getAID().getName().equals("Player03@JADE"))
-                        reply.setContent("Yes"); // YES or NO
+
+                    System.out.println(this.player.getName() + " :: " + this.player.getBuyIn() + " -- " + this.player.getBigBlind());
+                    if(this.player.getBuyIn() < this.player.getBigBlind())
+                        reply.setContent("Yes");
                     else
-                        reply.setContent("No"); // YES or NO
+                        reply.setContent("No");
 
                     System.out.println(this.player.getName() + " :: Intention to leave session :: " + reply.getContent());
                     myAgent.send(reply);
 
-                    this.state = State.NEW_GAME;
+                    // Terminates agent if necessary or moves it to next state
+                    if(this.player.getBuyIn() < this.player.getBigBlind())
+                        this.player.doDelete();
+                    else
+                        this.state = State.NEW_GAME;
                 }
                 else
                     block();
@@ -98,9 +106,8 @@ public class BetweenGames extends Behaviour {
 
     @Override
     public int onEnd() {
-        // TODO - Reset all need variables
-        this.player.getCards().clear();
-        this.logic.nextState();
+        this.player.resetAll();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

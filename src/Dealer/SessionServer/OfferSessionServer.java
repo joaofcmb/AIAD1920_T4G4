@@ -36,8 +36,7 @@ public class OfferSessionServer extends CyclicBehaviour {
                         this.dealer.getTableSettings().get("upperBuyIn") >= playerBuyIn) {
                     reply.setPerformative(ACLMessage.PROPOSE);
                     reply.setContent("Session-available");
-                    System.out.println(this.dealer.getName() + " :: Session available in response to " +
-                            msg.getSender().getName());
+                    System.out.println(this.dealer.getName() + " :: Session available :: " + msg.getSender().getName());
 
                     this.dealer.getWindow().updateDealerAction("Session available in response to " +
                             msg.getSender().getName());

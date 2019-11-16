@@ -32,7 +32,7 @@ public class BetStorageServer extends Behaviour {
             System.out.println(this.player.getName() + " :: Received " + content[0] + " bet :: " + content[1]);
 
             // Store bet
-            this.player.addBet(content[0], content[1]);
+            this.player.getPersonality().updateInfo(content[0], content[1]);
         }
         else
             block();

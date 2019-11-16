@@ -8,6 +8,7 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -44,9 +45,19 @@ public class EndGame extends Behaviour {
     private int targetPlayer;
 
     /**
+     * Players in game. Does not include those who have folded
+     */
+    private LinkedList<Player> inGamePlayers = new LinkedList<>();
+
+    /**
      * Each player earnings
      */
     private HashMap<Integer, Integer> playerEarnings = new HashMap<>();
+
+    /**
+     * Index of player which is recovering money from an excessive bet
+     */
+    private int recoverPlayer = -1;
 
     /**
      * Logic behaviour
@@ -61,15 +72,18 @@ public class EndGame extends Behaviour {
         this.dealer = dealer;
         this.logic = logic;
         this.targetPlayer = 0;
+        this.initializeInGamePlayers();
 
-        // First player who has not folded
-        while(this.dealer.getSession().getCurrPlayers().get(targetPlayer).isFoldStatus()) {
-            this.targetPlayer++;
-        }
-
-        // Initialize player earnings with 0 values
+        // Initialize player earnings
         for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++)
             this.playerEarnings.put(i, 0);
+    }
+
+    private void initializeInGamePlayers() {
+        for(Player player : this.dealer.getCurrPlayers()) {
+            if(!this.inGamePlayers.contains(player) && !player.getFoldStatus())
+                this.inGamePlayers.add(player);
+        }
     }
 
     @Override
@@ -81,13 +95,12 @@ public class EndGame extends Behaviour {
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
 
                 // Configure message
-                msg.addReceiver(this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer());
+                msg.addReceiver(this.inGamePlayers.getFirst().getPlayer());
                 msg.setConversationId("show-up-cards");
                 msg.setReplyWith("show-up-cards" + System.currentTimeMillis());
 
                 // Send message
-                System.out.println(this.dealer.getName() + " :: Retrieving " +
-                        this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName() + " cards");
+                System.out.println(this.dealer.getName() + " :: Retrieving cards :: " + this.inGamePlayers.getFirst().getPlayer().getName());
                 myAgent.send(msg);
 
                 // Prepare the template to get the reply
@@ -120,31 +133,18 @@ public class EndGame extends Behaviour {
                     for(Card card : playerHand)
                         hand.append(card.toString()).append(" ");
 
-                    this.dealer.getSession().getCurrPlayers().get(this.targetPlayer).setCurrHandFinalValue(handValue);
-                    System.out.println(this.dealer.getName() + " :: " + reply.getSender().getName() +
-                            " has shown up his cards :: " + reply.getContent() + " :: Hand (" + hand + ") value = " +
-                            handValue);
+                    this.inGamePlayers.getFirst().setCurrHandFinalValue(handValue);
+                    System.out.println(this.dealer.getName() + " :: Shown up his cards " + Arrays.toString(reply.getContent().split(":"))
+                            + " :: " + reply.getSender().getName() + " :: Hand (" + hand + ") value = " + handValue);
 
-                    if(this.targetPlayer == this.dealer.getSession().getCurrPlayers().size() - 1) {
-                        this.targetPlayer = 0;
+                    this.inGamePlayers.removeFirst();
+
+                    if(this.inGamePlayers.isEmpty()) {
                         this.computeEarnings();
                         this.state = State.DISTRIBUTING_EARNINGS;
                     }
-                    else {
-                        this.targetPlayer++;
-
-                        while(this.dealer.getSession().getCurrPlayers().get(targetPlayer).isFoldStatus()) {
-                            if(this.targetPlayer == this.dealer.getSession().getCurrPlayers().size() - 1) {
-                                this.targetPlayer = 0;
-                                this.computeEarnings();
-                                this.state = State.DISTRIBUTING_EARNINGS;
-                            }
-                            else
-                                this.targetPlayer++;
-                        }
-
+                    else
                         this.state = State.INFORM_PLAYER_TO_SHOW_HAND;
-                    }
                 }
                 else {
                     block();
@@ -162,16 +162,21 @@ public class EndGame extends Behaviour {
                 msg.setConversationId("earnings");
                 msg.setReplyWith("earnings" + System.currentTimeMillis());
 
+                String finalStatus;
+
+                if(this.playerEarnings.get(targetPlayer) > 0)
+                    finalStatus = targetPlayer == recoverPlayer ? " Recover " : " Won ";
+                else
+                    finalStatus = "Lost";
+
                 // Send message
                 System.out.println(this.dealer.getName() + " :: " +
-                        this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName()
-                        + (this.playerEarnings.get(targetPlayer) > 0 ?
-                        " has won " + this.playerEarnings.get(targetPlayer) : " has lost"));
+                        this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName() +
+                        (finalStatus.equals("Lost") ? " Lost" : finalStatus + this.playerEarnings.get(targetPlayer)));
 
                 this.dealer.getWindow().updatePlayerAction(
                         this.dealer.getSession().getCurrPlayers().get(targetPlayer).getPlayer().getName(),
-                        (this.playerEarnings.get(targetPlayer) > 0 ?
-                                "Won " + this.playerEarnings.get(targetPlayer) : "Lost"));
+                        (finalStatus.equals("Lost") ? " Lost" : finalStatus + this.playerEarnings.get(targetPlayer)));
 
                 // Update GUI chips
                 this.dealer.getWindow().managePlayerChips(
@@ -202,6 +207,14 @@ public class EndGame extends Behaviour {
             int maxHandValue = 0;
             ArrayList<Integer> winners = new ArrayList<>();
 
+            // Determine if there is only one player remaining
+            int potsAbove0 = 0;
+
+            for(Player player : this.dealer.getSession().getCurrPlayers())
+                if(player.getPot() > 0)
+                    potsAbove0++;
+
+            // Retrieves the max hand value
             for(int i = 0; i < this.dealer.getSession().getCurrPlayers().size(); i++) {
                 if(this.dealer.getSession().getCurrPlayers().get(i).getCurrHandFinalValue() > maxHandValue &&
                    this.dealer.getSession().getCurrPlayers().get(i).getPot() > 0)
@@ -219,11 +232,11 @@ public class EndGame extends Behaviour {
             int earnings = 0;
 
             // Due to possible existence of side pots always select the smaller pot
-            for(int i = 0; i < winners.size(); i++) {
-                if(winnerPot == 0)
-                    winnerPot = this.dealer.getSession().getCurrPlayers().get(i).getPot();
-                else if(winnerPot > this.dealer.getSession().getCurrPlayers().get(i).getPot())
-                    winnerPot = this.dealer.getSession().getCurrPlayers().get(i).getPot();
+            for (Integer winner : winners) {
+                if (winnerPot == 0)
+                    winnerPot = this.dealer.getSession().getCurrPlayers().get(winner).getPot();
+                else if (winnerPot > this.dealer.getSession().getCurrPlayers().get(winner).getPot())
+                    winnerPot = this.dealer.getSession().getCurrPlayers().get(winner).getPot();
             }
 
             // Calculate earnings
@@ -235,9 +248,11 @@ public class EndGame extends Behaviour {
             // Update earnings
             for(int i = 0; i < winners.size(); i++) {
                 this.playerEarnings.put(winners.get(i), this.playerEarnings.get(i) + earnings/winners.size());
+
+                if(potsAbove0 == 1)
+                    recoverPlayer = winners.get(i);
             }
         }
-
     }
 
     /**
@@ -266,10 +281,12 @@ public class EndGame extends Behaviour {
 
     @Override
     public int onEnd() {
+        // Updates GUI
         this.dealer.pauseGUI();
         this.dealer.getWindow().removeAllCardsFromPlayers();
         this.dealer.getWindow().removeCardsFromTable();
-        this.logic.nextState();
+
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

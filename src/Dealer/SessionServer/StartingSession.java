@@ -4,11 +4,6 @@ import Dealer.Dealer;
 import Dealer.GameLogic.Logic;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
-
-import java.io.IOException;
-
-import static java.lang.Thread.sleep;
 
 public class StartingSession extends Behaviour {
 
@@ -16,11 +11,6 @@ public class StartingSession extends Behaviour {
      * Dealer agent
      */
     private Dealer dealer;
-
-    /**
-     * Number of replies received
-     */
-    private int repliesCnt = 0;
 
     /**
      * Behaviour status. True if ended, false otherwise
@@ -65,8 +55,8 @@ public class StartingSession extends Behaviour {
                 this.dealer.getSession().getBigBlind().getPlayer().getName(),"B");
         this.dealer.getWindow().updateDealerAction("Session has started");
 
+        // Sessions starts
         System.out.println(this.dealer.getName() + " :: Session has started");
-
         this.dealer.pauseGUI();
 
         // Add game logic behaviour

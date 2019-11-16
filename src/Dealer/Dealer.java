@@ -134,6 +134,9 @@ public class Dealer extends Agent {
         return false;
     }
 
+    /**
+     * Pauses GUI for visual purposes
+     */
     public void pauseGUI() {
         window.setWaitingAction(true);
         while (window.isWaitingAction()){
@@ -204,5 +207,13 @@ public class Dealer extends Agent {
      */
     public Session getSession() {
         return session;
+    }
+
+    /**
+     * Prints dealer information
+     * @param msg msg to be printed
+     */
+    public void printInfo(String msg) {
+        System.out.println(this.getName() + " :: " + msg);
     }
 }

@@ -1,6 +1,5 @@
 package Player.GameLogic.BetLogic;
 
-import Player.GameLogic.Logic;
 import Player.Player;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
@@ -14,6 +13,11 @@ public class BetEndServer extends Behaviour {
     private Player player;
 
     /**
+     * Bet logic class
+     */
+    private Bet betLogic;
+
+    /**
      * Behaviour status. True if ended, false otherwise
      */
     private boolean status = false;
@@ -22,7 +26,8 @@ public class BetEndServer extends Behaviour {
      * Betting end server constructor
      * @param player agent
      */
-    BetEndServer(Player player) {
+    BetEndServer(Bet betLogic, Player player) {
+        this.betLogic = betLogic;
         this.player = player;
     }
 
@@ -33,7 +38,9 @@ public class BetEndServer extends Behaviour {
         ACLMessage msg = myAgent.receive(msgTemplate);
 
         if(msg != null) {
-            System.out.println(this.player.getName() + " :: Terminating betting phase");
+            this.betLogic.status = msg.getContent();
+
+            System.out.println(this.player.getName() + " :: Terminating betting phase :: " + msg.getContent());
             this.terminate();
         }
         else

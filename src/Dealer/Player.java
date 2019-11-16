@@ -5,9 +5,14 @@ import jade.core.AID;
 public class Player {
 
     /**
-     * Player pot
+     * Player total pot
      */
     private int pot;
+
+    /**
+     * Player specific bet pot
+     */
+    private int betPot;
 
     /**
      * Player current chips
@@ -18,11 +23,6 @@ public class Player {
      * Agent
      */
     private AID player;
-
-    /**
-     * Player current bet in a specific betting phase
-     */
-    private int currBet;
 
     /**
      * Player current hand final value
@@ -39,7 +39,6 @@ public class Player {
      */
     private boolean foldStatus = false;
 
-
     /**
      * Player constructor
      * @param chips player buy in
@@ -47,7 +46,7 @@ public class Player {
      */
     Player(int chips, AID player) {
         this.pot = 0;
-        this.currBet = 0;
+        this.betPot = 0;
         this.currHandFinalValue = 0;
         this.chips = chips;
         this.player = player;
@@ -61,10 +60,10 @@ public class Player {
     }
 
     /**
-     * Resets player pot
+     * Returns player bet pot
      */
-    public void resetPot() {
-        this.pot = 0;
+    public int getBetPot() {
+        return betPot;
     }
 
     /**
@@ -72,7 +71,13 @@ public class Player {
      */
     public void updatePot(int value) {
         this.pot += value;
-        this.currBet += value;
+    }
+
+    /**
+     * Updates player bet pot
+     */
+    public void updateBetPot(int value) {
+        this.betPot += value;
     }
 
     /**
@@ -97,27 +102,6 @@ public class Player {
     }
 
     /**
-     * Returns current bet
-     */
-    public int getCurrBet() {
-        return currBet;
-    }
-
-    /**
-     * Updates current bet value
-     */
-    public void updateCurrBet(int value) {
-        this.currBet += value;
-    }
-
-    /**
-     * Resets current bet value to 0
-     */
-    public void resetCurrBet() {
-        this.currBet = 0;
-    }
-
-    /**
      * Returns current hand final value
      */
     public int getCurrHandFinalValue() {
@@ -132,25 +116,48 @@ public class Player {
         this.currHandFinalValue = currHandFinalValue;
     }
 
-    public boolean isAllInStatus() {
+    /**
+     * Returns all in status
+     * @return True if made all in, false otherwise
+     */
+    public boolean getAllInStatus() {
         return allInStatus;
     }
 
+    /**
+     * Sets all in status to true
+     */
     public void setAllInStatus() {
-        this.allInStatus = !this.allInStatus;
+        this.allInStatus = true;
     }
 
-    public boolean isFoldStatus() {
+    /**
+     * Returns fold status
+     * @return True if made fold, false otherwise
+     */
+    public boolean getFoldStatus() {
         return foldStatus;
     }
 
+    /**
+     * Sets fold status to true
+     */
     public void setFoldStatus() {
-        this.foldStatus = !this.foldStatus;
+        this.foldStatus = true;
     }
 
+    /**
+     * Reset bet pot
+     */
+    public void resetBetPot() {
+        this.betPot = 0;
+    }
+
+    /**
+     * Resets all needed variables to start new session
+     */
     public void resetAll() {
         this.pot = 0;
-        this.currBet = 0;
         this.currHandFinalValue = 0;
         this.allInStatus = false;
         this.foldStatus = false;

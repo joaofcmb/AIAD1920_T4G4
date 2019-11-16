@@ -42,7 +42,10 @@ public class Deck {
         return this.deck.remove(0);
     }
 
-    public int getDeck() {
-        return deck.size();
+    /**
+     * Returns deck of cards
+     */
+    public ArrayList<Card> getDeck() {
+        return deck;
     }
 }

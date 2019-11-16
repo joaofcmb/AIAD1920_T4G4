@@ -18,11 +18,6 @@ public class Session {
     private LinkedList<Player> currPlayers;
 
     /**
-     * Chips of players of have folded
-     */
-    private int foldPot = 0;
-
-    /**
      * Stores players bets history
      */
     private HashMap<String, LinkedList<String>> bets = new HashMap<>();
@@ -77,13 +72,6 @@ public class Session {
     }
 
     /**
-     * Returns session bets history
-     */
-    public HashMap<String, LinkedList<String>> getBets() {
-        return bets;
-    }
-
-    /**
      * Adds a new bet
      * @param playerName player name
      * @param bet bet made
@@ -96,21 +84,6 @@ public class Session {
             LinkedList<String> bets = new LinkedList<>(); bets.push(bet);
             this.bets.put(playerName, bets);
         }
-    }
-
-    /**
-     *  Retrieves chips of folded players
-     */
-    public int getFoldPot() {
-        return foldPot;
-    }
-
-    /**
-     * Updates fold pot
-     * @param foldPot new value
-     */
-    public void updateFoldPot(int foldPot) {
-        this.foldPot += foldPot;
     }
 }
 

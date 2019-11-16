@@ -32,11 +32,9 @@ public class JoinSessionServer extends CyclicBehaviour {
                 // Update current players structure
                 if (this.dealer.updateCurrPlayers(msg.getSender(), Integer.parseInt(msg.getContent()))) {
                     reply.setPerformative(ACLMessage.INFORM);
-                    System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
-                            " successfully joined current session");
 
                     // Add player to Game window
-                    this.dealer.getWindow().addPlayer(msg.getSender().getName(), Float.parseFloat(msg.getContent()));
+                    this.dealer.getWindow().addPlayer(msg.getSender().getName(), Integer.parseInt(msg.getContent()));
                 } else {
                     reply.setPerformative(ACLMessage.FAILURE);
                     reply.setContent("join-not-possible");
@@ -44,6 +42,9 @@ public class JoinSessionServer extends CyclicBehaviour {
 
                 // Send reply
                 myAgent.send(reply);
+                if(reply.getPerformative() == ACLMessage.INFORM)
+                    System.out.println(this.dealer.getName() + " :: Joined successfully :: "
+                            + msg.getSender().getName());
             }
             else
                 block();

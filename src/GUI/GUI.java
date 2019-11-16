@@ -7,8 +7,6 @@ import java.io.File;
 import java.util.Collection;
 import java.util.HashMap;
 
-import static java.lang.Thread.sleep;
-
 public class GUI {
 
     /**
@@ -37,7 +35,7 @@ public class GUI {
     public JPanel pots;
 
     /**
-     * Side pots
+     * Pots
      */
     private JLabel pot1;
     private JLabel pot2;
@@ -148,6 +146,10 @@ public class GUI {
      * Action of the dealer
      */
     private JLabel dealerAction;
+
+    /**
+     * Button to skip to next play
+     */
     private JButton nextButton;
 
     /**
@@ -179,17 +181,15 @@ public class GUI {
      */
     private HashMap<String,String> cardMap;
 
-
+    /**
+     * Map associating players name to index on the playersList
+     */
     private HashMap<String,Integer> playerMap = new HashMap<>();
+
     /**
      * Number of cards in the table
      */
     private int cardCounter = 0;
-
-    /**
-     * Number of existing pots
-     */
-    private int potCounter = 0;
 
     /**
      * Flag to waiting for user action
@@ -254,7 +254,7 @@ public class GUI {
      * @param name name of the player
      * @param buyIn initial buy-in of the player
      */
-    public void addPlayer(String name, float buyIn) {
+    public void addPlayer(String name, int buyIn) {
         playerMap.put(name, playerCounter);
         playersList[playerCounter][0].setText(name);
         playersList[playerCounter][1].setText(reduceNumber(buyIn) + " €");
@@ -267,17 +267,41 @@ public class GUI {
      * @param playerName name of the player to remove
      */
     public void removePlayer(String playerName) {
-        int playerIndex = playerMap.get(playerName);
-        playerMap.remove(playerName, playerIndex);
-
+        int removedPlayerIndex = playerMap.get(playerName);
+        playerMap.remove(playerName, removedPlayerIndex);
         playerCounter--;
-        playersList[playerIndex][0].setText("Player" + (playerIndex + 1));
-        playersList[playerIndex][0].setForeground(Color.white);
-        playersList[playerIndex][1].setText("");
-        playersList[playerIndex][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
-        playersList[playerIndex][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
-        playersList[playerIndex][4].setText("");
-        potsList[playerIndex].setText("");
+
+        int index = removedPlayerIndex;
+
+        for (; index < playerCounter; index++) {
+            playersList[index][0].setText(playersList[index+1][0].getText());
+            playersList[index][0].setForeground(playersList[index+1][0].getForeground());
+            playersList[index][1].setText(playersList[index+1][1].getText());
+            playersList[index][2].setIcon(playersList[index+1][2].getIcon());
+            playersList[index][3].setIcon(playersList[index+1][3].getIcon());
+            playersList[index][4].setText(playersList[index+1][4].getText());
+            potsList[index].setText(potsList[index+1].getText());
+
+            if (smallBlind == index+1)
+                smallBlind--;
+
+            if (bigBlind == index+1)
+                bigBlind--;
+        }
+
+        // Update playerMap indexes
+        playerMap.forEach((k,v) -> {
+            if (v > removedPlayerIndex) v -= 1;
+            playerMap.replace(k,v);
+        });
+
+        playersList[index][0].setText("Player" + (index + 1));
+        playersList[index][0].setForeground(Color.white);
+        playersList[index][1].setText("");
+        playersList[index][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        playersList[index][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
+        playersList[index][4].setText("");
+        potsList[index].setText("");
     }
 
     /**
@@ -289,11 +313,13 @@ public class GUI {
         int playerIndex = playerMap.get(playerName);
         playersList[playerIndex][0].setText(playerName + " (" + blind + ")");
 
-        if (blind == "B") {
+        if (blind.equals("B")) {
             playersList[playerIndex][0].setForeground(Color.red);
+            playersList[playerIndex][4].setText("Big Blind");
             bigBlind = playerIndex;
-        } else if (blind == "S") {
+        } else if (blind.equals("S")) {
             playersList[playerIndex][0].setForeground(Color.blue);
+            playersList[playerIndex][4].setText("Small Blind");
             smallBlind = playerIndex;
         }
     }
@@ -304,13 +330,13 @@ public class GUI {
      */
     public void removePlayerBlind(String blind) {
         String playerName;
-        if (blind == "B") {
+        if (blind.equals("B")) {
             playerName = playersList[bigBlind][0].getText();
             playerName = playerName.substring(0, playerName.length()-4);
             playersList[bigBlind][0].setText(playerName);
             playersList[bigBlind][0].setForeground(Color.white);
             bigBlind = -1;
-        } else if (blind == "S") {
+        } else if (blind.equals("S")) {
             playerName = playersList[smallBlind][0].getText();
             playerName = playerName.substring(0, playerName.length()-4);
             playersList[smallBlind][0].setText(playerName);
@@ -329,7 +355,7 @@ public class GUI {
         String[] potText = potsList[potIndex].getText().split(" : ");
         String chipsText = potText[1].substring(0, potText[1].length()-2);
 
-        float actualChips = expandNumber(chipsText) + chips;
+        int actualChips = expandNumber(chipsText) + chips;
 
         potsList[potIndex].setText(potText[0] + " : " + reduceNumber(actualChips) + " €");
     }
@@ -380,17 +406,6 @@ public class GUI {
     }
 
     /**
-     * Collects a player's cards
-     * @param playerName name of the player
-     */
-    public void  removeCardFromPlayer(String playerName) {
-        int playerIndex = playerMap.get(playerName);
-
-        playersList[playerIndex][2].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
-        playersList[playerIndex][3].setIcon(new ImageIcon(IMAGE_FOLDER_LOCATION + "emptyCard.png"));
-    }
-
-    /**
      * Collect cards from all players
      */
     public void removeAllCardsFromPlayers() {
@@ -412,7 +427,7 @@ public class GUI {
         String actualChips = playersList[playerIndex][1].getText();
         actualChips = actualChips.substring(0, actualChips.length()-2);
 
-        float totalChips = expandNumber(actualChips);
+        int totalChips = expandNumber(actualChips);
 
         if (operation)
             totalChips += chips;
@@ -432,6 +447,16 @@ public class GUI {
     }
 
     /**
+     * Remove bets from de screen
+     */
+    public void cleanPlayerAction() {
+        playerMap.forEach((k, v) -> {
+            if (!playersList[v][4].getText().equals("Fold") && !playersList[v][4].getText().equals("All in"))
+                playersList[v][4].setText("");
+        });
+    }
+
+    /**
      * Display of the action of the dealer
      * @param action action to display
      */
@@ -444,7 +469,7 @@ public class GUI {
      * @param number number to format
      * @return return a string with the number representation
      */
-    private String reduceNumber(float number) {
+    private String reduceNumber(int number) {
         String text = "";
 
         if (number >= 1000000) text += number/1000000.0 + "M";
@@ -455,81 +480,23 @@ public class GUI {
     }
 
     /**
-     * Decode a string with a number in format "x.x(M/K)" in a float number
+     * Decode a string with a number in format "x.x(M/K)" in a integer number
      * @param text text to decode
-     * @return float number with the value of text
+     * @return integer number with the value of text
      */
-    private float expandNumber(String text) {
-        float number;
+    private int expandNumber(String text) {
+        int number;
 
         if(text.contains("M")){
             text = text.substring(0, text.length()-1);
-            number = Float.parseFloat(text) * 1000000;
+            number = (int) (Float.parseFloat(text) * 1000000);
         } else if (text.contains("K")) {
             text = text.substring(0, text.length()-1);
-            number = Float.parseFloat(text) * 1000;
+            number = (int) (Float.parseFloat(text) * 1000);
         } else {
-            number = Float.parseFloat(text);
+            number = (int) Float.parseFloat(text);
         }
 
         return number;
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        GUI g = new GUI("GUI");
-
-        g.addPlayer("1", 1563000);
-        g.addPlayer("2", 5000);
-        g.addPlayer("3", 150);
-        g.addPlayer("4", 341000);
-        g.addPlayer("5", 17590);
-
-        g.addPlayerBlind("1", "S");
-        g.addPlayerBlind("3", "B");
-
-        sleep(1000);
-        g.addChipsToPot("1", 4000);
-        g.addChipsToPot("2", 190000);
-
-        sleep(1000);
-        g.updateDealerAction("Dealing cards");
-        g.addCardsToTable("Ace-Hearts");
-        g.addCardsToTable("8-Hearts");
-        g.addCardsToTable("Ace-Clubs");
-        sleep(1000);
-        g.addCardsToTable("Ace-Spades");
-        sleep(1000);
-        g.addCardsToTable("Ace-Diamonds");
-        sleep(1000);
-        g.addCardToPlayer("1","2-Hearts",true);
-        g.addCardToPlayer("2","4-Hearts",true);
-        g.addCardToPlayer("3","6-Clubs",true);
-        g.addCardToPlayer("4","King-Hearts",true);
-        g.addCardToPlayer("5","9-Hearts",true);
-        g.addCardToPlayer("1","10-Clubs",false);
-        g.addCardToPlayer("2","8-Spades",false);
-        g.addCardToPlayer("3","4-Spades",false);
-        g.addCardToPlayer("4","3-Clubs",false);
-        g.addCardToPlayer("5","7-Diamonds",false);
-        sleep(1000);
-        g.updateDealerAction("Receiving bets...");
-        g.updatePlayerAction("1","raise");
-        g.updatePlayerAction("3","fold");
-        g.managePlayerChips("2", 200, false);
-        g.updatePlayerAction("2","call - 200");
-        g.managePlayerChips("4", 300, false);
-        g.updatePlayerAction("4","call - 300");
-        g.updatePlayerAction("5","fold");
-
-        sleep(1000);
-        g.removeCardFromPlayer("3");
-        sleep(1000);
-        g.removeAllCardsFromPlayers();
-        g.updateDealerAction("Playing !!!");
-        g.resetAllPots();
-        sleep(1000);
-        g.removePlayer("4");
-        sleep(1000);
-        g.removeCardsFromTable();
     }
 }

@@ -72,6 +72,8 @@ public class PreFlop extends Behaviour {
 
                 // Send message
                 myAgent.send(msg);
+                System.out.println(this.dealer.getName() + " :: Delivered " + msg.getContent() + " :: " +
+                        receiver.getName());
 
                 this.dealer.getWindow().addCardToPlayer(receiver.getName(), msg.getContent(),
                         targetPlayer < this.dealer.getSession().getCurrPlayers().size());
@@ -88,8 +90,7 @@ public class PreFlop extends Behaviour {
                 msg = myAgent.receive(msgTemplate);
 
                 if(msg != null) {
-                    System.out.println(this.dealer.getName() + " :: " + msg.getSender().getName() +
-                            " has sent card reception confirmation :: " + msg.getContent());
+                    System.out.println(this.dealer.getName() + " :: Card reception confirmation :: " + msg.getSender().getName());
                     this.state = State.CARD_DELIVERY;
                     if(targetPlayer >= this.dealer.getSession().getCurrPlayers().size()*2)
                         this.state = State.SMALL_BIG_BLIND;
@@ -101,10 +102,12 @@ public class PreFlop extends Behaviour {
             case SMALL_BIG_BLIND:
                 // Small blind bet
                 this.dealer.getSession().getSmallBlind().updatePot(this.dealer.getTableSettings().get("smallBlind"));
+                this.dealer.getSession().getSmallBlind().updateBetPot(this.dealer.getTableSettings().get("smallBlind"));
                 this.dealer.getSession().getSmallBlind().updateChips(-this.dealer.getTableSettings().get("smallBlind"));
                 this.dealer.getSession().addBet(this.dealer.getSession().getSmallBlind().getPlayer().getName(),
                         "Bet-" + this.dealer.getTableSettings().get("smallBlind"));
 
+                // Small blind GUI actions
                 this.dealer.getWindow().addChipsToPot(this.dealer.getSession().getSmallBlind().getPlayer().getName(),
                         this.dealer.getTableSettings().get("smallBlind"));
                 this.dealer.getWindow().managePlayerChips(this.dealer.getSession().getSmallBlind().getPlayer().getName(),
@@ -112,10 +115,12 @@ public class PreFlop extends Behaviour {
 
                 // Big blind bet
                 this.dealer.getSession().getBigBlind().updatePot(this.dealer.getTableSettings().get("bigBlind"));
+                this.dealer.getSession().getBigBlind().updateBetPot(this.dealer.getTableSettings().get("bigBlind"));
                 this.dealer.getSession().getBigBlind().updateChips(-this.dealer.getTableSettings().get("bigBlind"));
                 this.dealer.getSession().addBet(this.dealer.getSession().getBigBlind().getPlayer().getName(),
                         "Bet-" + this.dealer.getTableSettings().get("bigBlind"));
 
+                // Big blind GUI actions
                 this.dealer.getWindow().addChipsToPot(this.dealer.getSession().getBigBlind().getPlayer().getName(),
                         this.dealer.getTableSettings().get("bigBlind"));
                 this.dealer.getWindow().managePlayerChips(this.dealer.getSession().getBigBlind().getPlayer().getName(),
@@ -137,8 +142,8 @@ public class PreFlop extends Behaviour {
                 msg.setReplyWith("pre-flop-blinds" + System.currentTimeMillis());
 
                 // Send message
-                System.out.println(this.dealer.getName() + " :: Sent information about blinds: " + msg.getContent());
                 myAgent.send(msg);
+                System.out.println(this.dealer.getName() + " :: Sent information about blinds: " + msg.getContent());
 
                 this.terminate();
                 break;
@@ -160,7 +165,7 @@ public class PreFlop extends Behaviour {
     @Override
     public int onEnd() {
         this.dealer.pauseGUI();
-        this.logic.nextState();
+        this.logic.nextState("Next State");
         return super.onEnd();
     }
 }

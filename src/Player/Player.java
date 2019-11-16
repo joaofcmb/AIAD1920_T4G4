@@ -6,11 +6,8 @@ import jade.core.AID;
 import jade.core.Agent;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 public class Player extends Agent {
-
     /**
      * Player buy in
      */
@@ -35,11 +32,20 @@ public class Player extends Agent {
      * Dealer of the current session
      */
     private AID dealer = null;
-
     /**
      * Player current bet
      */
     private int currBet = 0;
+
+    /**
+     * Session big blind value
+     */
+    private int bigBlind;
+
+    /**
+     * Fold status. True if folded false otherwise
+     */
+    private boolean foldStatus = false;
 
     /**
      * Table cards
@@ -52,11 +58,6 @@ public class Player extends Agent {
     private ArrayList<Card> cards = new ArrayList<>();
 
     /**
-     * Stores players bets history
-     */
-    private HashMap<String, LinkedList<String>> bets = new HashMap<>();
-
-    /**
      * Agent initializations
      */
     protected void setup() {
@@ -64,7 +65,24 @@ public class Player extends Agent {
 
         if (playerSettings != null && playerSettings.length == 2) {
             this.buyIn = Integer.parseInt((String) playerSettings[0]);
-            //this.personality = (Personality) playerSettings[1];
+
+
+            String personalityAlias = (String) playerSettings[1];
+            if (personalityAlias.equals("pro"))
+                this.personality = new ReactivePersonality(this);
+            else
+                this.personality = new NonReactivePersonality(this, personalityAlias);
+
+            // Updates player state and adds a TickerBehaviour that schedules a request for a session every X seconds
+            this.playerState = State.SEARCHING_SESSION;
+            addBehaviour(new SearchSessionServer(this, 1000));
+        }
+        else if (playerSettings != null && playerSettings.length == 3) {
+            this.buyIn = Integer.parseInt((String) playerSettings[0]);
+            this.personality = new NonReactivePersonality(this,
+                    Double.parseDouble((String) playerSettings[1]),
+                    Double.parseDouble((String) playerSettings[2])
+            );
 
             // Updates player state and adds a TickerBehaviour that schedules a request for a session every X seconds
             this.playerState = State.SEARCHING_SESSION;
@@ -81,6 +99,13 @@ public class Player extends Agent {
      */
     protected void takeDown() {
         System.out.println(this.getName() + " :: Terminating");
+    }
+
+    /**
+     * Gets player personality
+     */
+    public Personality getPersonality() {
+        return this.personality;
     }
 
     /**
@@ -119,6 +144,35 @@ public class Player extends Agent {
     }
 
     /**
+     * Sets big blind value
+     * @param bigBlind value
+     */
+    public void setBigBlind(int bigBlind) {
+        this.bigBlind = bigBlind;
+    }
+
+    /**
+     * Sets fold status to true
+     */
+    public void setFoldStatus() {
+        this.foldStatus = true;
+    }
+
+    /**
+     * Returns big blind value
+     */
+    public int getBigBlind() {
+        return bigBlind;
+    }
+
+    /**
+     * Returns fold status
+     */
+    public boolean getFoldStatus() {
+        return foldStatus;
+    }
+
+    /**
      * Returns player cards
      */
     public ArrayList<Card> getCards() {
@@ -140,6 +194,33 @@ public class Player extends Agent {
     }
 
     /**
+     * Updates the current chips and current bet based on the player bet
+     *
+     * @param bettingContent String containg the player bet
+     */
+    public void updateChips(String bettingContent) {
+        final String[] bettingOptions = bettingContent.split("-");
+
+        if (bettingOptions.length == 2) {
+            int betAmount = Integer.parseInt(bettingOptions[1]);
+            updateCurrBet(betAmount);
+            this.buyIn -= betAmount;
+        }
+        else if (bettingContent.equals("All in")){
+            updateCurrBet(buyIn);
+            buyIn = 0;
+        }
+    }
+
+    /**
+     * Updates player chips
+     * @param earnings total amount earned
+     */
+    public void updateChips(int earnings) {
+        this.buyIn += earnings;
+    }
+
+    /**
      * Updates current bet value
      */
     public void updateCurrBet(int value) {
@@ -147,24 +228,35 @@ public class Player extends Agent {
     }
 
     /**
-     * Retrieves other players bets
+     * Resets the current bet value to 0
      */
-    public HashMap<String, LinkedList<String>> getBets() {
-        return bets;
+    private void resetCurrBet() {
+        this.currBet = 0;
     }
 
     /**
-     * Adds a new bet
-     * @param playerName player name
-     * @param bet player bet
+     * Resets fold status to its default value
      */
-    public void addBet(String playerName, String bet) {
-        if(this.bets.containsKey(playerName)) {
-            this.bets.get(playerName).push(bet);
-        }
-        else {
-            LinkedList<String> bets = new LinkedList<>(); bets.push(bet);
-            this.bets.put(playerName, bets);
-        }
+    private void resetFoldStatus() {
+        this.foldStatus = false;
+    }
+
+    /**
+     * Prints player information
+     * @param msg msg to be printed
+     */
+    public void printInfo(String msg) {
+        System.out.println(this.getName() + " :: " + msg);
+    }
+
+    /**
+     * Resets all variables needed to new poker session
+     */
+    public void resetAll() {
+        this.resetFoldStatus();
+        this.resetCurrBet();
+        this.getPersonality().reset();
+        this.getCards().clear();
+        this.getTable().clear();
     }
 }
