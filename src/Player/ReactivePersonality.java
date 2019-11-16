@@ -49,7 +49,7 @@ public class ReactivePersonality extends Personality {
             if (handEquity > 0.75) {
                 return this.player.getBuyIn() > raiseAmount ? "Raise-" + raiseAmount : "All in";
             }
-            else if (activePlayers.size() > 2) {
+            else if (handEquity > 0.55 && activePlayers.size() > 2) {
                 return passiveOption;
             }
             else {
