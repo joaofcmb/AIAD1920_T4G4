@@ -45,7 +45,7 @@ public class Deck {
     /**
      * Returns deck of cards
      */
-    public ArrayList<Card> getDeck() {
+    ArrayList<Card> getDeck() {
         return deck;
     }
 }

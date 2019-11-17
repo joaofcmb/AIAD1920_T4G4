@@ -196,7 +196,7 @@ public class Player extends Agent {
     /**
      * Updates the current chips and current bet based on the player bet
      *
-     * @param bettingContent String containg the player bet
+     * @param bettingContent String contain the player bet
      */
     public void updateChips(String bettingContent) {
         final String[] bettingOptions = bettingContent.split("-");

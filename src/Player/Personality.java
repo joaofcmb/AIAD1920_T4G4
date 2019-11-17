@@ -28,7 +28,7 @@ abstract public class Personality {
     abstract public String betAction(String[] bettingOptions);
 
     /**
-     * Calculates the Effective Hand Strength ( urrent hand strength and future potential)
+     * Calculates the Effective Hand Strength ( current hand strength and future potential)
      * @param rangePercentage range of opponent cards to consider
      * @return Effective Hand Strength, as a value between 0 and 1
      */

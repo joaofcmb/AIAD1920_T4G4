@@ -1,6 +1,5 @@
 package Session;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class Card {
@@ -30,19 +29,16 @@ public class Card {
      * @return List of Cards
      */
     public static ArrayList<ArrayList<Card>> playerCombinations() {
-        ArrayList<ArrayList<Card>> ret = cardsGenerator(2);
+        ArrayList<ArrayList<Card>> ret = cardsGenerator();
         ret.sort(Comparator.comparingDouble(Card::rankCards).reversed());
         return ret;
     }
 
     /**
-     * Generates Lists of Cards
-     * @param n number of cards
+     * Generates Lists with two Cards
      * @return List of Cards
      */
-    private static ArrayList<ArrayList<Card>> cardsGenerator(int n) {
-        return cardsGenerator(n, new Deck().getDeck());
-    }
+    private static ArrayList<ArrayList<Card>> cardsGenerator() { return cardsGenerator(2, new Deck().getDeck()); }
 
     /**
      * Generates Lists of Cards
@@ -73,6 +69,14 @@ public class Card {
         return listOfCards;
     }
 
+    /**
+     * Calculate all the combination of cards on the table completing the existent configuration and taking into
+     * account the player cards and the possible cards of the opponents
+     * @param table existent cards in table
+     * @param playerCards list of the player cards
+     * @param oppCards possible cards in the opponents players
+     * @return return all the possible combinations of tables for the end of the game
+     */
     public static ArrayList<ArrayList<Card>> possibleTables(ArrayList<Card> table,
                                                             ArrayList<Card> playerCards,
                                                             ArrayList<Card> oppCards) {
@@ -97,6 +101,11 @@ public class Card {
         return genCards;
     }
 
+    /**
+     * Calculate a numeric value from a list of card.
+     * @param playerCards list of cards
+     * @return Value of the cards
+     */
     public static double rankCards(ArrayList<Card> playerCards) {
         int rankValue = Card.cardValue.get(playerCards.get(0).getRank()) +
                 Card.cardValue.get(playerCards.get(1).getRank());
@@ -147,17 +156,21 @@ public class Card {
     /**
      * Returns card rank
      */
-    public String getRank() {
+    private String getRank() {
         return rank;
     }
 
     /**
      * Returns card suit
      */
-    public String getSuit() {
+    private String getSuit() {
         return suit;
     }
 
+    /**
+     * Sort a list of cards
+     * @param hand list of cards to sort
+     */
     public static void sort(ArrayList<Card> hand) {
         sort(new LinkedList<>(hand));
     }
@@ -166,7 +179,7 @@ public class Card {
      * Sorts an hand in descending order
      * @param hand player hand
      */
-    public static void sort(LinkedList<Card> hand) {
+    private static void sort(LinkedList<Card> hand) {
         hand.sort(Comparator.comparingInt(o -> Card.cardValue.get(((Card) o).rank)).reversed());
     }
 
@@ -233,7 +246,7 @@ public class Card {
      * @param suit flush suit
      * @return highest card value, or -1 in case no sequence is found
      */
-    public static Integer getFlushSequence(LinkedList<Card> hand, HashMap<String, Integer> handInfo, String suit) {
+    private static Integer getFlushSequence(LinkedList<Card> hand, HashMap<String, Integer> handInfo, String suit) {
         // Variables
         String initSeqCard = "";
         int noSeqCards = 0;
@@ -275,7 +288,7 @@ public class Card {
      * @param handInfo player hand parsed information
      * @return Array with the best sequence, otherwise empty
      */
-    public static ArrayList<String> getBestSequence(LinkedList<Card> hand, HashMap<String, Integer> handInfo) {
+    private static ArrayList<String> getBestSequence(LinkedList<Card> hand, HashMap<String, Integer> handInfo) {
         // Variables
         String seq = "";
         int noSeqCards = 0;
