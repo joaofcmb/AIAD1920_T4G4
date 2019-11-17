@@ -6,15 +6,32 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 abstract public class Personality {
+    /**
+     * Agent associated with the Personality
+     */
     final Player player;
 
+    /**
+     * Constructor with Dependency Injection of the Player
+     * @param player agent associated with the personality
+     */
     Personality(Player player) {
         this.player = player;
     }
 
+    /**
+     * Chooses an action to perform based on the available options
+     * @param bettingOptions actions that the Player can choose
+     *
+     * @return Chosen action
+     */
     abstract public String betAction(String[] bettingOptions);
 
-    // EHS = HS * (1 - NPOT) + (1 - HS) * PPOT
+    /**
+     * Calculates the Effective Hand Strength ( urrent hand strength and future potential)
+     * @param rangePercentage range of opponent cards to consider
+     * @return Effective Hand Strength, as a value between 0 and 1
+     */
     double effectiveHandStrength(double rangePercentage) {
         final ArrayList<Card> playerCards = this.player.getCards();
         Card.sort(playerCards);
@@ -81,7 +98,16 @@ abstract public class Personality {
         return handStrength * (1 - negativePotential) + (1 - handStrength) * positivePotential;
     }
 
+    /**
+     * Callback that allows the Personality to deal with other players' actions
+     *
+     * @param playerAlias player name
+     * @param action action of that player
+     */
     public void updateInfo(String playerAlias, String action) {}
 
+    /**
+     * Callback that allows the Personality to reset between games
+     */
     void reset() {}
 }

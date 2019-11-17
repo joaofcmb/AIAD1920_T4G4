@@ -7,7 +7,7 @@ import java.util.Random;
 public class NonReactivePersonality extends Personality {
 
     /**
-     * Different personalities and respective hand selection and aggression ratio
+     * Personality presets with corresponding hand selection and aggression ratio
      */
     static private Map<String, String> presets = Map.of(
             // Preset Name, handSelection:aggression
@@ -20,25 +20,26 @@ public class NonReactivePersonality extends Personality {
     );
 
     /**
-     * Variance deviation
+     * Determines the deviation of the variance (0+-deviation)
      */
     static private final double VARIANCE_DEVIATION = 0.05;
 
     /**
-     * Variance stream
+     * Variance stream containing random variances bounded by its deviation
      */
     private PrimitiveIterator.OfDouble varianceStream =
             new Random().doubles(-VARIANCE_DEVIATION, VARIANCE_DEVIATION).iterator();
 
     /**
-     * Hand selection and aggression ratios
+     * Hand selection determining the ratio of hands the player is willing to play and
+     * aggression ratio determining how aggressive the player is (More Bets/Raises, less calls)
      */
     private final double handSelection, aggression;
 
     /**
-     * Class constructor
+     * Personality Constructor using one of the preset personalities
      * @param player agent
-     * @param presetAlias alias
+     * @param presetAlias preset personality
      */
     NonReactivePersonality(Player player, String presetAlias) {
         super(player);
@@ -49,7 +50,7 @@ public class NonReactivePersonality extends Personality {
     }
 
     /**
-     * Class constructor
+     * Personality Constructor using specific values for the personality ratios
      * @param player agent
      * @param handSelection hand selection value
      * @param aggression aggression value
@@ -62,10 +63,12 @@ public class NonReactivePersonality extends Personality {
     }
 
     /**
-     * Determines best betting option
-     * @param bettingOptions Betting options available
-     * @return best betting option for this personality
+     * Chooses an action to perform based on the available options
+     * @param bettingOptions actions that the Player can choose
+     *
+     * @return Chosen action
      */
+    @Override
     public String betAction(String[] bettingOptions) {
         final double handEquity = effectiveHandStrength(this.player.getTable().isEmpty() ? 1d : .5d);
         final double requiredAllInEquity = (double) this.player.getBuyIn() /
@@ -74,7 +77,7 @@ public class NonReactivePersonality extends Personality {
         this.player.printInfo("EHS: " + handEquity);
         this.player.printInfo("All-in Equity: " + requiredAllInEquity);
 
-        final boolean willingToPlay = (this.player.getTable().isEmpty() ? 1 : 2) *
+        final boolean willingToPlay = (this.player.getTable().isEmpty() || handEquity < 0.5 ? 1 : 2) *
                 handEquity > this.handSelection + varianceStream.next();
 
         if (bettingOptions.length == 2) {
