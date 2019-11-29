@@ -1,5 +1,7 @@
 package Player;
 
+import Dataset.DatasetManager;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -34,7 +36,6 @@ public class ReactivePersonality extends Personality {
      */
     ReactivePersonality(Player player) {
         super(player);
-
         TAG = new NonReactivePersonality(player, "TAG");
     }
 
@@ -46,6 +47,10 @@ public class ReactivePersonality extends Personality {
      */
     @Override
     public String betAction(String[] bettingOptions) {
+        DatasetManager.processRound(this.player.getCards(), this.player.getTable(),
+                this.activePlayers, this.player.getBuyIn()
+        );
+
         if (this.player.getTable().isEmpty()) {
             final double handEquity = effectiveHandStrength(1d);
             this.player.printInfo("EHS: " + handEquity);
@@ -174,6 +179,9 @@ public class ReactivePersonality extends Personality {
      */
     @Override
     public void updateInfo(String playerAlias, String action) {
+        if (action.length() > 2)
+            DatasetManager.processMove(playerAlias, action);
+
         if (action.equals("Fold"))  activePlayers.remove(playerAlias);
         else                        activePlayers.add(playerAlias);
 

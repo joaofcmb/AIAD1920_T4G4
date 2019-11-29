@@ -138,6 +138,14 @@ public class Dealer extends Agent {
      * Pauses GUI for visual purposes
      */
     public void pauseGUI() {
+        try {
+            sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*public void pauseGUI() {
         window.setWaitingAction(true);
         while (window.isWaitingAction()){
             try {
@@ -146,7 +154,7 @@ public class Dealer extends Agent {
                 System.exit(0);
             }
         }
-    }
+    }*/
 
     /**
      * Retrieve game GUI

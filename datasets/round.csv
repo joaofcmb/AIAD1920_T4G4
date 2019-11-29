@@ -1,0 +1,6 @@
+Ace-Spades,Queen-Clubs,9-Hearts,5-Diamonds,5-Hearts,0.75,0.5,false
+Jack-Clubs,Queen-Hearts,3-Hearts,King-Clubs,Queen-Clubs,0.4,0.5,true
+King-Diamonds,10-Hearts,7-Spades,Queen-Diamonds,4-Clubs,0.3,0.75,0.7,0.5,false
+9-Hearts,Ace-Clubs,2-Hearts,Queen-Diamonds,5-Spades,0.9,0.1,false
+Queen-Spades,Queen-Clubs,6-Clubs,3-Hearts,2-Spades,0.3,0.7,true
+9-Diamonds,Ace-Clubs,King-Diamonds,Jack-Diamonds,10-Spades,0.3,0.7,true

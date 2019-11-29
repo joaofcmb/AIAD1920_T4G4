@@ -11,13 +11,21 @@ public class NonReactivePersonality extends Personality {
      */
     static private Map<String, String> presets = Map.of(
             // Preset Name, handSelection:aggression
-            "calling-station",  "0.40:0.20",
+            "callingstation",  "0.40:0.20",
             "rock",             "0.90:0.20",
             "LAG",              "0.40:0.50",
             "TAG",              "0.75:0.50",
             "nit",              "0.90:0.10",
             "maniac",           "0.30:0.70"
     );
+
+    static public Double presetSelection(String preset) {
+        return Double.parseDouble(presets.get(preset).split(":")[0]);
+    }
+
+    static public Double presetAggression(String preset) {
+        return Double.parseDouble(presets.get(preset).split(":")[1]);
+    }
 
     /**
      * Determines the deviation of the variance (0+-deviation)
