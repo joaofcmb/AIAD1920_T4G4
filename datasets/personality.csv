@@ -379,3 +379,280 @@ Call-25,Fold,Raise-150,Check,Check,Check,Call-50,Check,Bet-100,Fold,Check,Check,
 Fold,Call-50,Call-100,Check,Bet-200,Check,Fold,Fold,Call-150,Call-100,Call-100,Bet-250,Fold,Call-50,Fold,Check,Check,Bet-50,Fold,Call-150,Check,Bet-250,Fold,Call-50,Fold,Check,Bet-100,Fold,Fold,Call-150,0.4,0.2
 Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-125,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-2550,Fold,Fold,Fold,0.9,0.2
 Raise-150,Raise-150,Bet-100,Bet-100,Check,Fold,Raise-150,Raise-150,Call-25,Check,Check,Fold,Raise-150,Raise-150,Check,Check,Fold,Raise-150,Raise-600,Call-25,Check,Fold,Raise-150,Fold,Fold,Raise-150,Bet-50,Fold,Call-50,Check,0.3,0.7
+Call-150,Call-100,Call-150,Fold,Call-150,Call-150,Fold,Call-50,Fold,Call-150,Check,Check,Check,Raise-600,Check,Fold,Fold,Call-250,Fold,All in,Call-250,Fold,Call-50,Bet-50,Bet-100,Bet-200,Fold,Fold,Fold,Call-350,0.4,0.2
+Call-50,Fold,Call-100,Check,Fold,Fold,Fold,Fold,Call-200,Call-200,Check,Fold,Call-50,Fold,Call-50,Fold,Fold,Call-25,Check,Fold,Raise-400,Raise-450,Fold,Call-50,Fold,Raise-100,Call-250,Call-200,Fold,Check,0.4,0.5
+Raise-150,Bet-100,Bet-150,Bet-150,Raise-150,Bet-150,Bet-550,Fold,Fold,Raise-200,Call-425,Bet-700,Raise-400,Bet-150,Raise-250,Bet-250,Raise-250,Fold,Raise-250,Fold,Check,Check,Fold,Fold,Call-4925,Raise-350,Raise-350,Fold,Call-50,Check,0.3,0.7
+Fold,Call-150,Call-150,Fold,Call-50,Call-150,Check,Check,Check,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Fold,Call-50,Raise-800,Raise-2200,Fold,Fold,Fold,0.75,0.5
+Fold,Call-50,Call-150,Call-650,Fold,Raise-100,Bet-100,Fold,Call-300,Bet-200,Call-300,Bet-250,All in,Call-50,Fold,Raise-450,Check,Check,Check,Fold,Fold,Call-50,Check,Check,Check,Call-300,Check,Check,Check,Call-250,0.4,0.2
+Check,Fold,Fold,Fold,Raise-100,Call-200,Bet-200,Fold,Call-50,Fold,Fold,Fold,Call-200,Call-300,Call-200,Check,Bet-550,Call-200,Check,Fold,Call-50,Check,Check,Check,Call-50,Fold,Call-200,Bet-450,Call-25,Fold,0.4,0.5
+Call-150,Call-650,Bet-400,Fold,Call-25,Call-100,Check,Fold,Raise-300,Fold,Raise-300,Check,Fold,Raise-300,Check,Fold,Raise-300,Fold,Fold,Fold,Fold,Fold,Raise-300,Check,Check,Check,Raise-250,Fold,Raise-350,Call-25,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Raise-1250,0.9,0.1
+Fold,Call-50,Raise-450,Check,Check,Check,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Call-200,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.75,0.5
+Fold,Raise-200,Fold,Fold,Call-250,Check,Check,Fold,Call-300,Fold,Fold,Call-50,Fold,Fold,Fold,Call-300,Bet-150,Fold,Call-300,Check,Check,Check,Call-50,Check,Check,Check,Fold,Fold,All in,Call-300,0.4,0.2
+Raise-250,Raise-250,Check,Check,Bet-250,Raise-300,Fold,Raise-300,Raise-150,Raise-100,Fold,Raise-300,Check,Fold,Raise-300,Raise-300,Check,Check,Check,Check,Check,Check,Check,Fold,Raise-400,Bet-200,Call-50,Fold,Raise-300,Check,0.3,0.7
+Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Call-200,Check,Fold,Call-50,Fold,Call-50,Fold,Fold,Fold,Raise-100,Call-200,Call-200,Check,Fold,Fold,Call-50,Fold,Fold,Fold,Call-200,Fold,Fold,0.4,0.5
+Check,Fold,Call-300,Fold,Call-50,Fold,Raise-1250,Check,Check,Check,Fold,Call-300,Bet-450,Call-300,Fold,Call-350,Fold,Call-50,Raise-200,Raise-1050,Fold,Call-50,Fold,Fold,Call-350,Check,Fold,Call-350,Fold,Fold,0.4,0.2
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-350,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Bet-850,Raise-300,Bet-450,Fold,Fold,All in,Raise-300,Check,Fold,Raise-300,Raise-300,Bet-550,Raise-350,Fold,Raise-100,Raise-400,Call-750,Bet-850,Fold,Raise-400,Call-200,Fold,Raise-350,Check,Bet-250,Raise-350,Bet-200,All in,Raise-100,Fold,0.3,0.7
+Check,Check,Check,Fold,Fold,Fold,Fold,Call-300,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Raise-450,Call-2100,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.75,0.5
+Fold,Call-50,Fold,Fold,Fold,Raise-100,Raise-2500,All in,Call-200,Call-200,Fold,Fold,Call-50,Fold,Fold,Fold,Call-200,Check,Check,Check,Raise-400,Raise-3050,Call-50,Fold,Call-50,Fold,Fold,Fold,Call-50,Check,0.4,0.5
+Fold,Fold,Fold,Call-350,Fold,Call-350,Fold,Fold,Call-50,Fold,Check,Check,Check,Check,Fold,Call-400,Fold,Call-400,Bet-250,Call-50,Fold,Call-50,Fold,Call-75,Fold,Call-25,Check,Check,Check,Fold,0.4,0.2
+Fold,Raise-350,Bet-300,Raise-350,Bet-350,Raise-350,Raise-1250,Bet-1650,Fold,Raise-400,Raise-400,Bet-300,Raise-400,Check,Fold,Fold,Call-150,Bet-150,Bet-200,Raise-100,Bet-50,Call-50,Check,Check,Fold,Raise-400,Fold,All in,Raise-400,Bet-550,0.3,0.7
+Check,Call-50,Fold,Call-50,Fold,Raise-100,Call-300,Check,Fold,Fold,Fold,Call-50,Call-75,Fold,Fold,Call-50,Fold,Call-50,Fold,Fold,Fold,Call-50,Call-75,Fold,Call-50,Fold,Call-50,Fold,Raise-100,Raise-900,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Call-400,All in,Fold,Fold,All in,Fold,0.9,0.1
+Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Bet-100,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-400,Fold,0.75,0.5
+Fold,Fold,Call-400,Fold,Call-50,Fold,Fold,Fold,All in,Call-400,Fold,All in,Fold,Fold,Fold,Call-50,Call-125,Check,Check,Fold,Call-400,Fold,Call-400,Bet-450,Call-50,Fold,Raise-100,Call-350,Bet-550,Call-25,0.4,0.2
+Raise-100,Bet-100,Raise-400,Fold,Raise-400,Fold,Raise-400,Fold,Raise-350,Fold,Raise-400,Call-50,Fold,Raise-400,Bet-300,Raise-400,Check,Fold,Raise-350,Fold,Fold,Raise-400,Bet-450,Raise-400,Check,Check,Fold,Fold,Check,Fold,0.3,0.7
+Fold,Call-25,Fold,Fold,Call-50,Fold,Fold,Call-50,Fold,Fold,Call-25,Fold,Call-50,Fold,Call-50,Check,Bet-50,Call-50,Fold,Call-50,Fold,Check,Check,Check,Check,Call-25,Bet-50,Call-1900,Fold,Call-50,0.4,0.5
+Check,Fold,Call-400,Fold,Call-400,Check,Bet-500,Call-50,Check,Check,Check,Call-50,Fold,Fold,Fold,Call-400,Fold,Fold,Call-50,Check,Check,Check,Call-25,Check,Bet-100,Call-450,Fold,Call-450,Check,Check,0.4,0.2
+Check,Check,Bet-450,Fold,Fold,Fold,Fold,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Raise-400,Raise-400,Bet-300,Raise-400,Raise-4800,Check,Check,Check,Check,Fold,Call-50,Check,Fold,Raise-450,Bet-600,Raise-450,Check,Check,Check,Check,Check,Fold,Call-25,Fold,Raise-450,Raise-450,Check,Check,Check,Raise-450,0.3,0.7
+Call-50,Raise-450,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Call-50,Raise-250,Raise-1600,Fold,0.75,0.5
+Call-50,Bet-50,Raise-600,Fold,Call-450,Check,Check,Check,Fold,Call-50,Check,Check,Check,Call-75,Fold,Fold,Call-500,Fold,Call-500,Bet-400,Call-50,Check,Check,Check,Check,Check,Check,Check,Fold,Call-500,0.4,0.2
+Check,Check,Check,Raise-100,Raise-500,Call-1275,Bet-1350,Raise-500,Raise-500,Bet-450,Raise-500,Check,Fold,Check,Check,Check,Check,Call-25,Check,Check,Check,Raise-500,Raise-500,Bet-300,Raise-500,Fold,Check,Check,Fold,Call-25,0.3,0.7
+Fold,Fold,Fold,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Fold,Fold,Raise-1250,All in,Call-50,Bet-50,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Fold,Fold,Call-50,Check,0.75,0.5
+Raise-150,Check,Fold,Raise-150,Bet-150,Raise-150,Call-500,Fold,Raise-150,Call-150,Bet-200,Bet-450,Bet-950,Raise-100,Check,Check,Check,Fold,Call-25,Bet-100,Raise-200,Check,Check,Check,Raise-100,Fold,Call-50,Fold,Raise-100,Raise-100,0.3,0.7
+Fold,Fold,Call-150,Fold,Call-150,Call-150,Call-200,Call-450,Call-950,Call-100,Check,Check,Check,Call-50,Fold,Call-50,Fold,Call-150,Check,Check,Check,Fold,Call-200,Bet-150,Fold,Call-100,Call-50,Call-50,Check,Call-200,0.4,0.2
+Call-50,Fold,Fold,Fold,Raise-300,Fold,Call-100,Check,Check,Check,Call-50,Fold,Call-50,Fold,Raise-100,Call-100,Check,Check,Check,Call-50,Bet-50,Fold,Fold,Call-100,Fold,Raise-400,Fold,Call-50,Check,Check,0.4,0.5
+Fold,Call-50,Call-100,Check,Fold,Call-50,Fold,Fold,Fold,Raise-150,Fold,Call-100,Call-100,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-100,Check,Fold,0.75,0.5
+Fold,Fold,Raise-600,Bet-750,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Call-200,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,0.9,0.2
+Call-50,Check,Check,Check,Fold,Fold,All in,Call-50,Raise-200,Call-600,Check,Fold,Call-200,Fold,Call-50,Call-75,Check,Fold,Fold,Fold,Fold,Call-50,Check,Check,Bet-50,Call-150,Check,Check,Check,Fold,0.4,0.2
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Call-100,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Raise-100,Fold,Call-50,Bet-200,Fold,Raise-100,Raise-750,Bet-1000,Call-200,Fold,Call-50,Call-75,Bet-100,Call-50,Check,Check,Check,Raise-100,Raise-1200,All in,Fold,Call-25,Check,Check,Check,Fold,Fold,Call-150,Fold,Fold,0.4,0.5
+Bet-50,Check,Fold,Fold,Fold,Raise-100,Fold,Raise-100,Fold,Call-50,Fold,Fold,Fold,Fold,Raise-200,All in,Raise-150,Call-50,Check,Check,Check,Fold,Raise-150,Check,Check,Check,Raise-150,Fold,Raise-150,Call-150,0.3,0.7
+Call-100,Fold,Fold,Fold,Fold,Call-100,Bet-150,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Call-50,Fold,Fold,Call-50,Call-150,Check,Fold,Fold,Fold,Fold,Fold,Call-50,Raise-300,0.75,0.5
+Fold,Raise-150,Call-150,Call-500,Call-900,Call-50,Fold,Raise-200,Bet-100,Raise-200,Check,Fold,Fold,Fold,Call-25,Check,Check,Check,Raise-200,Raise-200,Bet-250,Raise-200,Bet-200,Raise-200,Bet-50,Raise-200,Bet-100,Fold,Raise-100,Raise-650,0.3,0.7
+Raise-300,Fold,Call-50,Raise-200,Check,Check,Check,Fold,Fold,Call-200,Fold,Call-200,Bet-150,Call-50,Fold,Call-200,Fold,Call-50,Fold,Fold,Fold,Call-200,Fold,Fold,Call-200,Fold,Fold,Call-50,Call-75,Fold,0.4,0.2
+Call-150,Check,Check,Check,Call-50,Call-100,Bet-150,Bet-500,Bet-900,Raise-350,Fold,Call-200,Fold,Call-50,Fold,Fold,Call-50,Fold,Call-50,Fold,Fold,Fold,Call-200,Fold,Fold,Fold,Call-50,Call-75,Fold,Fold,0.4,0.5
+Call-150,Call-150,Bet-300,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-600,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Check,Check,Bet-2050,All in,Raise-100,Raise-100,Fold,Raise-100,Check,Check,Fold,Raise-100,Fold,Raise-100,Check,Bet-50,Fold,Fold,Raise-100,Raise-100,Raise-100,Fold,Raise-100,Check,Bet-50,Raise-100,Fold,Fold,Fold,Call-50,0.3,0.7
+Call-75,Bet-100,Call-100,Check,Bet-50,Call-100,Fold,Call-100,Check,Fold,Call-200,Fold,Fold,Fold,Fold,Fold,Call-100,Check,Fold,Fold,Call-200,Fold,Fold,Raise-100,Fold,Call-100,Bet-50,Call-100,Check,Check,0.4,0.2
+Check,Check,All in,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Call-50,Call-50,Bet-100,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Raise-200,Check,Check,0.75,0.5
+Fold,Raise-100,Check,Fold,Raise-100,Check,Check,Check,Fold,Raise-100,Check,Check,Check,Raise-100,Call-150,Check,Check,Bet-100,Raise-100,Call-150,Fold,Raise-100,Check,Bet-50,Fold,Call-25,Check,Check,Check,Raise-100,0.3,0.7
+Fold,Call-50,Fold,Call-50,Check,Check,Check,Fold,Call-100,Raise-400,Call-800,Check,Check,Check,Call-100,Check,Fold,Call-200,Fold,Call-50,Check,Check,Check,Raise-200,Bet-200,Bet-350,Bet-750,Fold,All in,Call-100,0.4,0.2
+Fold,Call-50,Raise-200,Raise-1050,Check,Check,Check,Fold,Fold,Fold,Call-50,Call-200,Call-200,Call-350,Call-750,Fold,Fold,Raise-200,Raise-1050,Raise-5450,All in,Call-25,Fold,Fold,Call-50,Call-150,Raise-450,Fold,Fold,Fold,0.75,0.5
+Raise-100,Raise-100,Fold,Raise-100,Raise-450,Raise-2600,All in,Raise-200,Raise-100,Check,Check,Check,Fold,Raise-200,Fold,Raise-200,Fold,Call-50,Check,Check,Check,Raise-150,Check,Fold,Raise-1250,Check,Check,Check,Fold,Raise-200,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Call-50,Fold,Call-50,Call-75,Check,Check,Fold,Call-150,Bet-150,Fold,Call-175,Bet-250,Call-50,Fold,Call-150,Bet-100,Call-200,Fold,Call-50,Fold,Fold,Call-200,Fold,Call-50,Check,Check,Check,Call-50,Bet-100,Call-50,0.4,0.2
+Call-50,Fold,Fold,Check,Check,Fold,Call-25,Check,Check,Bet-100,Fold,Raise-200,Check,Bet-150,Raise-200,Bet-150,Call-50,Fold,Fold,Call-25,Check,Check,Check,Call-50,Check,Check,Check,Raise-250,Fold,Raise-250,0.3,0.7
+Fold,Fold,Fold,Call-50,Raise-1250,Check,Check,Bet-1900,Check,Check,Check,Check,Fold,Fold,Call-50,Fold,Fold,Call-50,Call-150,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-100,Raise-650,0.75,0.5
+Check,Fold,Raise-100,Fold,Fold,Call-200,Fold,Call-200,Raise-400,Bet-800,All in,Call-50,Check,Check,Check,Check,Check,Check,Check,Fold,All in,Call-250,Bet-200,Call-50,Fold,Call-50,Fold,Fold,All in,Fold,0.4,0.2
+Fold,Raise-200,Call-525,Fold,Fold,Raise-200,Fold,Raise-200,Fold,Raise-200,Check,Check,Fold,Call-75,Bet-100,Fold,Raise-200,Check,Bet-150,Raise-200,Raise-200,Call-50,Check,Fold,Fold,Call-25,Check,Check,Check,Fold,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-150,Bet-250,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Call-50,Raise-800,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Fold,Call-50,Fold,Fold,Fold,Fold,Call-50,Bet-50,Call-200,Fold,Call-50,Check,Check,Bet-100,Check,Check,Check,Check,Fold,Call-200,Check,Check,Check,Call-200,Fold,Fold,Call-50,Check,Check,Check,0.4,0.2
+Fold,Fold,Fold,Fold,Fold,Raise-100,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Call-50,Call-150,Check,Check,Check,Fold,Raise-300,Call-50,Check,Check,Bet-50,0.75,0.5
+Check,Check,Check,Raise-200,Check,Check,Check,Raise-200,Check,Check,Check,Call-50,Fold,Fold,Call-25,Check,Check,Check,Fold,Raise-200,Check,Check,Bet-50,Raise-200,Check,Check,Fold,Raise-200,Bet-100,Fold,0.3,0.7
+Call-150,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Call-150,Fold,Fold,Call-50,Check,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Bet-50,Fold,Fold,Call-50,Check,Check,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Raise-1250,Bet-1700,All in,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Raise-600,Check,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Call-25,Fold,Raise-200,Fold,Raise-200,Bet-100,Bet-150,Call-50,Check,Fold,Raise-200,Call-1075,Fold,Fold,Call-25,Raise-200,Fold,Raise-200,Call-425,Bet-550,Call-25,Check,Check,Check,Raise-200,Call-200,Bet-350,Raise-200,Raise-250,Fold,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Call-50,Call-150,Fold,Fold,Raise-800,Raise-100,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Call-150,Check,Check,Check,Fold,Call-50,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,0.75,0.5
+Fold,Raise-200,Raise-200,Raise-200,Check,Check,Fold,Fold,Fold,Raise-200,Raise-200,Raise-200,Check,Check,Check,Call-25,Check,Check,Check,Raise-200,Raise-250,Fold,Raise-200,Bet-150,Fold,Raise-250,Check,Check,Check,Raise-250,0.3,0.7
+Fold,Fold,Fold,Fold,Call-200,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-300,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Call-25,Raise-250,Raise-250,Check,Check,Check,Call-50,Fold,Raise-150,Raise-1300,All in,Raise-400,Raise-400,Bet-650,Call-25,Raise-400,Call-50,Fold,Fold,Raise-400,Raise-400,Check,Fold,Raise-100,Bet-100,Raise-400,Raise-400,Fold,Call-25,Fold,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Raise-250,Fold,Fold,Fold,Fold,Fold,Call-50,Call-75,Fold,Fold,Fold,Fold,Fold,Fold,Call-350,Check,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-350,Check,Bet-550,Fold,Fold,Fold,Check,Check,Check,Bet-50,Fold,Fold,Fold,Check,0.9,0.1
+Raise-400,Check,Check,Check,Fold,Raise-400,Check,Fold,Raise-400,Fold,Call-50,Check,Check,Fold,Raise-400,Check,Fold,Fold,Fold,Call-50,Check,Check,Bet-50,Raise-400,Fold,Raise-400,Raise-400,Call-150,Bet-250,Raise-300,0.3,0.7
+Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Call-350,Check,0.75,0.5
+Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Raise-600,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Raise-400,Fold,Fold,Raise-400,Check,Check,Check,Raise-400,Fold,Raise-400,Raise-400,Fold,Fold,Fold,Raise-400,Check,Check,Check,Fold,Call-25,Fold,Raise-400,Fold,Raise-600,Raise-400,Raise-400,Check,Check,Check,Fold,0.3,0.7
+Check,Fold,Fold,Fold,Fold,Raise-1250,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Raise-450,Bet-500,Fold,Fold,Fold,Call-50,Fold,Call-50,0.75,0.5
+Fold,Fold,Call-25,Fold,Raise-400,Check,Check,Check,Raise-400,Fold,Fold,Raise-400,Fold,Raise-350,Fold,Fold,Fold,Raise-350,Check,Check,Check,Fold,Raise-150,Raise-400,Fold,Raise-350,Call-25,Check,Check,Check,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-300,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,0.9,0.1
+All in,Fold,Call-50,Call-200,Bet-250,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Call-50,Bet-50,0.75,0.5
+Check,Check,Check,Raise-350,Call-25,Raise-400,Fold,Raise-350,Raise-400,Raise-6900,All in,Raise-250,Check,Check,Check,Raise-250,Call-25,Check,Fold,Raise-250,Raise-250,Fold,Call-25,Raise-250,Call-200,Fold,Raise-250,Call-25,Raise-250,Check,0.3,0.7
+Fold,Raise-800,Fold,Fold,Call-50,Raise-1250,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Raise-100,Call-275,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Check,0.75,0.5
+Raise-250,Fold,Raise-250,Fold,Fold,Raise-250,Raise-250,Check,Bet-100,Fold,Raise-350,Bet-500,Call-25,Call-50,Fold,Fold,Call-25,Raise-250,Raise-250,Call-25,Check,Check,Check,Call-50,Fold,Raise-250,Fold,Raise-400,Raise-250,Raise-250,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-600,Bet-800,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,0.9,0.1
+Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Call-200,Check,Check,Check,Fold,Fold,Fold,Raise-300,Fold,Fold,Fold,Call-200,Check,Check,Check,0.75,0.5
+Fold,Call-25,Raise-250,Raise-250,Fold,Raise-250,Raise-250,Check,Check,Check,Fold,Fold,Call-50,Check,Check,Check,Call-50,Fold,Fold,Fold,Fold,Raise-250,Check,Check,Check,Raise-350,Check,Check,Check,Fold,0.3,0.7
+Call-275,Check,Check,Check,Fold,Call-50,Call-200,Check,Check,Check,Call-150,Check,Check,Bet-350,Fold,Fold,Fold,Fold,Raise-100,Bet-150,Fold,Fold,Fold,Fold,Fold,Call-50,Call-200,Fold,Fold,Fold,0.75,0.5
+Check,Check,Check,Call-50,Fold,Call-150,Check,Check,Bet-350,Call-25,Raise-250,Bet-250,Raise-250,Fold,Call-75,Fold,Fold,Raise-250,Raise-250,Fold,Raise-250,Fold,Raise-250,Call-25,Raise-250,Fold,Raise-250,Raise-150,Call-50,Fold,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-600,Fold,Fold,Fold,Fold,Fold,Fold,Call-200,Bet-300,Fold,Fold,Fold,Call-200,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Bet-150,Fold,Raise-100,Check,Check,Check,Raise-250,Raise-250,Call-25,Fold,Raise-250,Fold,Call-75,Fold,Fold,Raise-250,Call-200,Fold,Raise-250,Call-25,Bet-50,Raise-250,Fold,Raise-600,Raise-250,Check,Check,Check,Fold,Fold,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Raise-150,Fold,Fold,Fold,Fold,Fold,Fold,Raise-100,Bet-250,Call-50,Call-200,Call-200,Bet-550,Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-275,0.9,0.1
+Raise-250,Raise-250,Check,Bet-200,Call-25,Raise-300,Fold,Fold,Call-25,Fold,Raise-300,Raise-300,Fold,Fold,Call-25,Check,Fold,Raise-250,Raise-300,Fold,Call-25,Call-50,Call-50,Call-150,Fold,Raise-250,Fold,Call-25,Fold,Raise-300,0.3,0.7
+Fold,Fold,Fold,Fold,Raise-100,Fold,Fold,Fold,Raise-150,Fold,Fold,Fold,Fold,Fold,Call-50,Bet-50,Bet-150,Bet-450,Fold,Raise-100,Fold,Fold,Fold,Fold,Call-50,Fold,Call-250,Bet-300,Fold,Fold,0.75,0.5
+Fold,Call-50,Bet-50,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,0.9,0.1
+Call-1250,Call-3350,Fold,Raise-800,Bet-1100,Call-25,Raise-300,Raise-300,Fold,Fold,Raise-300,Raise-300,Fold,Fold,Raise-100,Call-50,Check,Check,Check,Raise-300,Check,Check,Fold,Fold,Fold,Raise-300,Fold,Raise-300,Call-150,Bet-150,0.3,0.7
+Raise-800,Check,Check,Check,Fold,Fold,Fold,Fold,Raise-300,Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Call-250,Check,Check,Check,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Call-200,Bet-300,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,0.9,0.1
+Fold,Call-50,Raise-1250,All in,Fold,Fold,Raise-150,Fold,Fold,Fold,Raise-100,Bet-100,Check,Fold,Fold,Call-150,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-400,Check,Check,Fold,Fold,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Raise-150,Fold,Raise-150,Bet-200,Check,Check,Check,Fold,Call-25,Fold,Raise-150,Raise-400,Check,Fold,Raise-150,Fold,Raise-150,Check,Check,Check,Call-50,Fold,Check,Check,Check,Check,Fold,Raise-200,Raise-1250,Bet-950,0.3,0.7
+Call-50,Fold,Fold,Call-25,Check,Check,Fold,Call-50,Fold,Call-50,Fold,Call-200,Fold,Fold,Call-50,Fold,Fold,Call-25,Check,Check,Check,Call-200,Fold,Raise-100,Raise-400,Call-950,Check,Fold,Call-200,Fold,0.4,0.5
+All in,Call-150,Fold,Call-50,Check,Check,Fold,All in,Fold,Call-400,Bet-800,Call-150,Fold,Call-150,Check,Check,Check,Call-50,Fold,Call-50,Check,Check,Check,Fold,Fold,Call-400,Call-1300,Check,Fold,Call-50,0.4,0.2
+Fold,Fold,Call-50,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Call-150,Fold,Call-200,Raise-1500,Check,Bet-2150,Fold,Fold,Call-175,Check,Fold,Fold,All in,Fold,Fold,Fold,0.75,0.5
+Check,Check,Check,Raise-100,Raise-750,Fold,Fold,Fold,Raise-400,Check,Check,Check,Call-50,Fold,Call-50,Fold,All in,Fold,Call-25,Fold,Raise-100,Check,Check,Check,Call-50,Fold,Raise-100,Call-325,Fold,Fold,0.4,0.5
+Fold,Call-50,Check,Check,Check,Raise-200,Fold,Raise-200,Bet-250,Fold,Fold,Call-400,Check,Check,Check,Raise-200,Check,Fold,Raise-200,Bet-100,Bet-500,Fold,Raise-200,Fold,Raise-1250,Fold,Raise-200,Call-100,Fold,Raise-200,0.3,0.7
+Check,Check,Call-200,Fold,Call-200,Fold,Call-50,Fold,Fold,Fold,Call-200,Bet-150,Call-200,Call-100,Fold,Call-2400,Fold,Call-50,Fold,Call-50,Check,Check,Check,Fold,Call-100,Raise-1600,All in,Call-200,Fold,All in,0.4,0.2
+Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Raise-400,All in,Fold,Fold,0.9,0.1
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Fold,Fold,Call-50,Call-75,Fold,Fold,Raise-100,Raise-750,Fold,Call-50,Fold,Fold,Call-25,Check,Check,Check,Call-200,Bet-150,Call-50,Fold,Fold,All in,Fold,Fold,Call-50,Check,Check,Check,Raise-400,0.4,0.5
+Call-50,Fold,Raise-200,Check,Bet-100,Raise-100,Bet-100,Raise-200,Raise-200,Fold,Raise-200,Raise-200,Check,Check,Fold,Check,Check,Check,Check,Fold,Raise-200,Bet-50,Raise-200,Call-3500,Raise-100,Call-25,Check,Check,Check,Raise-800,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Call-150,Check,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Call-50,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Raise-200,Fold,Raise-100,Bet-100,Raise-100,Fold,Call-150,Check,Check,Check,Call-25,Check,Fold,Fold,Call-50,Fold,Raise-100,Check,Call-50,Call-100,Fold,Check,Check,Fold,Fold,Raise-100,Check,Fold,Raise-100,Call-150,0.3,0.7
+Raise-100,Fold,Call-50,Call-50,Check,Fold,Fold,Fold,Call-50,Bet-50,Raise-100,Call-50,Bet-50,Call-50,Call-50,Check,Bet-50,Bet-100,Call-25,Check,Fold,Raise-400,Bet-300,Call-50,Call-50,Check,Bet-100,Call-50,Fold,Call-50,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Fold,Call-200,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Bet-50,Fold,Fold,Call-50,Raise-200,Check,Fold,Raise-200,Fold,Raise-400,Call-50,Check,Check,Check,Fold,Call-50,Call-150,Bet-200,Fold,Fold,0.75,0.5
+Raise-100,All in,Call-50,Fold,Check,Check,Check,Check,Call-25,Check,Check,Fold,Raise-200,Fold,Raise-200,Call-450,Check,Check,Fold,Fold,Raise-100,Check,Check,Fold,Fold,Raise-200,Fold,Raise-100,Fold,Raise-100,0.3,0.7
+Fold,Call-25,Check,Check,Check,Fold,Raise-100,Call-100,Fold,Raise-100,Raise-550,Check,Check,Fold,All in,Fold,Fold,Call-50,Check,Check,Check,Raise-100,Call-100,Bet-150,Call-50,Fold,Call-50,Raise-200,Check,Check,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,0.9,0.1
+Call-50,Bet-50,Fold,Call-50,Call-150,Check,Fold,Fold,Call-50,Fold,Fold,Call-200,Call-450,Raise-1650,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Raise-200,Call-400,Check,Check,Bet-1600,Fold,Fold,Fold,0.75,0.5
+Call-50,Bet-50,Call-50,Check,Fold,Fold,Fold,Fold,Raise-100,Call-100,Bet-150,Raise-100,Raise-900,Raise-1550,Fold,Raise-600,Fold,Call-50,Fold,Call-50,Call-50,Check,Fold,Call-50,Call-50,Check,Fold,Fold,Call-25,Fold,0.4,0.5
+Raise-100,Raise-100,Bet-350,Raise-600,All in,Call-25,Check,Check,Check,Raise-100,Raise-200,Fold,Raise-200,Fold,Raise-100,Fold,Raise-600,Raise-100,Raise-550,Check,Check,Fold,Raise-100,Bet-50,Raise-100,Bet-200,Call-50,Fold,Raise-150,Fold,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Raise-100,Call-150,Bet-150,Raise-100,Fold,Raise-100,Call-125,Check,Check,Check,Check,Check,Check,Check,Fold,Raise-200,Fold,Raise-100,Bet-50,Call-50,Check,Check,Fold,Raise-100,Bet-200,Fold,Raise-100,Raise-100,Check,0.3,0.7
+All in,Call-50,Fold,Call-50,Call-50,Bet-50,Fold,Call-25,Check,Check,Check,Fold,Raise-100,Raise-2500,Call-50,Call-50,Check,Fold,Call-50,Check,Check,Fold,Fold,Fold,Call-8375,Fold,Call-50,Call-50,Check,Check,0.4,0.5
+Raise-1250,Fold,Fold,Fold,Fold,Raise-200,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Check,Bet-50,Call-75,Check,Fold,Fold,Fold,Fold,Fold,Fold,Raise-600,Fold,Fold,Fold,Fold,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-600,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Fold,Fold,Fold,Call-50,Fold,Call-50,Raise-200,Bet-200,Call-50,Fold,Call-50,Check,Check,Check,Raise-600,Call-25,Fold,Raise-100,Raise-2500,All in,Call-50,Fold,Raise-250,Raise-100,Call-375,Check,Check,Fold,Fold,Call-50,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,0.9,0.2
+Check,Check,Check,Fold,Call-50,Call-100,Check,Check,Check,Fold,Fold,Call-25,Fold,Call-50,Raise-450,Check,Bet-850,Fold,Fold,Raise-200,Fold,Fold,Fold,Call-50,Bet-50,Fold,Check,Check,Check,Check,0.75,0.5
+Raise-100,All in,Raise-200,Call-50,Fold,Fold,Call-50,Check,Check,Check,Raise-300,Bet-400,Call-50,Check,Check,Check,Call-50,Call-50,Check,Check,Bet-50,Fold,Raise-100,Call-150,Bet-100,Call-50,Fold,Call-50,Fold,Fold,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-275,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Call-50,Fold,Fold,Fold,Check,Check,Check,Fold,0.9,0.1
+Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Call-50,Bet-50,Call-50,Raise-200,Check,Fold,Fold,Raise-200,Fold,Call-50,Check,Bet-100,Fold,Fold,Check,Check,Check,Check,Call-25,Fold,Call-50,0.75,0.5
+Check,Check,Check,Check,Fold,Call-50,Fold,Call-50,Call-75,Bet-50,Call-50,Call-100,Fold,Raise-100,Fold,Fold,Raise-100,Fold,Check,Check,Check,Check,Call-25,Check,Bet-50,Fold,Call-50,Check,Call-100,Call-300,0.4,0.5
+Fold,Fold,Fold,Fold,Call-125,Bet-200,Call-200,Raise-5000,All in,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Call-50,Check,Fold,Fold,Fold,Fold,Fold,Raise-1250,Fold,Fold,Call-50,Fold,Raise-100,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Bet-100,Bet-300,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Raise-100,Fold,Call-50,Check,Check,Check,All in,Call-50,Fold,Raise-100,Check,Check,Bet-100,Fold,Call-25,Fold,Call-50,Fold,Call-50,Fold,Fold,Raise-100,Fold,Call-25,Check,Fold,Fold,Call-50,Fold,Fold,0.4,0.5
+Check,Check,Check,Fold,Fold,Fold,Raise-250,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Bet-50,Fold,Raise-100,Call-200,Check,Bet-200,Call-50,Fold,Raise-200,Fold,Fold,Call-50,Call-75,Check,Check,Check,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,0.9,0.2
+Fold,Call-50,Fold,Call-50,Check,Bet-100,Raise-100,Check,Check,Check,Call-50,Check,Check,Check,Call-50,Check,Check,Call-50,Raise-600,Call-50,Check,Check,Check,Call-50,Fold,Raise-150,Fold,Call-50,Check,Bet-50,0.4,0.5
+Check,Check,Check,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Fold,Call-50,Call-150,Fold,Fold,Fold,0.75,0.5
+Check,Check,Check,Fold,Raise-100,Fold,Check,Check,Check,Check,Call-25,Fold,Call-50,Check,Check,Check,Raise-150,Bet-150,Fold,Raise-100,Call-50,Fold,Call-25,Fold,Raise-100,Check,Check,Fold,Fold,Call-50,0.4,0.5
+Check,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,0.9,0.2
+Fold,Fold,Call-75,Check,Check,Bet-100,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Raise-450,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Call-50,Bet-50,Check,Check,Check,0.75,0.5
+Check,Check,Call-50,Check,Check,Bet-50,Fold,Call-25,Call-50,Fold,Fold,Raise-100,Fold,Call-50,Check,Check,Check,Call-50,Fold,Call-25,Check,Fold,Call-50,Check,Check,Check,Call-50,Fold,Fold,Fold,0.4,0.5
+Fold,Fold,Fold,Call-50,Raise-1250,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,All in,Fold,Fold,Check,0.9,0.2
+Fold,Fold,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Check,Check,Fold,Call-25,Check,Check,Check,Raise-100,Check,Check,Check,Fold,Fold,Fold,Call-50,Check,Check,Check,Call-50,Bet-50,0.4,0.5
+Raise-100,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Call-50,Bet-50,Call-50,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Call-50,Check,0.75,0.5
+Fold,Raise-100,Bet-50,Raise-100,Check,Check,Check,Fold,Call-25,Check,Fold,All in,Raise-100,Check,Check,Check,Fold,Raise-100,Call-250,Bet-950,Raise-300,Raise-100,Fold,Fold,Call-25,Fold,Call-50,Bet-50,Check,Check,0.4,0.5
+Call-75,Check,Check,Check,Call-200,Check,Check,Check,Call-50,Bet-50,Fold,Fold,Call-50,Raise-350,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Call-175,Check,Check,Check,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,0.9,0.2
+Check,Fold,Call-50,Fold,Fold,Check,Check,Bet-50,Fold,Raise-100,Fold,Raise-100,Fold,Fold,Call-50,Fold,Call-50,Check,Fold,Call-25,Call-50,Check,Fold,Call-50,Check,Check,Check,Fold,Fold,Fold,0.4,0.5
+Call-50,Check,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Check,Check,Bet-100,Fold,Fold,Fold,Call-25,Check,Check,Check,All in,Fold,Fold,Fold,Fold,Fold,Check,Check,0.75,0.5
+Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,0.9,0.2
+Raise-300,Call-50,Fold,Call-50,Check,Check,Fold,Fold,Call-50,Check,Check,Call-50,Call-50,Check,Check,Check,Check,Check,Check,Check,Fold,Call-25,Fold,Fold,Call-50,Fold,Call-25,Check,Check,Fold,0.4,0.5
+Bet-50,Fold,Call-50,Check,Check,Bet-100,Fold,Fold,Raise-100,Fold,Call-50,Check,Bet-50,Raise-150,Fold,Call-50,Call-350,Bet-450,Fold,Raise-250,Fold,Fold,Fold,Call-175,Check,Check,Check,Fold,Fold,Fold,0.75,0.5
+Fold,Fold,Raise-350,Check,Fold,Raise-100,Call-50,Fold,Call-50,Check,Check,Check,Fold,Raise-100,Call-50,Fold,Call-50,Check,Check,Fold,Fold,Fold,Call-50,Fold,Fold,Call-25,Fold,Call-50,Check,Check,0.4,0.5
+Call-50,Raise-450,Check,Check,Bet-1300,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,0.9,0.2
+Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Call-50,Check,Check,Check,Raise-150,Fold,Fold,Call-50,Call-200,Check,Check,Fold,Fold,Fold,Call-50,Call-200,Check,Check,Check,Fold,Fold,0.75,0.5
+Call-50,Check,Check,Check,Call-25,Check,Check,Check,Call-50,Fold,Call-50,Fold,Call-125,Fold,Call-25,Fold,Fold,Call-50,Check,Check,Check,Call-25,Fold,Fold,Call-50,Bet-50,Call-25,Fold,Raise-100,Check,0.4,0.5
+Check,Check,Fold,Fold,Fold,Fold,Raise-150,Bet-200,Fold,Fold,Check,Check,Check,Check,Fold,Fold,All in,Check,Check,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Fold,Fold,Call-50,Fold,Call-50,Fold,Call-75,Check,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Call-50,Raise-200,Fold,Call-50,Check,Check,Check,Raise-100,Fold,Fold,Fold,Fold,0.75,0.5
+Check,Bet-100,Fold,Raise-100,Raise-100,Bet-100,Call-25,Fold,Call-50,Check,Check,Bet-100,Call-50,Fold,Raise-100,Call-100,Bet-150,Call-25,Check,Check,Check,Call-50,Fold,Call-50,Fold,Fold,Fold,Call-50,Check,Raise-100,0.4,0.5
+Fold,Fold,Fold,Fold,Raise-1250,Fold,Fold,Fold,Check,Check,Bet-50,Call-50,Bet-150,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-300,Fold,Fold,Check,Check,Check,Check,0.9,0.2
+Call-50,Call-125,Fold,Fold,Call-50,Fold,Check,Check,Check,Check,Fold,Fold,Call-50,Fold,Call-50,Check,Check,Check,Raise-100,Bet-100,Call-100,Bet-200,Call-250,Bet-450,Fold,Fold,Fold,Fold,Raise-100,Bet-100,0.4,0.5
+Raise-150,Bet-150,Call-50,Fold,Call-50,Fold,Call-50,Check,Check,Check,Fold,Call-50,Fold,Raise-250,Check,Bet-300,Fold,Call-100,Raise-200,Raise-450,Raise-1700,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Call-50,0.4,0.2
+Fold,Fold,All in,Fold,Raise-150,Check,Fold,Raise-150,Fold,Check,Check,Check,Check,Fold,Fold,Raise-150,Raise-150,Fold,Call-50,Fold,Raise-150,Bet-100,Fold,Raise-100,Bet-50,Call-50,Check,Bet-400,Call-50,Fold,0.3,0.7
+Fold,Call-50,Fold,Fold,Fold,Call-150,Check,Fold,Fold,Call-50,Call-250,Check,Fold,Fold,Fold,Fold,Fold,Fold,Call-150,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,0.75,0.5
+Fold,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Call-150,Raise-1800,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Call-50,Fold,Call-50,Call-75,Raise-100,Check,Call-400,Call-50,Check,Fold,Call-100,Fold,Call-25,Check,Check,Bet-50,Call-150,Fold,Fold,Fold,Call-50,Fold,Call-50,Fold,Fold,Call-125,Check,Fold,Call-150,0.4,0.5
+Call-250,Fold,Call-50,Check,Check,Fold,Raise-150,Bet-150,Raise-150,Call-150,Check,Check,Check,Fold,Fold,Fold,Raise-150,Bet-50,Raise-150,Call-100,Bet-100,Raise-150,Check,Check,Check,Call-50,Check,Check,Fold,Fold,0.3,0.7
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,0.9,0.1
+Call-50,Raise-350,Call-1550,Check,Bet-2700,Call-50,Check,Check,Fold,Call-50,Fold,Fold,Fold,Call-200,Fold,All in,Call-50,Call-100,Check,Fold,Call-50,Fold,Fold,Check,Check,Check,Bet-50,Fold,Fold,Fold,0.4,0.2
+Check,Check,Call-50,Check,Check,Fold,Call-50,Fold,Call-50,Check,Fold,Raise-100,Call-100,Check,Check,Fold,Fold,Call-125,Check,Fold,Fold,Call-150,Fold,Call-50,Fold,Fold,Call-50,Fold,Raise-1250,Fold,0.4,0.5
+Check,Fold,Raise-200,Check,Bet-100,Raise-150,Call-475,Fold,Raise-150,Fold,Call-50,Fold,Raise-150,Bet-50,Call-75,Fold,Raise-150,Raise-400,Bet-200,Raise-150,Fold,Raise-150,Check,Fold,Raise-150,Check,Check,Check,Fold,Fold,0.3,0.7
+Fold,Call-50,Call-100,Fold,Call-50,Fold,Fold,Raise-100,Raise-500,Raise-2600,All in,Fold,Call-200,Fold,Call-50,Fold,Call-50,Fold,Call-50,Call-100,Check,Check,Check,Fold,Call-100,Call-225,Check,Fold,Call-50,Fold,0.4,0.2
+Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Raise-600,Bet-900,Fold,Fold,Fold,Call-50,Raise-200,Raise-1050,All in,Fold,Fold,Fold,Call-150,Bet-200,Fold,Fold,Fold,Fold,Call-150,Bet-200,Check,0.75,0.5
+Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,0.9,0.2
+Check,Bet-400,Raise-200,Call-200,Bet-300,Raise-400,Check,Check,Check,Call-4850,Raise-100,Check,Fold,Raise-100,Fold,Raise-150,Check,Check,Check,Call-25,Check,Fold,Fold,Raise-100,Call-400,Check,Check,Fold,Raise-100,Check,0.3,0.7
+Fold,Raise-100,Raise-100,Call-225,Check,Fold,Fold,Fold,Fold,Call-100,Bet-50,Call-100,Fold,Call-50,Call-150,Check,Check,Check,Call-50,Fold,Call-50,Fold,Raise-450,Check,Check,Bet-1300,Call-75,Check,Check,Check,0.4,0.5
+Fold,Fold,Call-50,Fold,Call-50,Bet-50,Call-25,Fold,Call-50,Fold,Fold,Call-50,Fold,Fold,Call-50,Call-50,Check,Fold,Raise-600,Bet-1650,Call-75,Check,Check,Check,All in,Call-50,Fold,Call-50,Call-50,Fold,0.4,0.2
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Fold,Fold,Fold,Fold,Fold,Call-50,Bet-50,Fold,Fold,Call-100,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Call-75,Check,Fold,Fold,Call-200,Bet-200,Call-100,Fold,Call-50,Raise-200,Check,Check,0.75,0.5
+Check,Raise-100,Bet-50,Call-50,Fold,Call-50,Check,Check,Check,Fold,Raise-100,Check,Check,Check,Raise-100,Fold,Raise-100,Fold,All in,Raise-100,Bet-50,Raise-100,Call-100,Check,Check,Check,Raise-100,Call-275,Check,Check,0.3,0.7
+Fold,Call-50,Fold,Raise-100,Check,Check,Check,Call-50,Fold,Call-50,Call-50,Check,Check,Check,Call-50,Bet-50,Fold,Call-200,Fold,Call-100,Fold,Call-50,Fold,Call-50,Fold,Call-50,Fold,Raise-250,Check,Check,0.4,0.5
+Raise-350,Call-2200,Check,Check,Check,Call-50,Fold,Fold,Call-25,Fold,Call-50,Fold,Call-200,Fold,Call-50,Fold,Call-50,Fold,Call-50,Call-175,Fold,Call-50,Check,Fold,Raise-300,All in,Call-50,Fold,Fold,Fold,0.4,0.2
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-100,Raise-2500,Check,Check,Check,Call-200,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-150,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Call-50,Raise-350,Check,Check,Check,Fold,Call-75,Call-200,Check,Check,Bet-300,Call-50,Call-200,Fold,Fold,Fold,Fold,Fold,Raise-100,Raise-500,Call-1275,Check,Fold,Fold,Fold,Fold,Fold,Raise-250,Fold,Fold,0.75,0.5
+Fold,Call-50,Fold,Raise-100,Bet-100,Fold,Call-50,Fold,Raise-250,Raise-1600,Bet-1750,Fold,Call-50,Fold,Raise-100,Fold,Call-50,Fold,Check,Check,Check,Check,Fold,Fold,Call-50,Bet-50,Call-50,Fold,Fold,Fold,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Check,Bet-50,Fold,Fold,Fold,Fold,Check,Check,Check,Check,0.9,0.1
+Check,Check,Check,Call-50,Check,Bet-100,Call-50,Check,Check,Check,Raise-100,Bet-250,Bet-700,Raise-100,Call-50,Check,Check,Check,Call-50,Call-150,Check,Check,Check,Fold,Fold,Fold,Raise-100,Call-50,Fold,Call-50,0.4,0.5
+Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Fold,Raise-200,Raise-150,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-200,Fold,Fold,Fold,Fold,Raise-100,Fold,Fold,Fold,Raise-400,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,0.9,0.1
+Fold,Fold,Call-50,Check,Check,Check,Fold,Fold,Fold,Call-50,Check,Fold,Call-50,Check,Check,Check,Fold,Fold,Call-25,Fold,Fold,Raise-100,Call-50,Fold,Call-150,Check,Fold,Call-25,Fold,Call-50,0.4,0.5
+Check,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Call-200,Bet-250,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,0.9,0.2
+Call-50,Bet-50,Fold,Check,Bet-50,Fold,Fold,Call-50,Check,Check,Check,Call-50,Raise-800,Check,Check,Bet-950,Fold,Raise-100,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Check,0.75,0.5
+Raise-100,Fold,Call-25,Call-50,Fold,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Call-25,Raise-100,Call-50,Check,Check,Fold,Call-50,Check,Check,Check,Fold,Raise-100,Call-50,Fold,Raise-100,Call-50,Fold,0.4,0.5
+Check,Check,Check,Check,Fold,Fold,Fold,Fold,Raise-1250,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Check,Check,Call-175,Check,Check,Check,Fold,Fold,Call-50,Bet-50,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,0.75,0.5
+Fold,Fold,Fold,Fold,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Raise-150,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Raise-800,0.9,0.2
+Check,Check,Check,Raise-100,Call-50,Check,Check,Check,Call-50,Fold,Fold,Raise-100,Call-50,Fold,Call-50,Check,Check,Check,Call-25,Fold,Fold,Raise-100,Call-50,Bet-50,Fold,Raise-100,Call-50,Check,Fold,Raise-100,0.4,0.5
+Call-175,Check,Check,Check,Fold,Check,Check,Fold,Raise-600,Fold,Fold,Fold,Check,Check,Check,Bet-50,Raise-100,Call-50,Call-200,Check,Fold,Fold,Fold,Raise-600,Fold,Fold,Fold,Fold,Raise-600,Fold,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Raise-600,Fold,Fold,0.9,0.1
+Check,Check,Fold,Fold,Call-25,Fold,Call-50,Call-175,Check,Check,Check,Raise-100,Raise-100,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Call-50,Fold,Call-50,Check,Check,Fold,Call-50,Fold,Fold,Raise-100,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Check,Check,Check,Call-50,Fold,Call-50,Check,Check,Bet-50,Fold,Call-25,Fold,Call-50,Check,Check,Check,Call-50,Check,Fold,Call-50,Fold,Call-25,Fold,Raise-100,Check,Check,Fold,Call-50,Check,Fold,0.4,0.5
+Fold,Fold,Raise-200,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Call-50,Fold,Fold,Call-50,Check,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Bet-50,Raise-300,Bet-500,Fold,0.75,0.5
+Fold,Check,Check,Check,Check,Raise-600,Fold,All in,Fold,Check,Check,Check,Check,Fold,All in,Fold,Fold,Fold,Fold,Call-50,Check,Fold,Fold,Fold,Check,Check,Check,Fold,Fold,Fold,0.9,0.1
+Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Fold,Raise-300,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Fold,Call-50,Check,Bet-50,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Fold,Raise-300,Raise-100,Fold,Call-50,Fold,Call-25,Raise-100,Raise-1200,Raise-1750,Fold,Fold,Call-25,Fold,Raise-100,Fold,Call-50,0.4,0.5
+Fold,Check,Check,Check,Check,Raise-100,Fold,Fold,Call-50,Bet-50,Fold,Fold,Fold,Call-50,Raise-250,Call-1000,Fold,Call-50,Call-150,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Check,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,0.9,0.1
+Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,All in,Fold,Check,Check,Check,Check,Raise-300,Fold,Fold,Call-50,Check,Check,Check,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Fold,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Call-50,Fold,Fold,Fold,Call-50,Check,Check,Check,Call-50,Fold,Raise-100,Raise-100,Fold,Call-50,Fold,Call-50,Check,Check,Check,Check,0.4,0.5
+Check,Fold,Fold,Fold,Call-50,Raise-600,Check,Check,Check,Fold,Fold,Raise-600,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Call-25,Check,Check,Check,Fold,Fold,Fold,Check,Check,Check,0.75,0.5
+Check,Check,Call-25,Fold,Call-50,Fold,Fold,Call-50,Check,Check,Check,Fold,Call-50,Check,Check,Check,Call-50,Fold,Call-50,Fold,Fold,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Call-50,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Call-50,Fold,Check,Check,0.9,0.1
+Fold,Fold,Fold,Fold,Raise-600,Fold,Call-5700,Fold,Call-50,Check,Check,Check,Check,Check,Bet-50,Call-175,Check,Check,Check,Fold,Fold,Call-50,Check,Check,Fold,Fold,Fold,Call-50,Fold,Fold,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Check,Check,Check,Check,Fold,Fold,All in,Fold,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,0.9,0.2
+Fold,Fold,Fold,Call-50,Check,Check,Bet-100,Call-50,Check,Bet-50,Raise-100,Call-150,Check,Fold,Raise-300,Call-50,Fold,Call-50,Check,Check,Bet-50,Call-50,Fold,Fold,Call-50,Check,Check,Check,Call-50,Fold,0.4,0.5
+Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,0.9,0.1
+Check,Bet-50,Fold,Fold,Fold,Call-50,Bet-50,Fold,Fold,Call-50,Bet-50,Call-50,Call-175,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Call-50,Call-150,Check,Check,Fold,Check,Check,Check,0.75,0.5
+Fold,Call-25,Check,Fold,Call-50,Fold,Call-50,Check,Check,Check,Raise-100,Raise-600,Check,Check,Bet-500,Raise-100,Bet-100,Fold,Call-50,Fold,Call-50,Check,Check,Check,Raise-350,Bet-500,Raise-100,Call-50,Fold,Call-50,0.4,0.5
+Check,Fold,Fold,Fold,All in,Fold,Check,Check,Fold,Raise-300,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Fold,0.9,0.2
+Raise-100,Call-275,Check,Fold,Fold,Call-50,Bet-50,Call-50,Check,Check,Fold,Check,Check,Check,Check,Fold,Call-50,Call-200,Call-200,Bet-450,Call-50,Call-175,Check,Check,Check,Call-50,Raise-200,Check,Check,Check,0.75,0.5
+Check,Fold,Call-50,Check,Check,Check,Call-25,Fold,Fold,Raise-100,Call-150,Check,Check,Check,Fold,Fold,Call-25,Check,Check,Check,Fold,Call-50,Call-175,Fold,Call-50,Check,Check,Check,Raise-100,Bet-50,0.4,0.5
+Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Fold,Fold,Fold,Fold,Raise-600,All in,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,0.9,0.2
+Fold,Call-50,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Check,Check,Check,Check,Fold,All in,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Fold,Raise-350,Fold,0.75,0.5
+Call-50,Check,Check,Check,Call-50,Fold,Call-50,Check,Check,Check,Fold,Raise-100,Call-50,Check,Fold,Fold,Raise-600,Check,Check,Fold,Raise-100,Call-50,Check,Check,Fold,Call-50,Fold,Check,Bet-50,Call-25,0.4,0.5
+Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Bet-100,Raise-300,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Call-50,Fold,Raise-100,Bet-50,Bet-100,Fold,Call-150,Check,Check,Check,Call-25,Fold,Call-50,Check,Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-25,Fold,Raise-100,Call-50,Fold,Raise-200,Call-525,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Fold,Fold,Call-50,Call-175,Fold,Fold,Raise-250,Raise-100,Raise-650,Check,Check,Check,Call-50,Raise-350,Bet-400,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Raise-1250,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Check,Check,Raise-100,Call-275,Check,Fold,Raise-100,Call-250,Check,Check,Check,Raise-100,Call-150,Check,Bet-150,Call-50,Check,Fold,Fold,Call-50,Call-175,Call-200,Fold,Call-50,Check,Check,Check,Call-50,Fold,Fold,0.4,0.5
+Raise-300,Check,Check,Check,Call-50,Raise-200,Check,Check,Fold,Check,Check,Fold,Fold,Fold,Call-50,Call-175,Fold,Fold,All in,Fold,Call-50,Check,Check,Check,Fold,Fold,Check,Check,Check,Check,0.75,0.5
+Check,Check,Check,Call-50,Check,Bet-100,Raise-100,Call-50,Check,Check,Check,All in,Fold,Raise-100,Call-50,Check,Check,Check,Call-50,Fold,Raise-100,Raise-550,Check,Check,Check,Call-50,Bet-50,Call-50,Check,Check,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Call-50,Fold,0.9,0.1
+Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Fold,Fold,Fold,Fold,Raise-200,Fold,Call-50,Raise-200,Call-425,Check,Check,Check,Fold,Fold,Fold,Call-50,Bet-50,Fold,Call-50,Bet-50,Raise-400,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,0.75,0.5
+Fold,Raise-150,Call-25,Check,Fold,Raise-100,Fold,Fold,Fold,Fold,Call-25,Fold,Call-50,Check,Check,Check,Raise-100,Raise-100,Call-25,Call-50,Check,Fold,Call-50,Check,Check,Check,Call-50,Fold,Call-150,Check,0.4,0.5
+Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-200,Fold,Fold,Check,Check,Fold,Fold,0.9,0.1
+Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Call-200,Check,Fold,Fold,Fold,Check,Bet-50,Fold,Call-200,Fold,Fold,Call-50,Bet-50,Check,0.9,0.2
+Fold,Fold,Call-50,Fold,Call-50,Fold,Fold,Call-150,Bet-300,Fold,Fold,Call-50,Bet-100,Call-50,Check,Check,Check,Call-150,Bet-150,Fold,Raise-100,Call-150,Check,Check,Check,Raise-100,Bet-100,Bet-150,Fold,Call-50,0.4,0.5
+Call-50,Check,Check,Check,Call-150,Check,Check,Check,Fold,Fold,Call-50,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,All in,Call-50,Raise-200,Check,Check,Check,Fold,Raise-600,0.75,0.5
+Fold,Fold,Call-50,Fold,Call-50,Check,Check,Check,Raise-100,Call-50,Fold,Raise-100,Bet-100,Bet-250,Fold,Raise-100,Call-25,Check,Check,Check,Raise-100,Raise-100,Check,Check,Check,Fold,Call-50,Fold,Fold,Fold,0.4,0.5
+Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Call-50,Call-175,Check,Check,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Fold,Call-150,Bet-200,Raise-300,Fold,Fold,Call-50,Check,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Raise-600,0.9,0.2
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Raise-800,Fold,Fold,Fold,0.9,0.1
+Fold,Fold,Call-25,Fold,Call-50,Fold,Fold,Raise-100,Fold,Fold,Call-50,Fold,Call-50,Fold,Fold,Raise-100,Check,Check,Fold,Fold,Raise-100,Call-50,Check,Fold,Call-50,Check,Bet-50,Check,Check,Fold,0.4,0.5
+Check,Fold,Fold,Call-50,Call-200,Check,Check,Check,Fold,Fold,Fold,Raise-1250,Fold,Fold,Call-50,Bet-50,Call-25,Call-100,Check,Check,Bet-250,Fold,Fold,Fold,Check,Check,Check,Fold,Fold,Fold,0.75,0.5
+Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Call-150,Bet-200,Check,Check,Fold,Fold,Fold,Fold,Check,Check,0.9,0.2
+Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Bet-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,All in,Fold,Fold,Check,0.9,0.1
+Fold,Call-50,Fold,Raise-100,Check,Check,Fold,Raise-100,Call-50,Fold,Call-50,Check,Fold,Call-50,Check,Fold,Call-25,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Call-50,Fold,Fold,Call-50,Check,0.4,0.5
+Raise-1250,Raise-1600,Fold,Call-50,Check,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Call-50,Call-200,0.75,0.5
+Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,0.9,0.2
+Check,Call-50,Check,Fold,Call-50,Check,Check,Check,Fold,Raise-100,Raise-750,Bet-1050,Raise-100,Call-50,Check,Check,Check,Fold,Fold,Fold,Call-50,Check,Check,Bet-100,Call-50,Check,Check,Check,Fold,Fold,0.4,0.5
+Bet-600,Call-50,Raise-200,Call-600,Check,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Fold,Check,Check,Check,Check,Fold,Fold,Fold,0.75,0.5
+Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.1
+Call-50,Fold,Fold,Fold,Raise-100,Raise-100,Fold,Call-50,Check,Check,Check,Fold,Fold,Raise-100,Call-50,Check,Check,Check,Call-50,Check,Check,Fold,Call-150,Check,Check,Check,Fold,Call-50,Check,Check,0.4,0.5
+Fold,Fold,Fold,Call-50,Check,Check,Check,Check,Check,Check,Check,Fold,Fold,Fold,Call-50,Check,Check,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,0.75,0.5
+Fold,Fold,Raise-1250,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,All in,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,0.9,0.2
+Raise-100,Fold,Call-25,Check,Check,Check,Call-50,Fold,Call-50,Fold,Fold,Call-150,Check,Check,Check,Fold,Raise-100,Fold,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Call-25,Fold,Raise-100,Call-300,0.4,0.5
+Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Raise-150,Fold,Fold,Fold,Raise-600,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,0.9,0.1
+Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Call-50,Raise-350,Check,Check,Check,Call-50,Raise-600,Check,Fold,Raise-800,Fold,Fold,Fold,Fold,Raise-1250,Fold,Fold,Call-50,0.75,0.5
+Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Fold,Call-50,Check,Check,Check,Fold,Fold,Fold,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,0.9,0.2
+Check,Check,Call-50,Fold,Raise-100,Fold,Call-25,Check,Check,Check,Call-50,Check,Check,Check,Call-50,Fold,Raise-100,Fold,Fold,Call-50,Check,Check,Check,Call-50,Check,Check,Check,Fold,Fold,Call-50,0.4,0.5
+Check,Check,Fold,Fold,Fold,Fold,Fold,Check,Check,Fold,Fold,Call-50,Check,Check,Check,Call-50,Check,Check,Fold,Fold,Check,Check,Check,Check,Raise-100,Check,Check,Check,Fold,Fold,0.75,0.5
+Call-50,Check,Check,Check,Fold,Fold,Call-25,Check,Check,Check,Call-50,Check,Check,Fold,Call-50,Check,Check,Fold,Call-50,Check,Check,Check,Call-75,Check,Check,Check,Fold,Call-50,Check,Check,0.4,0.5
+Bet-850,Fold,Fold,Fold,Check,Check,Check,Check,Fold,Fold,Fold,All in,Fold,Fold,Call-50,Bet-50,Fold,Fold,Check,Check,Check,Bet-50,Fold,Fold,Fold,Fold,Check,Check,Check,Check,0.9,0.1
