@@ -1,25 +1,25 @@
 import os
-import numpy as np
-from src.Model import Model
+from sklearn import svm
+from src.OldFiles.Model import Model
 from joblib import load
-from sklearn.linear_model import SGDClassifier
 
 
 # ---------------------------------------------------
-#   SVC model class
+#   LinearSVC model class
 # ---------------------------------------------------
-class SGD(Model):
-    parameters = {}  # Grid search parameters
+class LinearSVC(Model):
+    parameters = {'loss': ('hinge', 'squared_hinge'),
+                  'tol': (1e-2, 1e-4)}  # Grid search parameters
 
     # ---------------------------------------------------
-    #   SGD class constructor
+    #   LinearSVC class constructor
     #       + train_dataset: Dataset object containing
     #                       all training information
     #       + train_dataset: Dataset object containing
     #                       all training information
     # ---------------------------------------------------
-    def __init__(self, train_dataset, test_dataset, grid_search=False, cv=10, iid=False, n_jobs=None):
-        super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "SGD")
+    def __init__(self, train_dataset, test_dataset, grid_search=False, cv=5, iid=False, n_jobs=None):
+        super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "LinearSVC")
         self.grid_search = grid_search
         self.set_classifier()
         if self.grid_search:
@@ -31,12 +31,10 @@ class SGD(Model):
     #   a file otherwise creates it
     # ---------------------------------------------------
     def set_classifier(self):
-        if os.path.isfile('../joblib/SGD' + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
-            self.clf = load('../joblib/SGD' + '_' + self.train_dataset.get_dataset_size() + '.joblib')
+        if os.path.isfile('../joblib/LinearSVC' + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
+            self.clf = load('../joblib/LinearSVC' + '_' + self.train_dataset.get_dataset_size() + '.joblib')
         else:
-            self.clf = SGDClassifier(loss='hinge', penalty='l2',
-                                     alpha=1e-3, random_state=42,
-                                     max_iter=5, tol=-np.inf)
+            self.clf = svm.LinearSVC()
 
     # ---------------------------------------------------
     #   Function responsible for retrieving the

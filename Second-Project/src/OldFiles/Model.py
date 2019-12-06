@@ -1,6 +1,6 @@
 import os
 from joblib import dump, load
-from src.Statistics import Statistics
+from src.OldFiles.Statistics import Statistics
 from sklearn.model_selection import GridSearchCV
 from sklearn.feature_extraction.text import TfidfVectorizer
 
@@ -64,8 +64,8 @@ class Model:
     #                      class
     # ---------------------------------------------------
     def init_vectorizer(self):
-        if os.path.isfile('../joblib/vectorizer.joblib'):
-            self.vectorizer = load('../joblib/vectorizer.joblib')
+        if os.path.isfile('../../joblib/vectorizer.joblib'):
+            self.vectorizer = load('../../joblib/vectorizer.joblib')
         else:
             self.vectorizer = TfidfVectorizer(sublinear_tf=True, stop_words='english', ngram_range=(1, 2),
                                               lowercase=False)
@@ -84,7 +84,7 @@ class Model:
             self.X_train = self.vectorizer.fit_transform(self.train_dataset.get_reviews())
             dump(self.X_train, '../joblib/X_train_' + self.algorithm + '_' + self.train_dataset.get_dataset_size()
                  + '.joblib')
-            dump(self.vectorizer, '../joblib/vectorizer.joblib')
+            dump(self.vectorizer, '../../joblib/vectorizer.joblib')
 
     # ---------------------------------------------------
     #   Function responsible for setting the model

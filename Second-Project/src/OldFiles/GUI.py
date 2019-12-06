@@ -1,10 +1,10 @@
 import PySimpleGUI as sg
-from src.Dataset import Dataset
-from src.SVM import LinearSVC
-from src.SGD import SGD
-from src.KNeighbors import KNeighbors
-from src.DecisionTrees import DecisionTreeClassifier
-from src.NeuralNetworks import NeuralNetworkClassifier
+from src.OldFiles.Dataset import Dataset
+from src.OldFiles.SVM import LinearSVC
+from src.OldFiles.SGD import SGD
+from src.OldFiles.KNeighbors import KNeighbors
+from src.OldFiles.DecisionTrees import DecisionTreeClassifier
+from src.OldFiles.NeuralNetworks import NeuralNetworkClassifier
 import tkinter as Tk
 import matplotlib
 import matplotlib.pyplot as plt

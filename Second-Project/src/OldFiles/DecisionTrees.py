@@ -1,6 +1,6 @@
 import os
 from sklearn import tree
-from src.Model import Model
+from src.OldFiles.Model import Model
 from joblib import load
 
 

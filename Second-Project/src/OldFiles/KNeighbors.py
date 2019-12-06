@@ -1,24 +1,24 @@
 import os
-from src.Model import Model
+from src.OldFiles.Model import Model
 from joblib import load
-from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
 
 
 # ---------------------------------------------------
-#   NeuralNetworkClassifier model class
+#   KNeighbors model class
 # ---------------------------------------------------
-class NeuralNetworkClassifier(Model):
+class KNeighbors(Model):
     parameters = {}  # Grid search parameters
 
     # ---------------------------------------------------
-    #   NeuralNetworkClassifier class constructor
+    #   KNeighbors class constructor
     #       + train_dataset: Dataset object containing
     #                       all training information
     #       + train_dataset: Dataset object containing
     #                       all training information
     # ---------------------------------------------------
-    def __init__(self, train_dataset, test_dataset, grid_search=False, cv=5, iid=False, n_jobs=None):
-        super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "NeuralNetworkClassifier")
+    def __init__(self, train_dataset, test_dataset, grid_search=False, cv=10, iid=False, n_jobs=None):
+        super().__init__(train_dataset, test_dataset, cv, iid, n_jobs, "KNeighbors")
         self.grid_search = grid_search
         self.set_classifier()
         if self.grid_search:
@@ -30,11 +30,10 @@ class NeuralNetworkClassifier(Model):
     #   a file otherwise creates it
     # ---------------------------------------------------
     def set_classifier(self):
-        if os.path.isfile('../joblib/MLPClassifier' + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
-            self.clf = load('../joblib/MLPClassifier' + '_' + self.train_dataset.get_dataset_size() + '.joblib')
+        if os.path.isfile('../joblib/KNeighbors' + '_' + self.train_dataset.get_dataset_size() + '.joblib'):
+            self.clf = load('../joblib/KNeighbors' + '_' + self.train_dataset.get_dataset_size() + '.joblib')
         else:
-            self.clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
-                                     hidden_layer_sizes=(5, 2), random_state=1)
+            self.clf = KNeighborsClassifier()
 
     # ---------------------------------------------------
     #   Function responsible for retrieving the
