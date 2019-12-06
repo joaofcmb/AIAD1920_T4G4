@@ -1,0 +1,6 @@
+# Default ignored files
+workspace.xml
+libraries/*.xml
+
+APDescription.txt
+MTPs-Main-Container.txt

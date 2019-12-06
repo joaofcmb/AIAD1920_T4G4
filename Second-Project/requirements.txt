@@ -1,0 +1,10 @@
+load
+sklearn
+numpy
+PySimpleGUI
+matplotlib
+joblib
+nltk
+html2text
+pandas
+xlrd
