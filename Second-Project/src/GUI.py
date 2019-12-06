@@ -1,15 +1,15 @@
 import PySimpleGUI as sg
-import matplotlib.pyplot as plt
 from src.Dataset import Dataset
 from src.SVM import LinearSVC
 from src.SGD import SGD
 from src.KNeighbors import KNeighbors
 from src.DecisionTrees import DecisionTreeClassifier
 from src.NeuralNetworks import NeuralNetworkClassifier
-from matplotlib.backends.backend_tkagg import FigureCanvasAgg
-import matplotlib.backends.tkagg as tkagg
 import tkinter as Tk
 import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.backends.tkagg as tkagg
+from matplotlib.backends.backend_tkagg import FigureCanvasAgg
 
 matplotlib.use('TkAgg')
 

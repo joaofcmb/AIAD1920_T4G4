@@ -1,6 +1,6 @@
 import re
 import pandas as pd
-from html2text import unescape
+# from html2text import unescape
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
 
@@ -46,7 +46,7 @@ class Dataset:
         df = pd.DataFrame(reviews, columns=['review'])
 
         # Remove html encoding from reviews
-        df['review'] = df['review'].apply(unescape, unicode_snob=True)
+        # df['review'] = df['review'].apply(unescape, unicode_snob=True)
 
         # Apply text stemming
         df['review'] = df['review'].apply(
