@@ -16,10 +16,11 @@ from sklearn.model_selection import cross_val_score
 from src.Classification.Model import Model
 from src.Classification.SVC import SVC
 from src.Classification.SGD import SGD
+from src.Classification.KNeighbors import KNeighbors
 
 # tuned_parameters = {'kernel': ['rbf', 'linear'], 'gamma': ['scale', 'auto']}
 
-model = SVC(True)
+model = KNeighbors(True)
 model.train()
 model.predict()
 print(model.get_best_param())
