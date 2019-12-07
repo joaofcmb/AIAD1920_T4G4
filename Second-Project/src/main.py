@@ -8,22 +8,19 @@ from src.Classification.Dataset import Dataset
 ds = Dataset('round.csv')
 
 
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn import svm
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_curve, auc
-from sklearn.model_selection import cross_val_score
-
 from src.Classification.Model import Model
 from src.Classification.SVC import SVC
 from src.Classification.SGD import SGD
 from src.Classification.KNeighbors import KNeighbors
 from src.Classification.GaussianNaiveBayes import GaussianNaiveBayes
+from src.Classification.DecisionTrees import DecisionTree
+from src.Classification.RandomForest import RandomForest
 
-# tuned_parameters = {'kernel': ['rbf', 'linear'], 'gamma': ['scale', 'auto']}
-
-model = GaussianNaiveBayes()
+model = RandomForest(True)
 model.train()
 model.predict()
+
 print(model.get_best_param())
 
 # clf = GridSearchCV(svm.SVC(), parameters)

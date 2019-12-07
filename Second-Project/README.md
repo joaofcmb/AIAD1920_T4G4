@@ -17,3 +17,5 @@ the installed python interpreter
     - Using the Python Terminal: `import nltk` and `nltk.download('stopwords')`
 
 4. Using PyCharm, run GUI.py (Run -> Run 'GUI')
+
+5. sudo apt install python-pydot python-pydot-ng graphviz
