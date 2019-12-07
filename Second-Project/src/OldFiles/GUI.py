@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from src.OldFiles.Dataset import Dataset
-from src.OldFiles.SVM import LinearSVC
+from src.OldFiles.SVC import LinearSVC
 from src.OldFiles.SGD import SGD
 from src.OldFiles.KNeighbors import KNeighbors
 from src.OldFiles.DecisionTrees import DecisionTreeClassifier

@@ -43,10 +43,15 @@ class Dataset:
                 players_info = row[5:-1]
                 num_players = int(len(players_info) / 2)
 
-                train_data.extend(players_info[:num_players])
-                train_data.extend([0] * (8 - num_players))
-                train_data.extend(players_info[num_players:])
-                train_data.extend([0] * (8 - num_players))
+                for elem in players_info[:num_players]:
+                    train_data.append(float(elem))
+
+                train_data.extend([0.0] * (8 - num_players))
+
+                for elem in players_info[num_players:]:
+                    train_data.append(float(elem))
+
+                train_data.extend([0.0] * (8 - num_players))
 
                 self.x.append(train_data)
                 self.y.append(row[-1])

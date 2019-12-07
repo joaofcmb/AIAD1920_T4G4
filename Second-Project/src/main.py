@@ -3,28 +3,36 @@ from src.Classification.Dataset import Dataset
 from sklearn.feature_extraction.text import CountVectorizer
 from array import *
 
-from src.Regression.Dataset import Dataset
+from src.Classification.Dataset import Dataset
 
-ds = Dataset('personality.csv')
+ds = Dataset('round.csv')
 
 
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn import svm
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_curve, auc
+from sklearn.model_selection import cross_val_score
 
+from src.Classification.Model import Model
+from src.Classification.SVC import SVC
 
-# print(X_train)
-# print(X_test)
+# tuned_parameters = {'kernel': ['rbf', 'linear'], 'gamma': ['scale', 'auto']}
 
-# X = [[0, 0], [2, 2]]
-# y = [0.5, 2.5]
-# clf = svm.SVR()
-# clf.fit(X, y)
-# clf.predict([[1, 1]])
+model = SVC(True)
+model.train()
+model.predict()
+# print(model.get_best_param())
 
-clf = svm.SVR()
-clf.fit(ds.get_x_train(), ds.get_y_train())
-predicted = clf.predict(ds.get_x_test())
+# clf = GridSearchCV(svm.SVC(), parameters)
+# clf.fit(ds.get_x_train(), ds.get_y_train())
+
+# print("Best parameters set found on development set:")
+# print()
+# print(clf.best_params_)
+# predicted = clf.predict(ds.get_x_test())
+#
+print(classification_report(model.predicted, ds.get_y_test()))
+print('Accuracy score: ' + str(accuracy_score(model.predicted, ds.get_y_test())))
 
 from sklearn.metrics import explained_variance_score, mean_squared_error
 
@@ -37,8 +45,6 @@ from sklearn.metrics import explained_variance_score, mean_squared_error
 #
 # predicted = clf.predict(ds.get_x_test())
 # print(predicted)
-# print(classification_report(predicted, y_test))
-# print('Accuracy score: ' + str(accuracy_score(predicted, y_test)))
 
 # print(clf.score(X_test, y_test))
 
