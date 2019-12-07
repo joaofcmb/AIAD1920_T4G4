@@ -17,10 +17,11 @@ from src.Classification.Model import Model
 from src.Classification.SVC import SVC
 from src.Classification.SGD import SGD
 from src.Classification.KNeighbors import KNeighbors
+from src.Classification.GaussianNaiveBayes import GaussianNaiveBayes
 
 # tuned_parameters = {'kernel': ['rbf', 'linear'], 'gamma': ['scale', 'auto']}
 
-model = KNeighbors(True)
+model = GaussianNaiveBayes()
 model.train()
 model.predict()
 print(model.get_best_param())
