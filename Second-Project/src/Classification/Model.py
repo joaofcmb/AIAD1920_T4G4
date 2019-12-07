@@ -32,6 +32,12 @@ class Model:
         """
         Function responsible for predicting data
         from a certain x_test sample
-        @return:
         """
         self.predicted = self.clf.predict(self.dataset.get_x_test())
+
+    def get_predicted(self):
+        """
+        Function responsible for retrieving predicted data
+        @return: predicted data
+        """
+        return self.predicted

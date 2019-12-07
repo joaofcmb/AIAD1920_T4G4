@@ -15,13 +15,14 @@ from sklearn.model_selection import cross_val_score
 
 from src.Classification.Model import Model
 from src.Classification.SVC import SVC
+from src.Classification.SGD import SGD
 
 # tuned_parameters = {'kernel': ['rbf', 'linear'], 'gamma': ['scale', 'auto']}
 
 model = SVC(True)
 model.train()
 model.predict()
-# print(model.get_best_param())
+print(model.get_best_param())
 
 # clf = GridSearchCV(svm.SVC(), parameters)
 # clf.fit(ds.get_x_train(), ds.get_y_train())

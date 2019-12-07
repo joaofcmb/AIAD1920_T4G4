@@ -4,33 +4,39 @@
 
 import os
 from joblib import load, dump
-from sklearn import svm
+from sklearn.linear_model import SGDClassifier
 from src.Classification.Model import Model
 from sklearn.model_selection import GridSearchCV
 
 
-class SVC(Model):
+class SGD(Model):
     """
-    SVC model class
+    SGD model class
     """
-    algorithm = 'SVC'
+    algorithm = 'SGD'
 
     # Default Tuning parameters
-    default_parameters = {'C': [1.0],
-                          'kernel': ['rbf', 'linear', 'poly', 'sigmoid', 'precomputed'],
-                          'degree': [3],
-                          'gamma': ['scale', 'auto'],
-                          'coef0': [0.0],
-                          'shrinking': [True, False],
-                          'probability': [True, False],
+    default_parameters = {'loss': ['hinge', 'log', 'modified_huber', 'squared_hinge', 'perceptron'],
+                          'penalty': ['l2', 'l1', 'elasticnet'],
+                          'alpha': [0.0001],
+                          'l1_ratio': [0.15],
+                          'fit_intercept': [True, False],
+                          'max_iter': [1000],
                           'tol': [0.001],
-                          'cache_size': [200],
-                          'class_weight': [None, 'dict', 'balanced'],
-                          'verbose': [True, False],
-                          'max_iter': [-1],
-                          'decision_function_shape': ['ovo', 'ovr'],
-                          'break_ties': [True, False],
-                          'random_state': [None]
+                          'shuffle': [True, False],
+                          'verbose': [0],
+                          'epsilon': [0.1],
+                          'n_jobs': [None],
+                          'random_state': [None],
+                          'learning_rate': ['optimal'],
+                          'eta0': [0.0],
+                          'power_t': [0.5],
+                          'early_stopping': [True, False],
+                          'validation_fraction': [0.1],
+                          'n_iter_no_change': [5],
+                          'class_weight': [None],
+                          'warm_start': [True, False],
+                          'average': [True, False]
                           }
 
     # Tuning parameters
@@ -38,7 +44,7 @@ class SVC(Model):
 
     def __init__(self, grid_search=False, filename='round.csv'):
         """
-        SVC class constructor
+        SGD class constructor
 
         @param grid_search: indicates whether classifier should be created
                             with the grid search classifier
@@ -57,13 +63,13 @@ class SVC(Model):
             if os.path.isfile('../joblib/GridSearchCV_' + self.algorithm + '.joblib'):
                 clf = load('../joblib/GridSearchCV_' + self.algorithm + '.joblib')
             else:
-                clf = GridSearchCV(svm.SVC(), self.tuning_parameters)
+                clf = GridSearchCV(SGDClassifier(), self.tuning_parameters)
                 dump(clf, '../joblib/GridSearchCV_' + self.algorithm + '.joblib')
         else:
             if os.path.isfile('../joblib/' + self.algorithm + '.joblib'):
                 clf = load('../joblib/' + self.algorithm + '.joblib')
             else:
-                clf = svm.SVC()
+                clf = SGDClassifier()
 
         return clf
 
