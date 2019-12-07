@@ -16,8 +16,9 @@ from src.Classification.KNeighbors import KNeighbors
 from src.Classification.GaussianNaiveBayes import GaussianNaiveBayes
 from src.Classification.DecisionTrees import DecisionTree
 from src.Classification.RandomForest import RandomForest
+from src.Classification.MultiLayerPerceptron import MultiLayerPerceptron
 
-model = RandomForest(True)
+model = MultiLayerPerceptron(True)
 model.train()
 model.predict()
 
