@@ -19,3 +19,7 @@ the installed python interpreter
 4. Using PyCharm, run GUI.py (Run -> Run 'GUI')
 
 5. sudo apt install python-pydot python-pydot-ng graphviz
+
+6. . venv/bin/activate --> python3.6 -m src.main
+
+7. In pycharm add src as sources

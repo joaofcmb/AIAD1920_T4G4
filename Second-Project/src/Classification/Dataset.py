@@ -17,7 +17,7 @@ class Dataset:
         @param filename: file to be read
         @param ds_test_perc: dataset test percentage used
         """
-        self.filename = '../dataset/' + filename
+        self.filename = 'dataset/' + filename
         self.ds_test_perc = ds_test_perc
         self.x, self.y = [], []
 

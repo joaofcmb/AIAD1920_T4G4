@@ -18,7 +18,7 @@ from src.Classification.DecisionTrees import DecisionTree
 from src.Classification.RandomForest import RandomForest
 from src.Classification.MultiLayerPerceptron import MultiLayerPerceptron
 
-model = MultiLayerPerceptron(True)
+model = SVC()
 model.train()
 model.predict()
 

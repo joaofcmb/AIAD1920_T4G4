@@ -26,7 +26,7 @@ class Model:
         dataset variables
         """
         self.clf = self.clf.fit(self.dataset.get_x_train(), self.dataset.get_y_train())
-        dump(self.clf, '../joblib/' + self.algorithm + '.joblib')
+        dump(self.clf, 'joblib/' + self.algorithm + '.joblib')
 
     def predict(self):
         """
