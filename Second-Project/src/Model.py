@@ -4,7 +4,8 @@
 from joblib import dump
 from src.Classification.Dataset import Dataset as ClassificationDataset
 from src.Regression.Dataset import Dataset as RegressionDataset
-from src.Classification.Metrics import Metrics
+from src.Classification.Metrics import Metrics as ClassificationMetrics
+from src.Regression.Metrics import Metrics as RegressionMetrics
 
 
 class Model:
@@ -25,8 +26,12 @@ class Model:
         self.algorithm = algorithm
         self.supervised_learning_method = supervised_learning_method
 
-        self.dataset = ClassificationDataset(filename) if supervised_learning_method else RegressionDataset(filename)
-        self.metrics = Metrics(self)
+        if supervised_learning_method:
+            self.dataset = ClassificationDataset(filename)
+            self.metrics = ClassificationMetrics(self)
+        else:
+            self.dataset = RegressionDataset(filename)
+            self.metrics = RegressionMetrics(self)
 
     def train(self):
         """

@@ -6,13 +6,14 @@ import matplotlib.pyplot as plt
 from inspect import signature
 from sklearn.model_selection import learning_curve
 from sklearn import metrics
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_curve, auc
-from sklearn.metrics import plot_precision_recall_curve, plot_confusion_matrix, average_precision_score
+from sklearn.metrics import mean_gamma_deviance
+from sklearn.metrics import explained_variance_score, max_error, mean_absolute_error, mean_squared_error
+from sklearn.metrics import mean_squared_log_error, median_absolute_error, r2_score, mean_poisson_deviance
 
 
 class Metrics:
     """
-    Metrics class where all classification model metrics
+    Metrics class where all regression model metrics
     are defined
     """
 
@@ -23,57 +24,60 @@ class Metrics:
         """
         self.model = model
 
-    # ---------------------------------------------------
-    #   Function responsible for displaying all the model
-    #   associated statistics
-    # ---------------------------------------------------
-    def show_all(self):
-        self.show_classification_report(True)
-        self.show_accuracy_score(True)
-        self.show_learning_curve(True)
-        self.show_confusion_matrix(True)
-        self.show_roc_curve(True)
-        self.show_precision_recall_curve(True)
-
-    def classification_report(self):
+    def explained_variance_score(self):
         """
-        Function responsible for displaying the model
-        classification report including precision, recall,
-        f1-score and support
-        @return: classification report
+        Displays the explained variance score
         """
-        print('Classification report: \n')
-        print(classification_report(self.model.dataset.get_y_test(), self.model.predicted))
+        print('Explained variance score: ' + str(explained_variance_score(self.model.dataset.get_y_test(),
+                                                                          self.model.get_predicted())))
 
-    def accuracy_score(self):
+    def max_error(self):
         """
-        Function responsible for displaying the accuracy score
-        @return: accuracy score
+        Displays the maximum residual error
         """
-        print('Accuracy score: ' + str(accuracy_score(self.model.dataset.get_y_test(),
-                                                      self.model.get_predicted())) + '\n')
+        print('Maximum residual error: ' + str(max_error(self.model.dataset.get_y_test(), self.model.get_predicted())))
 
-    def confusion_matrix(self):
+    def mean_absolute_error(self):
         """
-        Function responsible for displaying the confusion
-        matrix
-        @return: confusion matrix
+        Displays the mean absolute error regression loss
         """
-        np.set_printoptions(precision=2)
+        print('Mean absolute error regression loss: ' + str(mean_absolute_error(self.model.dataset.get_y_test(),
+                                                                                self.model.get_predicted())))
 
-        # Plot non-normalized confusion matrix
-        titles_options = [(self.model.algorithm + " - Confusion matrix, without normalization", None),
-                          (self.model.algorithm + " - Normalized confusion matrix", 'true')]
-        for title, normalize in titles_options:
-            disp = plot_confusion_matrix(self.model.clf, self.model.dataset.get_x_test(),
-                                         self.model.dataset.get_y_test(), cmap=plt.cm.Blues, normalize=normalize)
-            disp.ax_.set_title(title)
+    def mean_squared_error(self):
+        """
+        Displays the mean squared error regression loss
+        """
+        print('Mean squared error regression loss: ' + str(mean_squared_error(self.model.dataset.get_y_test(),
+                                                                              self.model.get_predicted())))
 
-            print(title)
-            print(disp.confusion_matrix)
-            print()
+    def median_absolute_error(self):
+        """
+        Displays the median absolute error regression loss
+        """
+        print('Median absolute error regression loss: ' + str(median_absolute_error(self.model.dataset.get_y_test(),
+                                                                                    self.model.get_predicted())))
 
-        plt.show()
+    def r2_score(self):
+        """
+        Displays the R^2 (coefficient of determination) regression score function
+        """
+        print('R^2 (coefficient of determination) regression score function: ' +
+              str(r2_score(self.model.dataset.get_y_test(), self.model.get_predicted())))
+
+    def mean_poisson_deviance(self):
+        """
+        Displays the mean Poisson deviance regression loss
+        """
+        print('Mean Poisson deviance regression loss: ' + str(mean_poisson_deviance(self.model.dataset.get_y_test(),
+                                                                                    self.model.get_predicted())))
+
+    def mean_gamma_deviance(self):
+        """
+        Displays the mean Gamma deviance regression loss
+        """
+        print('Mean Gamma deviance regression loss: ' + str(mean_gamma_deviance(self.model.dataset.get_y_test(),
+                                                                                self.model.get_predicted())))
 
     def learning_curve(self, axes=None, ylim=None, cv=None):
         """
@@ -133,24 +137,4 @@ class Metrics:
         axes[2].set_ylabel("Score")
         axes[2].set_title(self.model.algorithm + " - Performance of the model")
 
-        plt.show()
-
-    def roc_curve(self):
-        """
-        Function responsible for displaying the ROC curve
-        @return: ROC curve
-        """
-        metrics.plot_roc_curve(self.model.clf, self.model.dataset.get_x_test(), self.model.dataset.get_y_test())
-        plt.title(self.model.algorithm + ' - ROC curve')
-        plt.show()
-
-    def precision_recall_curve(self):
-        """
-        Function responsible for displaying the
-        precision-recall curve
-        @return: precision-recall curve
-        """
-        disp = plot_precision_recall_curve(self.model.clf, self.model.dataset.get_x_test(),
-                                           self.model.dataset.get_y_test())
-        disp.ax_.set_title(self.model.algorithm + ' - Precision-Recall curve')
         plt.show()

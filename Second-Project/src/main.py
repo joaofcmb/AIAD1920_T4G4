@@ -9,7 +9,7 @@ from src.Classification.Dataset import Dataset
 import matplotlib.pyplot as plt
 from sklearn import metrics
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_curve, auc
-# from src.Classification.SVC import SVC
+from src.Classification.SVC import SVC
 # from src.Classification.SGD import SGD
 # from src.Classification.KNeighbors import KNeighbors
 # from src.Classification.GaussianNaiveBayes import GaussianNaiveBayes
@@ -25,11 +25,11 @@ from src.Regression.MultiLayerPerceptron import MultiLayerPerceptron
 
 from sklearn.metrics import explained_variance_score
 
-model = KNeighbors()
+model = DecisionTree()
 model.train()
 model.predict()
 
-print(model.get_best_param())
+# print(model.get_best_param())
 # model.metrics.classification_report()
 # model.metrics.accuracy_score()
 # model.metrics.confusion_matrix()
@@ -38,6 +38,16 @@ print(model.get_best_param())
 # model.metrics.precision_recall_curve()
 
 # print(explained_variance_score(model.dataset.get_y_test(), model.get_predicted()))
+
+model.metrics.explained_variance_score()
+model.metrics.max_error()
+model.metrics.mean_absolute_error()
+model.metrics.mean_squared_error()
+model.metrics.median_absolute_error()
+model.metrics.r2_score()
+model.metrics.mean_poisson_deviance()
+model.metrics.mean_gamma_deviance()
+model.metrics.learning_curve()
 
 print("Terminated with success")
 
