@@ -23,3 +23,5 @@ the installed python interpreter
 6. . venv/bin/activate --> python3.6 -m src.main
 
 7. In pycharm add src as sources
+
+8. python3.6 -W ignore -m src.main

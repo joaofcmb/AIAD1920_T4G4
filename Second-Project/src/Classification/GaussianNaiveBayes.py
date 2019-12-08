@@ -70,15 +70,6 @@ class GaussianNaiveBayes(Model):
         """
         return self.tuning_parameters
 
-    def get_y_score(self):
-        """
-        Function responsible for retrieving the y_score
-        which consists on the array having all
-        estimations
-        @return: y_score
-        """
-        return self.clf.decision_function(self.dataset.get_y_test())
-
     def get_best_param(self):
         """
         Function responsible for showing the best

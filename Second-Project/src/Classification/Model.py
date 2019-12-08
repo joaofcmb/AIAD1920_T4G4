@@ -3,6 +3,7 @@
 """
 from joblib import dump
 from src.Classification.Dataset import Dataset
+from src.Classification.Metrics import Metrics
 
 
 class Model:
@@ -17,7 +18,7 @@ class Model:
         self.algorithm = algorithm
 
         self.dataset = Dataset(filename)
-        # self.statistics = Statistics(self)
+        self.metrics = Metrics(self)
 
     def train(self):
         """
