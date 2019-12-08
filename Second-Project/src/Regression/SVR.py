@@ -4,39 +4,42 @@
 
 import os
 from joblib import load, dump
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn import svm
 from src.Model import Model
 from sklearn.model_selection import GridSearchCV
 
 
-class KNeighbors(Model):
+class SVR(Model):
     """
-    KNeighbors model class
+    SVR model class
     """
-    algorithm = 'KNeighbors'
+    algorithm = 'SVR'
 
     # Default Tuning parameters
-    default_parameters = {'n_neighbors': [5],
-                          'weights': ['uniform'],
-                          'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
-                          'leaf_size': [30],
-                          'p': [2],
-                          'metric': ['minkowski'],
-                          'metric_params': [None],
-                          'n_jobs': [None]
+    default_parameters = {'kernel': ['rbf', 'linear', 'poly', 'sigmoid', 'precomputed'],
+                          'degree': [3],
+                          'gamma': ['scale', 'auto'],
+                          'coef0': [0.0],
+                          'tol': [0.001],
+                          'C': [1.0],
+                          'epsilon': [0.1],
+                          'shrinking': [True, False],
+                          'cache_size': [200],
+                          'verbose': [True, False],
+                          'max_iter': [-1]
                           }
 
     # Tuning parameters
-    tuning_parameters = {}
+    tuning_parameters = {'gamma': ['scale', 'auto']}
 
-    def __init__(self, grid_search=False, filename='round.csv'):
+    def __init__(self, grid_search=False, filename='personality.csv'):
         """
-        KNeighbors class constructor
+        SVR class constructor
 
         @param grid_search: indicates whether classifier should be created
                             with the grid search classifier
         """
-        super().__init__(self.get_classifier(grid_search), self.algorithm, filename)
+        super().__init__(self.get_classifier(grid_search), self.algorithm, filename, False)
 
     def get_classifier(self, grid_search):
         """
@@ -50,13 +53,13 @@ class KNeighbors(Model):
             if os.path.isfile('joblib/GridSearchCV_' + self.algorithm + '.joblib'):
                 clf = load('joblib/GridSearchCV_' + self.algorithm + '.joblib')
             else:
-                clf = GridSearchCV(KNeighborsClassifier(), self.tuning_parameters)
+                clf = GridSearchCV(svm.SVR(), self.tuning_parameters)
                 dump(clf, 'joblib/GridSearchCV_' + self.algorithm + '.joblib')
         else:
             if os.path.isfile('joblib/' + self.algorithm + '.joblib'):
                 clf = load('joblib/' + self.algorithm + '.joblib')
             else:
-                clf = KNeighborsClassifier()
+                clf = svm.SVR()
 
         return clf
 

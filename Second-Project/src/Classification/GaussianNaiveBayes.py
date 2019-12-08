@@ -5,7 +5,7 @@
 import os
 from joblib import load, dump
 from sklearn.naive_bayes import GaussianNB
-from src.Classification.Model import Model
+from src.Model import Model
 from sklearn.model_selection import GridSearchCV
 
 

@@ -4,7 +4,7 @@
 
 import os
 from joblib import load, dump
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsRegressor
 from src.Model import Model
 from sklearn.model_selection import GridSearchCV
 
@@ -29,14 +29,14 @@ class KNeighbors(Model):
     # Tuning parameters
     tuning_parameters = {}
 
-    def __init__(self, grid_search=False, filename='round.csv'):
+    def __init__(self, grid_search=False, filename='personality.csv'):
         """
         KNeighbors class constructor
 
         @param grid_search: indicates whether classifier should be created
                             with the grid search classifier
         """
-        super().__init__(self.get_classifier(grid_search), self.algorithm, filename)
+        super().__init__(self.get_classifier(grid_search), self.algorithm, filename, False)
 
     def get_classifier(self, grid_search):
         """
@@ -50,13 +50,13 @@ class KNeighbors(Model):
             if os.path.isfile('joblib/GridSearchCV_' + self.algorithm + '.joblib'):
                 clf = load('joblib/GridSearchCV_' + self.algorithm + '.joblib')
             else:
-                clf = GridSearchCV(KNeighborsClassifier(), self.tuning_parameters)
+                clf = GridSearchCV(KNeighborsRegressor(), self.tuning_parameters)
                 dump(clf, 'joblib/GridSearchCV_' + self.algorithm + '.joblib')
         else:
             if os.path.isfile('joblib/' + self.algorithm + '.joblib'):
                 clf = load('joblib/' + self.algorithm + '.joblib')
             else:
-                clf = KNeighborsClassifier()
+                clf = KNeighborsRegressor()
 
         return clf
 

@@ -5,7 +5,7 @@
 import os
 from joblib import load, dump
 from sklearn.linear_model import SGDClassifier
-from src.Classification.Model import Model
+from src.Model import Model
 from sklearn.model_selection import GridSearchCV
 
 

@@ -18,7 +18,7 @@ class Dataset:
         @param target: defines whether regression is aiming hand-selection (default) or aggression
         @param ds_test_perc: dataset test percentage used
         """
-        self.filename = '../dataset/' + filename
+        self.filename = 'dataset/' + filename
         self.ds_test_perc = ds_test_perc
         self.target = target
         self.x, self.y = [], []

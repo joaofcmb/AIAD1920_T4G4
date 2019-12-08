@@ -4,39 +4,42 @@
 
 import os
 from joblib import load, dump
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn import tree
 from src.Model import Model
 from sklearn.model_selection import GridSearchCV
 
 
-class KNeighbors(Model):
+class DecisionTree(Model):
     """
-    KNeighbors model class
+    DecisionTree model class
     """
-    algorithm = 'KNeighbors'
+    algorithm = 'DecisionTree'
 
     # Default Tuning parameters
-    default_parameters = {'n_neighbors': [5],
-                          'weights': ['uniform'],
-                          'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
-                          'leaf_size': [30],
-                          'p': [2],
-                          'metric': ['minkowski'],
-                          'metric_params': [None],
-                          'n_jobs': [None]
+    default_parameters = {'criterion': ['mse', 'friedman_mse', 'mae'],
+                          'splitter': ['best', 'random'],
+                          'max_depth': [None],
+                          'min_samples_split': [2],
+                          'min_samples_leaf': [1],
+                          'min_weight_fraction_leaf': [0.],
+                          'max_features': [None, 'auto', 'sqrt', 'log2'],
+                          'random_state': [None],
+                          'max_leaf_nodes': [None],
+                          'min_impurity_decrease': [0.],
+                          'ccp_alpha': [0.0]
                           }
 
     # Tuning parameters
     tuning_parameters = {}
 
-    def __init__(self, grid_search=False, filename='round.csv'):
+    def __init__(self, grid_search=False, filename='personality.csv'):
         """
-        KNeighbors class constructor
+        DecisionTree class constructor
 
         @param grid_search: indicates whether classifier should be created
                             with the grid search classifier
         """
-        super().__init__(self.get_classifier(grid_search), self.algorithm, filename)
+        super().__init__(self.get_classifier(grid_search), self.algorithm, filename, False)
 
     def get_classifier(self, grid_search):
         """
@@ -50,13 +53,13 @@ class KNeighbors(Model):
             if os.path.isfile('joblib/GridSearchCV_' + self.algorithm + '.joblib'):
                 clf = load('joblib/GridSearchCV_' + self.algorithm + '.joblib')
             else:
-                clf = GridSearchCV(KNeighborsClassifier(), self.tuning_parameters)
+                clf = GridSearchCV(tree.DecisionTreeRegressor(), self.tuning_parameters)
                 dump(clf, 'joblib/GridSearchCV_' + self.algorithm + '.joblib')
         else:
             if os.path.isfile('joblib/' + self.algorithm + '.joblib'):
                 clf = load('joblib/' + self.algorithm + '.joblib')
             else:
-                clf = KNeighborsClassifier()
+                clf = tree.DecisionTreeRegressor()
 
         return clf
 

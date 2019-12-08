@@ -5,7 +5,7 @@
 import os
 from joblib import load, dump
 from sklearn import svm
-from src.Classification.Model import Model
+from src.Model import Model
 from sklearn.model_selection import GridSearchCV
 
 

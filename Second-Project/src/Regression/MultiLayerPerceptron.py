@@ -4,39 +4,54 @@
 
 import os
 from joblib import load, dump
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neural_network import MLPRegressor
 from src.Model import Model
 from sklearn.model_selection import GridSearchCV
 
 
-class KNeighbors(Model):
+class MultiLayerPerceptron(Model):
     """
-    KNeighbors model class
+    MultiLayerPerceptron model class
     """
-    algorithm = 'KNeighbors'
+    algorithm = 'MultiLayerPerceptron'
 
     # Default Tuning parameters
-    default_parameters = {'n_neighbors': [5],
-                          'weights': ['uniform'],
-                          'algorithm': ['auto', 'ball_tree', 'kd_tree', 'brute'],
-                          'leaf_size': [30],
-                          'p': [2],
-                          'metric': ['minkowski'],
-                          'metric_params': [None],
-                          'n_jobs': [None]
+    default_parameters = {'hidden_layer_sizes': [100],
+                          'activation': ['identity', 'logistic', 'tanh', 'relu'],
+                          'solver': ['lbfgs', 'sgd', 'adam'],
+                          'alpha': [0.0001],
+                          'batch_size': ['auto'],
+                          'learning_rate': ['constant', 'invscaling', 'adaptive'],
+                          'learning_rate_init': [0.001],
+                          'power_t': [0.5],
+                          'max_iter': [200],
+                          'shuffle': [True, False],
+                          'random_state': [None],
+                          'tol': [1e-4],
+                          'verbose': [True, False],
+                          'warm_start': [True, False],
+                          'momentum': [0.9],
+                          'nesterovs_momentum': [True, False],
+                          'early_stoppingbool': [True, False],
+                          'validation_fraction': [0.1],
+                          'beta_1': [0.9],
+                          'beta_2': [0.999],
+                          'epsilon': [1e-8],
+                          'n_iter_no_change': [10],
+                          'max_fun': [15000]
                           }
 
     # Tuning parameters
     tuning_parameters = {}
 
-    def __init__(self, grid_search=False, filename='round.csv'):
+    def __init__(self, grid_search=False, filename='personality.csv'):
         """
-        KNeighbors class constructor
+        MultiLayerPerceptron class constructor
 
         @param grid_search: indicates whether classifier should be created
                             with the grid search classifier
         """
-        super().__init__(self.get_classifier(grid_search), self.algorithm, filename)
+        super().__init__(self.get_classifier(grid_search), self.algorithm, filename, False)
 
     def get_classifier(self, grid_search):
         """
@@ -50,13 +65,13 @@ class KNeighbors(Model):
             if os.path.isfile('joblib/GridSearchCV_' + self.algorithm + '.joblib'):
                 clf = load('joblib/GridSearchCV_' + self.algorithm + '.joblib')
             else:
-                clf = GridSearchCV(KNeighborsClassifier(), self.tuning_parameters)
+                clf = GridSearchCV(MLPRegressor(), self.tuning_parameters)
                 dump(clf, 'joblib/GridSearchCV_' + self.algorithm + '.joblib')
         else:
             if os.path.isfile('joblib/' + self.algorithm + '.joblib'):
                 clf = load('joblib/' + self.algorithm + '.joblib')
             else:
-                clf = KNeighborsClassifier()
+                clf = MLPRegressor()
 
         return clf
 

@@ -2,7 +2,8 @@
  Import Module
 """
 from joblib import dump
-from src.Classification.Dataset import Dataset
+from src.Classification.Dataset import Dataset as ClassificationDataset
+from src.Regression.Dataset import Dataset as RegressionDataset
 from src.Classification.Metrics import Metrics
 
 
@@ -12,12 +13,19 @@ class Model:
     present and where all algorithms are defined
     """
 
-    def __init__(self, classifier, algorithm, filename):
-
+    def __init__(self, classifier, algorithm, filename, supervised_learning_method=True):
+        """
+        Model class constructor
+        @param classifier: associated classifier
+        @param algorithm: associated algorithm
+        @param filename: dataset filename
+        @param supervised_learning_method: True for classification, False for regression
+        """
         self.clf = classifier
         self.algorithm = algorithm
+        self.supervised_learning_method = supervised_learning_method
 
-        self.dataset = Dataset(filename)
+        self.dataset = ClassificationDataset(filename) if supervised_learning_method else RegressionDataset(filename)
         self.metrics = Metrics(self)
 
     def train(self):
