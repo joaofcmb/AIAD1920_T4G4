@@ -1,11 +1,13 @@
 """
  Import Module
 """
+import graphviz
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import tree
+from sklearn import metrics
 from inspect import signature
 from sklearn.model_selection import learning_curve
-from sklearn import metrics
 from sklearn.metrics import mean_gamma_deviance
 from sklearn.metrics import explained_variance_score, max_error, mean_absolute_error, mean_squared_error
 from sklearn.metrics import mean_squared_log_error, median_absolute_error, r2_score, mean_poisson_deviance
@@ -23,6 +25,21 @@ class Metrics:
         @param model: model to be analysed
         """
         self.model = model
+
+    def show_all(self):
+        """
+        Function responsible for displaying all the model
+        associated metrics
+        """
+        self.explained_variance_score()
+        self.max_error()
+        self.mean_absolute_error()
+        self.mean_squared_error()
+        self.median_absolute_error()
+        self.r2_score()
+        self.mean_poisson_deviance()
+        self.mean_gamma_deviance()
+        self.learning_curve()
 
     def explained_variance_score(self):
         """
@@ -138,3 +155,12 @@ class Metrics:
         axes[2].set_title(self.model.algorithm + " - Performance of the model")
 
         plt.show()
+
+    def export(self):
+        """
+        Exports the decision tree graph
+        """
+        if self.model.algorithm == 'DecisionTree':
+            dot_data = tree.export_graphviz(self.model.clf, out_file=None)
+            graph = graphviz.Source(dot_data)
+            graph.render("exports/DecisionTreeRegressor")

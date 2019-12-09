@@ -47,14 +47,14 @@ class KNeighbors(Model):
         self.grid_search = grid_search
 
         if grid_search:
-            if os.path.isfile('joblib/GridSearchCV_' + self.algorithm + '.joblib'):
-                clf = load('joblib/GridSearchCV_' + self.algorithm + '.joblib')
+            if os.path.isfile('joblib/classification/GridSearchCV_' + self.algorithm + '.joblib'):
+                clf = load('joblib/classification/GridSearchCV_' + self.algorithm + '.joblib')
             else:
                 clf = GridSearchCV(KNeighborsClassifier(), self.tuning_parameters)
-                dump(clf, 'joblib/GridSearchCV_' + self.algorithm + '.joblib')
+                dump(clf, 'joblib/classification/GridSearchCV_' + self.algorithm + '.joblib')
         else:
-            if os.path.isfile('joblib/' + self.algorithm + '.joblib'):
-                clf = load('joblib/' + self.algorithm + '.joblib')
+            if os.path.isfile('joblib/classification/' + self.algorithm + '.joblib'):
+                clf = load('joblib/classification/' + self.algorithm + '.joblib')
             else:
                 clf = KNeighborsClassifier()
 

@@ -24,7 +24,7 @@ class Model:
         """
         self.clf = classifier
         self.algorithm = algorithm
-        self.supervised_learning_method = supervised_learning_method
+        self.folder = 'classification/' if supervised_learning_method else 'regression/'
 
         if supervised_learning_method:
             self.dataset = ClassificationDataset(filename)
@@ -40,7 +40,7 @@ class Model:
         dataset variables
         """
         self.clf = self.clf.fit(self.dataset.get_x_train(), self.dataset.get_y_train())
-        dump(self.clf, 'joblib/' + self.algorithm + '.joblib')
+        dump(self.clf, 'joblib/' + self.folder + self.algorithm + '.joblib')
 
     def predict(self):
         """

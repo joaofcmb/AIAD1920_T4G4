@@ -50,14 +50,14 @@ class SVR(Model):
         self.grid_search = grid_search
 
         if grid_search:
-            if os.path.isfile('joblib/GridSearchCV_' + self.algorithm + '.joblib'):
-                clf = load('joblib/GridSearchCV_' + self.algorithm + '.joblib')
+            if os.path.isfile('joblib/regression/GridSearchCV_' + self.algorithm + '.joblib'):
+                clf = load('joblib/regression/GridSearchCV_' + self.algorithm + '.joblib')
             else:
                 clf = GridSearchCV(svm.SVR(), self.tuning_parameters)
-                dump(clf, 'joblib/GridSearchCV_' + self.algorithm + '.joblib')
+                dump(clf, 'joblib/regression/GridSearchCV_' + self.algorithm + '.joblib')
         else:
-            if os.path.isfile('joblib/' + self.algorithm + '.joblib'):
-                clf = load('joblib/' + self.algorithm + '.joblib')
+            if os.path.isfile('joblib/regression/' + self.algorithm + '.joblib'):
+                clf = load('joblib/regression/' + self.algorithm + '.joblib')
             else:
                 clf = svm.SVR()
 

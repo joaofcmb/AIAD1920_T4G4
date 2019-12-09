@@ -1,11 +1,13 @@
 """
  Import Module
 """
+import graphviz
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import tree
+from sklearn import metrics
 from inspect import signature
 from sklearn.model_selection import learning_curve
-from sklearn import metrics
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_curve, auc
 from sklearn.metrics import plot_precision_recall_curve, plot_confusion_matrix, average_precision_score
 
@@ -23,17 +25,17 @@ class Metrics:
         """
         self.model = model
 
-    # ---------------------------------------------------
-    #   Function responsible for displaying all the model
-    #   associated statistics
-    # ---------------------------------------------------
     def show_all(self):
-        self.show_classification_report(True)
-        self.show_accuracy_score(True)
-        self.show_learning_curve(True)
-        self.show_confusion_matrix(True)
-        self.show_roc_curve(True)
-        self.show_precision_recall_curve(True)
+        """
+        Function responsible for displaying all the model
+        associated metrics
+        """
+        self.classification_report()
+        self.accuracy_score()
+        self.confusion_matrix()
+        self.learning_curve()
+        self.roc_curve()
+        self.precision_recall_curve()
 
     def classification_report(self):
         """
@@ -154,3 +156,12 @@ class Metrics:
                                            self.model.dataset.get_y_test())
         disp.ax_.set_title(self.model.algorithm + ' - Precision-Recall curve')
         plt.show()
+
+    def export(self):
+        """
+        Exports the decision tree graph
+        """
+        if self.model.algorithm == 'DecisionTree':
+            dot_data = tree.export_graphviz(self.model.clf, out_file=None)
+            graph = graphviz.Source(dot_data)
+            graph.render("exports/DecisionTreeClassifier")
