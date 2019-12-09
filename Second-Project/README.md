@@ -1,27 +1,27 @@
-# Text classification of drug reviews
+# Machine learning - Classification/Regression
 
 ## Dependencies
 
-- [Python 3.7 - 32 bits](https://www.python.org/downloads/release/python-372/)
-- [Python Dependencies Set](https://drive.google.com/open?id=1SNy0JsSmaIQgPMV7PEPi5lQXrnb02e_2)
-- [PyCharm](https://www.jetbrains.com/pycharm/)
+- [Python 3.6](https://www.python.org/downloads/release/python-360/)
+- [PyCharm](https://www.jetbrains.com/pycharm/) (_Optional_)
 
 ## Instructions
 
-1. Install the required python interpreter (Python 3.7 - 32bits)
+1. Install the required python interpreter (Python 3.6)
 
-2. Download the [Dependencies Set](https://drive.google.com/open?id=1SNy0JsSmaIQgPMV7PEPi5lQXrnb02e_2) and add the Libraries to
-the installed python interpreter
+2. Install graphviz
+    - `sudo apt install python-pydot python-pydot-ng graphviz`
 
-3. **Open** the Project with PyCharm and download the stopwords dictionary
-    - Using the Python Terminal: `import nltk` and `nltk.download('stopwords')`
+3. Create a virtual environment `venv`
 
-4. Using PyCharm, run GUI.py (Run -> Run 'GUI')
+4. Access the virtual environment
+    - `. venv/bin/activate`
 
-5. sudo apt install python-pydot python-pydot-ng graphviz
-
-6. . venv/bin/activate --> python3.6 -m src.main
-
-7. In pycharm add src as sources
-
-8. python3.6 -W ignore -m src.main
+5. Install the dependencies inside the `venv` the file `requirements.txt`
+    - `pip3 install -r requirements.txt`
+    
+6. Run
+    - Using PyCharm: 
+        - `run classification.py or regression.py (Run -> Run 'target_file.py')`
+    - Using console and inside venv
+        - `python3.6 -W ignore -m src.[classification or regression]`
