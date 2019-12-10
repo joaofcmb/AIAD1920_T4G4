@@ -25,3 +25,10 @@
         - `run classification.py or regression.py (Run -> Run 'target_file.py')`
     - Using console and inside venv
         - `python3.6 -W ignore -m src.[classification or regression]`
+
+## Note
+
+* Relative to the regression there are two different scenarios: predicting the hand-selection and predicting the aggression. In order to set which of this problems you want to solve you must do the following:
+    - In `regression dataset` file **change** the `__init_ function` target parameter for your problem. Options:
+        - `hand-selection`
+        - `aggression` 
