@@ -33,15 +33,18 @@ abstract public class Personality {
      * @return Effective Hand Strength, as a value between 0 and 1
      */
     double effectiveHandStrength(double rangePercentage) {
-        final ArrayList<Card> playerCards = this.player.getCards();
+        return effectiveHandStrength(rangePercentage, this.player.getCards(), this.player.getTable());
+    }
+
+    public static double effectiveHandStrength(double rangePercentage, ArrayList<Card> playerCards, ArrayList<Card> tableCards) {
         Card.sort(playerCards);
 
         // Pre-flop Analysis
-        if (this.player.getTable().size() < 3) {
+        if (tableCards.size() < 3) {
             return Math.min(1d, Card.rankCards(playerCards));
         }
 
-        final LinkedList<Card> playerHand = new LinkedList<>(this.player.getTable());
+        final LinkedList<Card> playerHand = new LinkedList<>(tableCards);
         playerHand.addAll(playerCards);
 
         int wins = 0, loses = 0, ties = 0;
@@ -55,7 +58,7 @@ abstract public class Personality {
             Card.sort(oppCards);
             if (oppCards.equals(playerCards)) continue;
 
-            LinkedList<Card> oppHand = new LinkedList<>(this.player.getTable());
+            LinkedList<Card> oppHand = new LinkedList<>(tableCards);
             oppHand.addAll(oppCards);
 
             final int playerRank = Card.rankHand(playerHand), oppRank = Card.rankHand(oppHand);
@@ -65,11 +68,11 @@ abstract public class Personality {
             else if (playerRank < oppRank)  { loses++;  statusIndex = tieIndex; }
             else                            { ties++;   statusIndex = behindIndex; }
 
-            for (ArrayList<Card> tableCards : Card.possibleTables(this.player.getTable(), playerCards, oppCards)) {
-                final LinkedList<Card> playerPotentialHand = new LinkedList<>(tableCards);
+            for (ArrayList<Card> innerTableCards : Card.possibleTables(tableCards, playerCards, oppCards)) {
+                final LinkedList<Card> playerPotentialHand = new LinkedList<>(innerTableCards);
                 playerPotentialHand.addAll(playerCards);
 
-                final LinkedList<Card> oppPotentialHand = new LinkedList<>(tableCards);
+                final LinkedList<Card> oppPotentialHand = new LinkedList<>(innerTableCards);
                 oppPotentialHand.addAll(oppCards);
 
                 final int playerPotentialRank = Card.rankHand(playerPotentialHand);

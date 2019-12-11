@@ -1,1 +1,1 @@
-http://DESKTOP-4U7EOC4:7778/acc
+http://DESKTOP-4U7EOC4.lan:7778/acc
