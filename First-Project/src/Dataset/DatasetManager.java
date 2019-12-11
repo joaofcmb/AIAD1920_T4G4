@@ -31,6 +31,11 @@ public class DatasetManager {
     private static LinkedList<Double> opponentSelection;
     private static LinkedList<Double> opponentAggression;
 
+
+    public static void main(String[] args) {
+        ROUND_DATASET.alternativeRound();
+    }
+
     public static void processMove(String player, String move) {
         playerMoves.compute(player, (k, v) -> {
             if (v == null || v.size() > MOVES_SIZE)

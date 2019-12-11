@@ -135,6 +135,10 @@ public class Card {
         this.suit = suit;
     }
 
+    public Card(String card) {
+        this(card.split("-")[0], card.split("-")[1]);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

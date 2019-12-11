@@ -1,1 +1,1 @@
-( ap-description  :name "poker" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://DESKTOP-4U7EOC4:7778/acc))))
+( ap-description  :name "poker" :ap-services (set ( ap-service  :name fipa.mts.mtp.http.std :type fipa.mts.mtp.http.std :addresses (sequence http://DESKTOP-4U7EOC4.lan:7778/acc))))
