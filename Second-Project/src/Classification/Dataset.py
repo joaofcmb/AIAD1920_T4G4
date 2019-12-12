@@ -18,7 +18,7 @@ class Dataset:
         @param ds_test_perc: dataset test percentage used
         """
         self.filename = 'dataset/' + filename
-        self.feature_names = ['effective_hand_streng', 'hand_selection_1', 'hand_selection_2', 'hand_selection_3',
+        self.feature_names = ['effective_hand_strength', 'hand_selection_1', 'hand_selection_2', 'hand_selection_3',
                               'hand_selection_4', 'hand_selection_5', 'hand_selection_6', 'hand_selection_7',
                               'hand_selection_8', 'aggression_1', 'aggression_2', 'aggression_3', 'aggression_4',
                               'aggression_5', 'aggression_6', 'aggression_7', 'aggression_8']
