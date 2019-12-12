@@ -18,6 +18,10 @@ class Dataset:
         @param ds_test_perc: dataset test percentage used
         """
         self.filename = 'dataset/' + filename
+        self.feature_names = ['effective_hand_streng', 'hand_selection_1', 'hand_selection_2', 'hand_selection_3',
+                              'hand_selection_4', 'hand_selection_5', 'hand_selection_6', 'hand_selection_7',
+                              'hand_selection_8', 'aggression_1', 'aggression_2', 'aggression_3', 'aggression_4',
+                              'aggression_5', 'aggression_6', 'aggression_7', 'aggression_8']
         self.ds_test_perc = ds_test_perc
         self.x, self.y = [], []
 
@@ -36,11 +40,9 @@ class Dataset:
             csv_reader = csv.reader(csv_file, delimiter=',')
 
             for row in csv_reader:
-                train_data = []
-                for card in row[:5]:
-                    train_data.append(Dataset.card_to_feature(card))
+                train_data = [float(row[0])]
 
-                players_info = row[5:-1]
+                players_info = row[1:-1]
                 num_players = int(len(players_info) / 2)
 
                 for elem in players_info[:num_players]:
@@ -55,21 +57,6 @@ class Dataset:
 
                 self.x.append(train_data)
                 self.y.append(row[-1])
-
-    @staticmethod
-    def card_to_feature(card):
-        """
-        Converts a card in the format RANK-SUIT into
-        a numeric value
-        @param card: card to be converted
-        @return:
-        """
-        suit = {'Spades': 0, 'Clubs': 13, 'Hearts': 26, 'Diamonds': 39}
-        rank = {'2': 0, '3': 1, '4': 2, '5': 3, '6': 4, '7': 5, '8': 6, '9': 7, '10': 8,
-                'Jack': 9, 'Queen': 10, 'King': 11, 'Ace': 12}
-
-        card_info = card.split('-')
-        return rank[card_info[0]] + suit[card_info[1]]
 
     def get_x_train(self):
         """

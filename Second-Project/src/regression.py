@@ -35,6 +35,8 @@ parser.add_argument('--mean_poisson_deviance', action="store_true",
                     help="display the mean_poisson_deviance metric")
 parser.add_argument('--mean_gamma_deviance', action="store_true",
                     help="display the mean_gamma_deviance metric")
+parser.add_argument('--feat_importance', action="store_true",
+                    help="display the feature importance")
 parser.add_argument('--best_params', action="store_true",
                     help="display the GridSearchCV best parameters")
 parser.add_argument('--learning_curve', action="store_true",
@@ -75,6 +77,9 @@ if args.algorithm:
 
         if args.mean_gamma_deviance:
             model.metrics.mean_gamma_deviance()
+
+        if args.feat_importance:
+            model.metrics.feature_importance()
 
         if args.learning_curve:
             model.metrics.learning_curve()

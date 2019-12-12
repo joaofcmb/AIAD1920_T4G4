@@ -19,6 +19,8 @@ class Dataset:
         @param ds_test_perc: dataset test percentage used
         """
         self.filename = 'dataset/' + filename
+        self.feature_names = ['All_in', 'Bet', 'Call', 'Check', 'Fold', 'Raise', 'Call_sum', 'Bet_sum', 'Raise_sum']
+
         self.ds_test_perc = ds_test_perc
         self.target = target
         self.x, self.y = [], []

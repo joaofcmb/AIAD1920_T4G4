@@ -3,6 +3,7 @@
 """
 import graphviz
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import tree
 from sklearn import metrics
@@ -39,6 +40,7 @@ class Metrics:
         self.r2_score()
         self.mean_poisson_deviance()
         self.mean_gamma_deviance()
+        self.feature_importance()
         self.learning_curve()
 
     def explained_variance_score(self):
@@ -155,6 +157,17 @@ class Metrics:
         axes[2].set_title(self.model.algorithm + " - Performance of the model")
 
         plt.show()
+
+    def feature_importance(self):
+        """
+        Function responsible for displaying the
+        feature importance
+        @return: feature importance
+        """
+        if self.model.algorithm == 'DecisionTree' or self.model.algorithm == 'RandomForest':
+            print("Feature importance\n")
+            print(pd.DataFrame(self.model.clf.feature_importances_, index=self.model.dataset.feature_names,
+                               columns=['Importance']).sort_values('Importance', ascending=False))
 
     def export(self):
         """

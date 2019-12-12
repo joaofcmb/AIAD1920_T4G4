@@ -32,6 +32,8 @@ parser.add_argument('--confusion_matrix', action="store_true",
                     help="display the confusion_matrix metric")
 parser.add_argument('--best_params', action="store_true",
                     help="display the GridSearchCV best parameters")
+parser.add_argument('--feat_importance', action="store_true",
+                    help="display the feature importance")
 parser.add_argument('--learning_curve', action="store_true",
                     help="plot the learning_curve")
 parser.add_argument('--roc_curve', action="store_true",
@@ -56,6 +58,9 @@ if args.algorithm:
 
         if args.accuracy_score:
             model.metrics.accuracy_score()
+
+        if args.feat_importance:
+            model.metrics.feature_importance()
 
         if args.confusion_matrix:
             model.metrics.confusion_matrix()

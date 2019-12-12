@@ -3,6 +3,7 @@
 """
 import graphviz
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn import tree
 from sklearn import metrics
@@ -32,6 +33,7 @@ class Metrics:
         """
         self.classification_report()
         self.accuracy_score()
+        self.feature_importance()
         self.confusion_matrix()
         self.learning_curve()
         self.roc_curve()
@@ -156,6 +158,17 @@ class Metrics:
                                            self.model.dataset.get_y_test())
         disp.ax_.set_title(self.model.algorithm + ' - Precision-Recall curve')
         plt.show()
+
+    def feature_importance(self):
+        """
+        Function responsible for displaying the
+        feature importance
+        @return: feature importance
+        """
+        if self.model.algorithm == 'DecisionTree' or self.model.algorithm == 'RandomForest':
+            print("Feature importance\n")
+            print(pd.DataFrame(self.model.clf.feature_importances_, index=self.model.dataset.feature_names,
+                               columns=['Importance']).sort_values('Importance', ascending=False))
 
     def export(self):
         """
