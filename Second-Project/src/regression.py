@@ -9,11 +9,10 @@ algorithms = {'SVR': SVR,
               'KNeighbors': KNeighbors,
               'DecisionTree': DecisionTree,
               'RandomForest': RandomForest,
-              'MultiLayerPerceptron': MultiLayerPerceptron
               }
 
 parser = argparse.ArgumentParser(description='Supervised Learning - Regression')
-parser.add_argument('algorithm', choices=['SVR', 'DecisionTree', 'KNeighbors', 'MultiLayerPerceptron', 'RandomForest'],
+parser.add_argument('algorithm', choices=['SVR', 'DecisionTree', 'KNeighbors', 'RandomForest'],
                     help='set the supervised learning regression algorithm')
 parser.add_argument('--grid_search_cv', action="store_true",
                     help="set the GridSearchCV usage to select the best parameters (Default: False)")
