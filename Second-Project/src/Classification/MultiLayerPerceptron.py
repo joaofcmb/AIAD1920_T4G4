@@ -71,7 +71,7 @@ class MultiLayerPerceptron(Model):
             if os.path.isfile('joblib/classification/' + self.algorithm + '.joblib'):
                 clf = load('joblib/classification/' + self.algorithm + '.joblib')
             else:
-                clf = MLPClassifier()
+                clf = MLPClassifier(max_iter=600)
 
         return clf
 

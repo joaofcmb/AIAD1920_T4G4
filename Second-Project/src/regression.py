@@ -3,7 +3,6 @@ from src.Regression.SVR import SVR
 from src.Regression.KNeighbors import KNeighbors
 from src.Regression.DecisionTrees import DecisionTree
 from src.Regression.RandomForest import RandomForest
-from src.Regression.MultiLayerPerceptron import MultiLayerPerceptron
 
 algorithms = {'SVR': SVR,
               'KNeighbors': KNeighbors,
